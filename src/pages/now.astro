@@ -1,0 +1,10 @@
+---
+import { getEntryBySlug } from "astro:content";
+import PageLayout from "~/layouts/PageLayout.astro";
+
+const entry = await getEntryBySlug("page", "now");
+const { Content } = await entry.render();
+---
+<PageLayout {...entry.data}>
+  <Content />
+</PageLayout>

@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+export interface Props {
+  entry: CollectionEntry<"page">;
+}
+
+const { title, description, isIndex } = Astro.props;
+---
+<BaseLayout
+  title={title}
+  description={description}
+  isIndex={isIndex}
+>
+  <Fragment slot="main">
+    <main class="layout">
+      <slot />
+    </main>
+  </Fragment>
+</BaseLayout>

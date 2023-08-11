@@ -1,0 +1,68 @@
+# https://github.com/github/codeql-action
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - ".gitignore"
+      - ".github/**"
+      - ".husky/**"
+      - ".vscode/**"
+      - "LICENSE"
+      - "content/**"
+      - "**/*.md"
+
+  schedule:
+    # https://crontab.guru/
+    - cron: "30 16 * * 5"
+
+jobs:
+  CodeQL-Build:
+    runs-on: ubuntu-latest
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript", "TypeScript"]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+        # Learn more:
+        # https://aka.ms/codeql-docs/language-support
+
+    steps:
+      - name: "🛎️ Checkout repository"
+        uses: actions/checkout@v3
+
+      # - name: '🧹 Clear previous database' # https://github.com/github/codeql-action/issues/611#issuecomment-872252659
+      #   run: |
+      #     rm -rf "${{ runner.temp }}/codeql_databases/${{ matrix.language }}"
+
+      # Initializes the CodeQL tools for scanning.
+      - name: "🪡 Initialize CodeQL"
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          # db-location: '${{ runner.temp }}/codeql_databases'
+          # ram: 2048 # Limite memory usage to 2GB
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+          # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+          queries: security-and-quality
+
+      # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
+      # If this step fails, then you should remove it and run the build manually (see below)
+      - name: "🛠️ Autobuild"
+        uses: github/codeql-action/autobuild@v2
+
+      - name: "🕵️ Perform CodeQL Analysis"
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:${{matrix.language}}"

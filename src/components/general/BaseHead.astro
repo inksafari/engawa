@@ -1,0 +1,62 @@
+---
+import SearchWidget from "~/components/general/SearchWidget.astro";
+import Favicon from "~/components/general/Favicon.astro";
+import { SITE_DOMAIN, SITE_TITLE, SITE_DESCRIPTION } from "~/consts";
+
+export interface Props {
+  title?: string
+  description?: string
+  isIndex?: boolean
+};
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  isIndex
+} = Astro.props as Props;
+
+const isProd = import.meta.env.MODE === "production"
+const metaTitle = title // Astro.props.title
+  ? `${title} • ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
+  : SITE_TITLE;
+
+const metaDescription = description ?? SITE_DESCRIPTION;
+const domain = SITE_DOMAIN.toUpperCase();
+
+/* canonicalURL
+ * ------------
+ * @sources:
+ * https://github.com/yuheiy/yuheiy.com-v6/blob/main/src/components/Layout.astro
+ * https://github.com/yamanoku/archives/blob/main/src/components/BaseHead.astro
+ */
+const normalizedPathname = Astro.url.pathname.replace(/\.html$/, "");
+const canonicalURL: URL = new URL(normalizedPathname, Astro.site);
+//const pathName = canonicalURL.pathname.split('/').join('');
+//const ogpImageURL = canonicalURL.pathname === '/' 
+  //? new URL('/assets/images/ogp-image.png', Astro.url)
+  //: new URL(`/og/${pathName}.png`, Astro.url)
+---
+<!-- TODO: 使用capo.js排序 https://rviscomi.github.io/capo.js/ -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{metaTitle}</title>
+{isProd && <SearchWidget />}
+<meta name="view-transition" content="same-origin">
+<meta
+  name="format-detection"
+  content="telephone=no, date=no, address=no, email=no"
+/>
+<meta name="title" content={metaTitle} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<Favicon />
+{isIndex ?
+  <meta name="robots" content="index, follow, noai, noimageai, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+: <meta name="robots" content="noindex" />}
+{isProd &&
+  <link href='/rss/feed.xml' rel='alternate' title={`RSS Feed for ${domain}`} type='application/rss+xml' />
+  <link href='/rss/feed.json' rel='alternate' title={`JSON Feed for ${domain}`} type='application/json' />
+}
+<!-- @source:
+https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro
+-->

@@ -1,0 +1,48 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+//import { categorySlugToUrl } from '~/utilities/urlBuilder'
+//import { getCategoryOrNull } from "~/utilities/transformCategory.ts";
+import Date from "~/components/Date.astro";
+
+const { title, description, isIndex, publishDate } = Astro.props;
+---
+<BaseLayout
+  title={title}
+  description={description}
+  isIndex={isIndex}
+>
+  <Fragment slot="main">
+    <main data-pagefind-body>
+      <article
+      data-pagefind-body
+      class="blog_post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+    <div class="blog_post_meta">
+      <Date date={publishDate} />
+      <!---
+        {
+        category && (
+          <>
+            ・
+            <a
+              class="blog_post_meta_category"
+              href={`/categories/${category.slug}/`}
+            >
+              {category.name}
+            </a>
+          </>
+        )
+      }-->
+    </div>
+    <h1 class="blog_post_title" itemprop="name">
+      {title}
+    </h1>
+    <div class="markdown" itemprop="text">
+      <slot />
+    </div>
+  </article>
+</main>
+</Fragment>
+</BaseLayout>

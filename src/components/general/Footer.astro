@@ -1,0 +1,53 @@
+---
+//import { categorySlugToUrl } from "~/utilities/urlBuilder"
+//import { SITE_CATEGORIES } from "~/consts";
+import Year from "./Year.svelte";
+---
+
+<footer class="footer">
+  <div class="footer_inner">
+    <section class="footer_section">
+      <div id="search" class="footer_searchbar" aria-label="Search"></div>
+      <!--
+      <p class="footer_categories">
+        {
+          SITE_CATEGORIES.map(({ name, slug }) => (
+            <a class="footer_category" href={`/categories/${SITE_CATEGORIES.slug}/`}>
+              {name}
+            </a>
+          ))
+        }
+      </p>
+    -->
+    </section>
+    <section class="footer_section">
+      <h2 class="footer_title">中文假文佔位</h2>
+      <p class="footer_about">
+        時候會可愛的⋯事務所麥當勞，的但沒有一方團的：時候會過這個圈都可，上是不會我到，我也很關每次都可愛覺得是⋯越來己了回真的好關，好了球圖透人不。亂中置入<a href="/colophon">colophon</a>發現了⋯的腦用我，羅崩潰啊版好像沒存數什，了他有點這麼久說什麼後：底現在就不知一樣觸兩次，開就覺得留下的因為你的狀況遊戲。在這裡放<a href="/now">now</a>頁面。沒買次都沒在害鯊鯊，和其他太現在來的然後？我就很滿喜歡定真是得還好。
+      </p>
+
+      <p class="footer_analytics">
+        2望ーそ掲評えぶぎリ覧治まち考46顔ひょろ壮加はじぐ補題リーざ報朝テアヱレ応壌ク策名3新後を毎載コキ学南ざよずぜ愛引ほなル同映論仕ッくづイ。急わを遺元開をルも転屋クメノツ襲13快評ヱ断革之めぎふげ介負むくびろ提声確ラそすけ供健いざん細川年そぐ聞通オサタチ都林ヌ存図サヒチ社政ド。問メ河導ませ勝注ワレ必済エオミ外朝ヌノル記芸アム撤熟ヤニナ朝談トナ目柄ヲ会29評生素英担てずが。
+      </p>
+
+      <p class="footer_copyright">
+        &copy;&nbsp;<Year from={2022} /> inksafari
+      </p>
+    </section>
+  </div>
+</footer>
+<!-- @credit:
+  https://lirantal.com/blog/2023-01-01_-how_to_add_client-side_search_to_your_astro_blog_static_website/ -->
+<script>
+  window.addEventListener("DOMContentLoaded", (event) => {
+    new PagefindUI({ element: "#search", resetStyles: false});
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "/" || event.key === ".") {
+      console.log("you pressed the slash");
+      event.preventDefault();
+      document.querySelector("div#search input").focus();
+    }
+  });
+</script>

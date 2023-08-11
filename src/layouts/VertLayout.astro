@@ -1,0 +1,21 @@
+---
+// WARNING: 還沒寫
+import BaseHead from "../components/general/BaseHead.astro";
+import { HTM_LANG } from "../consts";
+---
+<!DOCTYPE html>
+<html lang={HTM_LANG} dir="rtl">
+  <head>
+    <BaseHead {...Astro.props} />
+    <slot name="meta" />
+  </head>
+  <body>
+    <slot name="main" />
+  </body>
+</html>
+<!--
+  縱書（Tategaki）參考：
+  https://tategaki.github.io/
+  https://www.plusdesign.co.jp/blog/author193a5/54.html
+  https://playtextdigitalarchive.com/
+-->

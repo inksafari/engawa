@@ -1,0 +1,41 @@
+*               text eol=lf
+
+# Documents
+src/content/*   linguist-documentation=true
+*.txt           linguist-documentation=false linguist-detectable=true
+*.pdf           diff=astextplain
+*.PDF           diff=astextplain
+
+# Serialisation
+*.csv           text
+*.tsv           text
+*.json          text
+*.toml          text
+*.xml           text
+*.yaml          text
+*.yml           text
+# Text files where line endings should be preserved
+*.patch         -text
+
+# Scripts
+*.bash         text eol=lf
+*.fish         text eol=lf
+*.sh           text eol=lf
+# These are explicitly windows files and should use crlf
+#*.bat         text eol=crlf
+#*.cmd         text eol=crlf
+#*.ps1         text eol=crlf
+
+# Vendors
+dist/*         linguist-generated=true
+build/*        linguist-generated=true
+vendor/*       linguist-vendored=true
+public/*       linguist-vendored=true
+static/*       linguist-vendored=true
+
+# Exclude files from exporting
+.editorconfig  export-ignore
+.vscode        export-ignore
+.github        export-ignore
+.gitattributes export-ignore
+.gitignore     export-ignore
