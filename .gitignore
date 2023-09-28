@@ -7,6 +7,7 @@ node_modules
 
 # build output
 .astro/
+.unlighthouse/
 dist/
 coverage/
 playwright-report/
@@ -23,6 +24,8 @@ pnpm-debug.log*
 .env.production
 
 # mine
+.diff
+.vale/
 public/assets/fonts/
 scripts/deploy.sh
 

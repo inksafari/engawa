@@ -1,25 +1,10 @@
 ---
-//import "~/styles/sanitize.css";
-//import "~/styles/global.css";
-//import "~/styles/markdown.css";
-import GlobalStyles from "~/components/general/GlobalStyles.astro"
-import Bar from "~/components/general/Bar.astro";
-import Header from "~/components/general/Header.astro";
-import Footer from "~/components/general/Footer.astro";
-import BaseHead from "~/components/general/BaseHead.astro";
-import { HTM_LANG } from "~/consts";
+import Bar from '~/components/Bar.astro';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
 ---
-<!DOCTYPE html>
-<html lang={HTM_LANG} dir="ltr">
-  <head>
-    <BaseHead {...Astro.props} />
-    <slot name="meta" />
-  </head>
-  <body>
-    <Bar />
-    <Header />
-    <slot name="main" />
-    <Footer />
-  </body>
-</html>
-<GlobalStyles />
+
+<Bar />
+<Header />
+<slot name='main' />
+<Footer />

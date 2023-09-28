@@ -34,5 +34,5 @@
   setInterval((): void => format_time_since_last_updated(milliseconds), 1000);
 </script>
 
-<b>Last Updated:</b> <time>{last_updated_date}</time><br />
+<b>Statically built on:</b> <time>{last_updated_date}</time><br />
 <small>(Or exactly <time>{time_since_updated}</time> ago)</small>

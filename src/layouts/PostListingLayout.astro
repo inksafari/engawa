@@ -20,10 +20,15 @@ import { HTM_LANG, RSS_LANG } from '~/consts';
     <GlobalStyles />
     <slot name='meta' />
   </head>
-  <body itemscope='' itemtype='https://schema.org/WebPage'>
+  <body itemscope='' itemtype='https://schema.org/CollectionPage'>
     <BaseLayout>
       <Fragment slot='main'>
-        <main class='layout'>
+        <main
+          class='layout h-feed hfeed'
+          itemprop='mainEntity'
+          itemscope=''
+          itemtype='https://schema.org/DataFeed'
+        >
           <slot />
         </main>
       </Fragment>

@@ -7,17 +7,16 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - ".gitignore"
-      - ".github/**"
-      - ".husky/**"
-      - ".vscode/**"
-      - "LICENSE"
-      - "content/**"
-      - "**/*.md"
+      - '.gitignore'
+      - '.github/**'
+      - '.husky/**'
+      - '.vscode/**'
+      - 'LICENSE'
+      - '**/*.mdx'
 
   schedule:
     # https://crontab.guru/
-    - cron: "30 16 * * 5"
+    - cron: '30 16 * * 5'
 
 jobs:
   CodeQL-Build:
@@ -31,13 +30,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript", "TypeScript"]
+        language: ['javascript', 'TypeScript']
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more:
         # https://aka.ms/codeql-docs/language-support
 
     steps:
-      - name: "🛎️ Checkout repository"
+      - name: '🛎️ Checkout repository'
         uses: actions/checkout@v3
 
       # - name: '🧹 Clear previous database' # https://github.com/github/codeql-action/issues/611#issuecomment-872252659
@@ -45,7 +44,7 @@ jobs:
       #     rm -rf "${{ runner.temp }}/codeql_databases/${{ matrix.language }}"
 
       # Initializes the CodeQL tools for scanning.
-      - name: "🪡 Initialize CodeQL"
+      - name: '🪡 Initialize CodeQL'
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
@@ -59,10 +58,10 @@ jobs:
 
       # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
-      - name: "🛠️ Autobuild"
+      - name: '🛠️ Autobuild'
         uses: github/codeql-action/autobuild@v2
 
-      - name: "🕵️ Perform CodeQL Analysis"
+      - name: '🕵️ Perform CodeQL Analysis'
         uses: github/codeql-action/analyze@v2
         with:
-          category: "/language:${{matrix.language}}"
+          category: '/language:${{matrix.language}}'

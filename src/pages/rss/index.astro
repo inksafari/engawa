@@ -1,25 +1,14 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageLayout from '~/layouts/PageLayout.astro';
+import { feedUrls } from '~/consts';
 ---
-<BaseLayout
-  title="RSS Feeds"
->
-  <Fragment slot="main">
-    <main class="layout">
-      <ul>
-        <li>XML格式： <a href="/rss/feed.xml">/rss/feed.xml</a></li>
-        <li>JSON格式： <a href="/rss/feed.json">/rss/feed.json</a></li>
-      </ul>
-    </main>
-  </Fragment>
-</BaseLayout>
-<style>
-  .layout {
-    max-width: var(--max-width);
-    margin: 0 auto 48px;
-    padding: 0 12px;
-  }
-</style>
+
+<PageLayout title='RSS Feeds'>
+  <ul>
+    <li>ATOM格式： <a href={feedUrls.atom}>feed.xml</a></li>
+    <li>JSON格式： <a href={feedUrls.json}>feed.json</a></li>
+  </ul>
+</PageLayout>
 <!-- @sources:
   https://github.com/MykalMachon/mykal.codes/tree/main/www/src/pages/feeds
   https://github.com/izmttk/astro-mecure/blob/main/src/pages/rss/feed.%5Bformat%5D.ts

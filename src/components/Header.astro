@@ -1,0 +1,16 @@
+---
+import { SITE_TITLE, SITE_URL } from '~/consts';
+---
+
+<header class='header'>
+  <h1
+    class='header_title'
+    itemscope=''
+    itemtype='https://schema.org/Blog https://schema.org/WebSite'
+    itemid={SITE_URL}
+  >
+    <a class='header_title_inner' href='/' rel='home' itemprop='url'>
+      <span class='header_title_name' itemprop='name'>{SITE_TITLE}</span>
+    </a>
+  </h1>
+</header>

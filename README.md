@@ -1,4 +1,4 @@
-# @inksafari/engawa
+# ❒ @inksafari/engawa
 
 [![framework][framework-badge]][framework-url]
 [![hosting][hosting-badge]][hosting-url]
@@ -9,9 +9,11 @@
 
 ## backlogs
 
+- cjk
+  - han.min.css
+  - webfont
 - prettier
-- [microformats](https://microformats.org/wiki/)
-- date
+- [microformats](https://indieweb.org/microformats)
 - description
 - anchor links
 - chat bubbles
@@ -20,7 +22,9 @@
 - unit/e2e tests
 - fonts optimization at build time (subfont).
 - image manipulation (@astrojs/images).
+  - avif
   - resizing
+  - srcset
   - lazy loading with blurred placeholders
   - custom markup
   - zoom
@@ -36,11 +40,14 @@
 ## Features
 
 - Built with [Astro][framework-url] and JavaScript.
+  - Component Framework: [Svelte](https://svelte.dev/)
 - Uses [Content Collections](https://docs.astro.build/guides/content-collections/) with [Zod schemas](/src/content/config.ts).
 - Markdown & MDX support.
-- RSS Feed support.
+- ATOM/JSON Feed support.
 - [Pagefind](https://pagefind.app/) static search library integration.
-- Uses [Shiki](https://shiki.matsu.io/) via [astro-expressive-code](https://github.com/expressive-code/expressive-code) (with `rose-pine-dawn` theme) for syntax highlighting.
+- Uses [starry-night](https://github.com/wooorm/starry-night) via [@Microflash/rehype-starry-night](https://github.com/Microflash/rehype-starry-night) (with `light` theme) for syntax highlighting.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Commands
 
@@ -48,7 +55,7 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                        | Action                                       |
 | :----------------------------- | :------------------------------------------- |
-| `pnpm astro telemetry disable` | Disable data collection.                     |
+| `pnpx astro telemetry disable` | Disable data collection                      |
 | `pnpm install`                 | Installs dependencies                        |
 | `pnpm dev`                     | Starts local dev server at `localhost:8081`  |
 | `pnpm build`                   | Build your production site to `./dist/`      |
@@ -57,28 +64,75 @@ All commands are run from the root of the project, from a terminal:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Personalization Configuration
+
+- .env
+- [consts.ts](src/consts.ts)
+- [Footer.astro](src/components/Footer.astro)
+  - [Year.svelte](src/components/Year.svelte)
+- [Favicon.astro](src/components/Favicon.astro)
+
+### Setup `.env`
+
+```ini
+VITE_SITE_DOMAIN="example.net"
+VITE_SITE_URL="https://example.net"
+VITE_SITE_PORT=8081
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Frontmatter
+
+In `src/content/then/yyyy-MM-dd_slug.mdx`:
+
+<!-- prettier-ignore-start -->
+```yaml
+---
+title: "Title of the Post"
+excerpt: "This blog post is not yet ready to be seen by the world"
+slug: "hello_world"
+publishDate: 2021-09-07T06:59:48+09:00
+updatedDate: 2022-05-10T11:01:01+08:00
+isIndex: false
+isDraft: true
+---
+```
+<!-- prettier-ignore-end -->
+
+`title`, `slug` and `publishDate` are required for all posts.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Credits
 
+- This theme was inspired by
+  - [rakuishi.com](https://github.com/rakuishi/rakuishi.com)
+  - [tonydang.blog](https://github.com/tonydangblog/blog/tree/main/apps/frontend/src/content/pages/now)(layouts & now page)
+  - [Silvia Maggi](https://silviamaggidesign.com/colophon/)(colophon page)
+  - [naiyerasif/site](https://github.com/naiyerasif/site)
 - SVG Favicon by [SVG Repo](https://www.svgrepo.com/svg/126349/bird-with-bow-tie?edit=true).
 - Watercolor texture by [Freepik](https://www.freepik.com/free-vector/pastel-watercolor-painted-background_13962241.htm).
-- CSS styles by [rakuishi.com](https://github.com/rakuishi/rakuishi.com).
-- layouts & now page by [tonydang.blog](https://github.com/tonydangblog/blog/tree/main/apps/frontend/src/content/pages/now).
-- Colophon page by [Silvia Maggi](https://silviamaggidesign.com/colophon/).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Licenses
 
-The texts (articles, writings, etc) are licensed under the terms of [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-All images are copyright to their respective owners.
+The source code of this site is available under [MPL-2.0](https://www.mozilla.org/MPL/2.0/), the content under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). All images are copyright to their respective owners.
 
 <!-- MARKDOWN LINKS & IMAGES -->
+<!-- #fff6d5 -- #ffe589 #fffdcc
+astro: #ff5D01
 
-[framework-badge]: https://img.shields.io/badge/framework-Astro-ff7f00.svg?style=for-the-badge&labelColor=fff6d5&logo=astro
-[hosting-badge]: https://img.shields.io/badge/Cloud-Deno_Deploy-informational?style=for-the-badge&labelColor=fff6d5&logo=deno&logoColor=00a300&color=00a300
-[observatory-badge]: https://img.shields.io/mozilla-observatory/grade/example.com?publish&style=for-the-badge&labelColor=fff6d5&logo=mozilla&logoColor=f92f0b&color=f92f0b
-[activity-badge]: https://img.shields.io/github/commit-activity/m/inksafari/engawa.svg?style=for-the-badge&labelColor=fff6d5&logo=github&logoColor=00a8ff&color=00a8ff
+https://img.shields.io/badge/framework-Astro-f230d5.svg?style=for-the-badge&labelColor=fff6d5&logo=astro&logoColor=f230d5
+
+https://img.shields.io/badge/framework-Astro-edf5ff.svg?style=for-the-badge&labelColor=edf5ff&logo=astro&logoColor=f230d5
+ -->
+
+[framework-badge]: https://img.shields.io/badge/framework-Astro-ff7f00.svg?style=for-the-badge&labelColor=fffdd0&logo=astro&logoColor=ff7f00
+[hosting-badge]: https://img.shields.io/badge/Hosting-Deno_Deploy-informational?style=for-the-badge&labelColor=fffdd0&logo=deno&logoColor=00a300&color=00a300
+[observatory-badge]: https://img.shields.io/mozilla-observatory/grade/example.com?publish&style=for-the-badge&labelColor=fffdd0&logo=mozilla&logoColor=f92f0b&color=f92f0b
+[activity-badge]: https://img.shields.io/github/commit-activity/m/inksafari/engawa.svg?style=for-the-badge&labelColor=fffdd0&logo=github&logoColor=00a8ff&color=00a8ff
 [framework-url]: https://astro.build
 [hosting-url]: https://deno.com/deploy
 [observatory-url]: https://observatory.mozilla.org

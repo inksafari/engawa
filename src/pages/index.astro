@@ -1,75 +1,39 @@
 ---
-import { getCollection } from "astro:content";
-import PageLayout from "~/layouts/PageLayout.astro";
-import { fetchPosts } from "~/utilities/getPosts";
-const entries = await fetchPosts({ collection: "then" });
-//const categories = [...new Set(posts.map((post) => post.data.categories).flat())].sort();
+import { getCollection } from 'astro:content';
+import PostListingLayout from '~/layouts/PostListingLayout.astro';
+import FormattedDate from '~/components/FormattedDate.astro';
+import { fetchPosts } from '~/utilities/getPosts';
+const entries = await fetchPosts({ collection: 'then' });
+//const categories = [...new Set(entries.flatMap((post) => entry.data.categories))].sort();
 ---
-<PageLayout>
-  <ul class="layout_list" data-pagefind-ignore>
+
+<PostListingLayout>
+  <ul class='layout_list' data-pagefind-ignore>
     {
-      entries.map((entry) => (
-        <li class="layout_list_item">
-          <a
-            href={`/${entry.slug}/`}
-            class="layout_list_item_inner"
-          >
-            <div class="layout_list_item_meta">
-              <time datetime={entry.data.publishDate}>{entry.data.publishDate}</time>
+      entries.flatMap((entry) => (
+        <li class='layout_list_item'>
+          <a href={`/${entry.slug}/`} class='layout_list_item_inner'>
+            <div class='layout_list_item_meta'>
+              <FormattedDate
+                date={entry.data.publishDate}
+                itemprop='datePublished'
+              />
             </div>
-            <h2 class="layout_list_item_title">{entry.data.title}</h2>
-            <div class="layout_list_item_summary">
-              {entry.data.description}
-            </div>
+            <h2 class='layout_list_item_title'>{entry.data.title}</h2>
+            <div class='layout_list_item_summary'>{entry.data.excerpt}</div>
           </a>
         </li>
       ))
     }
   </ul>
-</PageLayout>
-<style>
-  .layout {
-    max-width: var(--max-width);
-    margin: 0 auto 48px;
-    padding: 0 12px;
-  }
-  .layout_title {
-    color: var(--secondary-text-color);
-    font-size: 18px;
-    margin: 16px 0 16px 16px;
-  }
-  .layout_list {
-    list-style: none;
-  }
-  .layout_list_item_inner {
-    display: block;
-    padding: 12px;
-    border-radius: 10px;
-  }
-  .layout_list_item_inner:hover {
-    background: var(--secondary-background-color);
-  }
-  .layout_list_item_meta {
-    margin-bottom: 4px;
-    color: var(--secondary-text-color);
-  }
-  .layout_list_item_title {
-    margin-bottom: 4px;
-    color: var(--primary-text-color);
-    font-size: 20px;
-  }
-  .layout_list_item_summary {
-    color: var(--secondary-text-color);
-    font-size: 14px;
-  }
-</style>
+</PostListingLayout>
 <script is:inline>
-  console.log("%c Over the seaside ", "color: #ff7f50");
-  console.log("%c I see my future drown in the sea ", "color: #ff7f50");
-  console.log("%c Driving on a coastal way ", "color: #ff7f50");
-  console.log("%c I'm getting away from this city ", "color: #ff7f50");
+  console.log('%c Over the seaside ', 'color: #ff7f50');
+  console.log('%c I see my future drown in the sea ', 'color: #ff7f50');
+  console.log('%c Driving on a coastal way ', 'color: #ff7f50');
+  console.log("%c I'm getting away from this city ", 'color: #ff7f50');
   console.log(
-    "%c 〈Coastal Night Out〉 by Land Of Peace (랜드오브피스) ",
-    "background: #fafcd1;color: #ff7f50"
+    '%c 〈Coastal Night Out〉 by Land Of Peace (랜드오브피스) ',
+    'background: #fafcd1;color: #ff7f50',
   );
 </script>

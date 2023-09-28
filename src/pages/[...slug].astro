@@ -1,26 +1,24 @@
 ---
 export const prerender = true;
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-//import PageLayout from "~/layouts/PageLayout.astro";
-import PostLayout from "~/layouts/PostLayout.astro";
-import VertLayout from "~/layouts/VertLayout.astro";
-import { fetchPosts } from "~/utilities/getPosts";
+//import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+//import PageLayout from '~/layouts/PageLayout.astro';
+import PostLayout from '~/layouts/PostLayout.astro';
+import VertLayout from '~/layouts/VertLayout.astro';
+import { fetchPosts } from '~/utilities/getPosts';
 
 export interface Props {
-  entry:
-    //| CollectionEntry<"page">
-    | CollectionEntry<"then">;
+  entry: CollectionEntry<'page'> | CollectionEntry<'then'>;
 }
 
 export async function getStaticPaths() {
-  //const pages = await getCollection("page", (entry) => {
-    //return !["home"].includes(entry.slug) && !entry.data.isDraft;
+  //const pages = await getCollection('page', (entry) => {
+  //return !['home'].includes(entry.slug) && !entry.data.isDraft;
   //});
-  const posts = await fetchPosts({ collection: "then" })
+  const posts = await fetchPosts({ collection: 'then' });
 
   //return [...pages, ...posts].map((entry) => ({
-  return [...posts].map((entry) => ({
+  return [...posts].flatMap((entry) => ({
     params: { slug: String(entry.slug) },
     props: { entry },
   }));
@@ -31,12 +29,12 @@ const { Content } = await entry.render();
 ---
 
 {
-  //entry.collection === "page" ? (
-    //<PageLayout {...entry.data}>
-      //<Content />
-    //</PageLayout>
+  //entry.collection === 'page' ? (
+  //<PageLayout {...entry.data}>
+  //<Content />
+  //</PageLayout>
   //) :
-  entry.collection === "then" ? (
+  entry.collection === 'then' ? (
     <PostLayout {...entry.data}>
       <Content />
     </PostLayout>

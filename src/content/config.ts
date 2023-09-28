@@ -1,8 +1,8 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection } from 'astro:content';
 
 const page_schema = {
   title: z.string().max(60),
-  description: z.string().max(250).optional(),
+  excerpt: z.string().max(250).optional(),
   isIndex: z.boolean().default(false).optional(),
   isDraft: z.boolean().default(false).optional(),
 };
@@ -27,7 +27,7 @@ const post_schema = {
       return date.toISOString();
     })
     .optional(),
-  categories: z.array(z.string()).optional(),
+  //categories: z.array(z.string()).default(['uncategorized']).optional(),
 };
 
 export const collections = {

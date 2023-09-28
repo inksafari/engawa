@@ -1,60 +1,40 @@
-import { defineConfig } from "astro/config";
-/* --- Integrations --- */
-//import deno from "@astrojs/deno";
-import svelte from "@astrojs/svelte";
-import mdx from "@astrojs/mdx";
-import expressiveCode from "astro-expressive-code";
-import compress from "astro-compress";
+import { defineConfig } from 'astro/config';
+/* --- Integrations ( https://astro.build/integrations ) --- */
+import svelte from '@astrojs/svelte';
+import mdx from '@astrojs/mdx';
+import compress from 'astro-compress';
 /* -- Configuration -- */
 import {
-  astroExpressiveCodeOptions,
   astroCompressOptions,
   markdownOptions,
-} from "./src/plugins/plugins.config.js";
+} from './src/plugins/plugins.config.js';
 /* -- Environment Variables -- */
-import { loadEnv } from "vite";
-const SCRIPT = process.env.npm_lifecycle_script || "";
-const isBuild = SCRIPT.includes("astro build");
-const isProd = import.meta.env.MODE === "production";
-const env = loadEnv("", process.cwd(), ["PUBLIC"]);
-const SERVER_PORT = env.PUBLIC_SITE_PORT;
-const LOCALHOST_URL = `http://localhost:${SERVER_PORT}`;
-const SITE_URL = env.PUBLIC_SITE_URL;
+import { SERVER_PORT, SITE_URL } from '~/consts';
 
 // https://astro.build/config
-const config = {
-  //output: "server",
-  //adapter: deno({ port: 8081 }),
+const baseConfig = {
   site: SITE_URL,
   server: {
     port: parseInt(SERVER_PORT),
-    watch: {
-      ignored: ["**/{.cache,.github,.husky,dist}/**"],
-    },
   },
+  compressHTML: false,
   integrations: [
     svelte(),
-    expressiveCode(astroExpressiveCodeOptions),
     mdx(markdownOptions),
-    isBuild && compress(astroCompressOptions),
+    compress(astroCompressOptions),
   ],
   markdown: markdownOptions,
+  redirects:
+  {
+    "/feed": '/rss',
+  },
   /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
   /* https://docs.astro.build/en/guides/assets/#using-sharp */
-  image: {
-    service: {
-      entrypoint: "./src/imageService.ts",
-      // 沒有cache功能
-      // cacheDir: "./.cache/image",
-    },
-  },
-  vite: {
-    resolve: {
-      alias: {
-        "~/": `${process.cwd()}/src/`,
-      },
-    },
-  },
+  //image: {
+    //entrypoint: './src/imageService.ts',
+  //},
 };
 
-export default defineConfig(config);
+// isProd && { baseConfig.integrations.push(serviceWorker()) }
+
+export default defineConfig(baseConfig);
