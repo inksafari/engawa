@@ -19,7 +19,7 @@ print_glyph_count () {
 run_font_subsetter() {
     local font_name="$1";
     local glyphs_file="$2";
-    local input_dir="./src/styles/fonts";
+    local input_dir="./src/styles/input";
     local output_dir="./public/assets/fonts";
 
     # WOFF2

@@ -1,5 +1,4 @@
 ---
-import SearchWidget from '~/components/SearchWidget.astro';
 import Favicon from '~/components/Favicon.astro';
 import {
   isBuild,
@@ -20,6 +19,7 @@ export interface Props {
 const { title, excerpt, isIndex } = Astro.props as Props;
 
 const preconnectUrls = ['https://cdnjs.cloudflare.com'];
+const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0'];
 
 const metaTitle = title // Astro.props.title
   ? `${title} • ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
@@ -34,8 +34,8 @@ const domain = SITE_DOMAIN.toUpperCase();
  * https://github.com/yuheiy/yuheiy.com-v6/blob/main/src/components/Layout.astro
  * https://github.com/yamanoku/archives/blob/main/src/components/BaseHead.astro
  */
-const normalizedPathname = Astro.url.pathname.replace(/\.html$/, '');
-const canonicalURL: URL = new URL(normalizedPathname, Astro.site);
+const normalizedPathname = Astro.url.pathname.replace(/\.html$/, '').split('/').join('');
+const canonicalURL: URL = new URL(normalizedPathname, SITE_URL);
 const permalink = `${canonicalURL.href}`;
 //const pathName = canonicalURL.pathname.split('/').join('');
 //const ogpImageURL = canonicalURL.pathname === '/'
@@ -49,14 +49,29 @@ const permalink = `${canonicalURL.href}`;
   name='viewport'
   content='width=device-width,initial-scale=1, maximum-scale=5'
 />
+<!-- <base href={SITE_URL} /> -->
 <base href={SITE_URL} />
 <title>{metaTitle}</title>
-{preconnectUrls.map((url) => <link rel='preconnect' href={url} crossorigin />)}
-{isProd && <SearchWidget />}
+{
+  preconnectUrls.map((url) => (
+    <link rel='preconnect dns-prefetch' href={url} crossorigin />
+  ))
+}
+{
+  woff2Urls.map((url) => (
+    <link rel='preload' href={url} as='font' type='font/woff2' crossorigin />
+  ))
+}
 <script
+  crossorigin='anonymous'
   src='https://cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js'
-  referrerpolicy='no-referrer'></script>
-<link href='/assets/han.min.css' rel='stylesheet' media='all' />
+  defer></script>
+<!--
+<script
+  crossorigin='anonymous'
+  src='https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.4/heti-addon.min.js'
+  defer></script>
+-->
 <!-- <meta name='disabled-adaptations' content='watch' /> -->
 <meta name='view-transition' content='same-origin' />
 <meta
@@ -67,6 +82,7 @@ const permalink = `${canonicalURL.href}`;
 <meta name='description' content={metaDescription} />
 <link rel='canonical' href={canonicalURL} data-pagefind-meta='url[href]' />
 <Favicon />
+<!-- https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag -->
 {
   isIndex ? (
     <meta
@@ -93,6 +109,7 @@ const permalink = `${canonicalURL.href}`;
   title={`JSON Feed for ${domain}`}
   type='application/json'
 />
+<meta name='generator' content='Drupal 7 (https://www.drupal.org)' />
 <!-- @source:
 https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro
 -->

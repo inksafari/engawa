@@ -1,10 +1,18 @@
 ---
-import BaseLayout from '~/layouts/BaseLayout.astro';
+import '../styles/layout_post.js';
+import { Moon, Hemisphere } from 'lunarphase-js';
 import BaseHead from '~/components/BaseHead.astro';
-import GlobalStyles from '~/components/GlobalStyles.astro';
-import FormattedDate from '~/components/FormattedDate.astro';
 import Hant from '~/components/Hant.astro';
-import { HTM_LANG, RSS_LANG } from '~/consts';
+//import Heti from '~/components/Heti.astro';
+import FormattedDate from '~/components/FormattedDate.astro';
+import Bar from '~/components/Bar.astro';
+import Footer from '~/components/Footer.astro';
+import { HTM_LANG } from '~/consts';
+const { url, title, publishDate, updatedDate, prev, next } = Astro.props;
+const moonEmoji = Moon.lunarPhaseEmoji(
+  new Date(publishDate),
+  Hemisphere.NORTHERN,
+);
 ---
 
 <!doctype html>
@@ -12,58 +20,97 @@ import { HTM_LANG, RSS_LANG } from '~/consts';
   dir='ltr'
   lang={HTM_LANG}
   class='han-init'
-  xmlns='http://www.w3.org/1999/xhtml'
-  xml:lang={RSS_LANG}
-  prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# cc: http://creativecommons.org/ns#'
+  prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
     <BaseHead {...Astro.props} />
-    <GlobalStyles />
     <slot name='meta' />
   </head>
   <body>
-    <BaseLayout>
-      <Fragment slot='main'>
-        <!-- TODO: microformats
-        https://indieweb.org/posts#Types_of_Posts
-        https://docs.joinmastodon.org/spec/microformats/
-        -->
-        <main
+    <Bar />
+    <!-- TODO: microformats
+    - https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
+    - https://developers.google.com/search/docs/appearance/structured-data/article
+    - https://www.w3.org/TR/xhtml-rdfa-primer/#default_prefixes
+    -->
+    <div id='wrapper'>
+      <article
+        class='h-entry heti'
+      >
+        <header class='entry-header'>
+          <h1
+            class='entry-title p-name'
+            data-pagefind-meta='title'
+          >
+            <span class='entry-title-text'>{title}</span>
+          </h1>
+          <dl class='entry-meta'>
+            <!-- timestamp -->
+            <div class='entry-meta-item'>
+              <dt class='entry-meta-label'>Created at</dt>
+              <dd class='entry-meta-value'>
+                <FormattedDate date={publishDate} />
+              </dd>
+            </div>
+            {
+              updatedDate && (
+                <div class='entry-meta-item'>
+                  <dt class='entry-meta-label'>Updated at</dt>
+                  <dd class='entry-meta-value'>
+                    <FormattedDate
+                      date={updatedDate}
+                      class='dt-updated'
+                      //itemprop='dateUpdated'
+                    />
+                  </dd>
+                </div>
+              )
+            }
+            <!-- Moon -->
+            <div class='entry-meta-item'>
+              <dt class='entry-meta-label'>Moon</dt>
+              <dd class='entry-meta-value'>{moonEmoji}</dd>
+            </div>
+          </dl>
+        </header>
+        <section
           data-pagefind-body
-          class='h-entry'
-          itemprop='mainEntity'
-          itemscope=''
-          itemtype='https://schema.org/BlogPosting'
-          itemid={Astro.props.slug}
+          class='markdown entry-content e-content'
         >
-          <article class='blog_post'>
-            <div class='blog_post_meta'>
-              <FormattedDate date={Astro.props.publishDate} />
-              <!---
-                {
-                category && (
-                  <>
-                    ・
-                    <a
-                      class="blog_post_meta_category"
-                      href={`/categories/${category.slug}/`}
-                    >
-                      {category.name}
-                    </a>
-                  </>
-                )
-              }-->
-            </div>
-            <h1 class='blog_post_title' itemprop='name'>
-              {Astro.props.title}
-            </h1>
-            <div class='markdown' itemprop='text'>
-              <slot />
-            </div>
-          </article>
-        </main>
-      </Fragment>
+          <slot />
+        </section>
+        <nav
+          class='pager post-pagination'
+          data-pagefind-ignore
+        >
+          <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
+          {
+            prev && (
+              <div class='left stack'>
+                &laquo;&nbsp;
+                <a href={prev} rel='prev'>
+                  Prev
+                </a>
+              </div>
+            )
+          }
+          {
+            next && (
+              <div class='right stack'>
+                <a href={next} rel='next'>
+                  Next
+                </a>
+                &nbsp;&raquo;
+              </div>
+            )
+          }
+        </nav>
+        <Footer />
+      </article>
       <Hant />
-    </BaseLayout>
-  </body>
+      <!-- <Heti /> -->
+    </div>
+  </body><script>
+    import '../utilities/clipboard-copy/index.js';
+  </script>
 </html>

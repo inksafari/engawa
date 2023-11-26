@@ -7,7 +7,7 @@ const markdownOptions = {
   rehypePlugins,
 };
 
-/* https://github.com/astro-community/astro-compress/tree/main/Source/Option */
+/* https://github.com/astro-community/AstroCompress */
 const astroCompressOptions = {
   Logger: 0,
   css: { comments: true },

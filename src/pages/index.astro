@@ -1,39 +1,60 @@
 ---
-import { getCollection } from 'astro:content';
+import {
+  differenceInDays,
+  format,
+  formatDistanceToNow,
+  parseISO,
+} from 'date-fns';
 import PostListingLayout from '~/layouts/PostListingLayout.astro';
-import FormattedDate from '~/components/FormattedDate.astro';
+import { getURLFromEntry } from '~/utilities/getPermaLink';
 import { fetchPosts } from '~/utilities/getPosts';
 const entries = await fetchPosts({ collection: 'then' });
-//const categories = [...new Set(entries.flatMap((post) => entry.data.categories))].sort();
+//const categories = [...new Set(posts.flatMap((entry) => entry.data.categories))].sort();
 ---
 
 <PostListingLayout>
-  <ul class='layout_list' data-pagefind-ignore>
+  <ul class='post-list' data-pagefind-ignore>
     {
       entries.flatMap((entry) => (
-        <li class='layout_list_item'>
-          <a href={`/${entry.slug}/`} class='layout_list_item_inner'>
-            <div class='layout_list_item_meta'>
-              <FormattedDate
-                date={entry.data.publishDate}
-                itemprop='datePublished'
-              />
-            </div>
-            <h2 class='layout_list_item_title'>{entry.data.title}</h2>
-            <div class='layout_list_item_summary'>{entry.data.excerpt}</div>
+        <li
+          class='post-stub h-entry'
+        >
+          <a
+            href={getURLFromEntry(entry.slug, 'then')}
+            title={`Permalink to ${entry.data.title}`}
+            itemprop='url'
+            class='u-url u-uid'
+          >
+            <span class='post-stub-title p-name' itemprop='name'>
+              {entry.data.title}
+            </span>
           </a>
+          <div class='post-stub-date'>
+            <time
+              datetime={parseISO(entry.data.publishDate)}
+              class='dt-published'
+              //itemprop='datePublished'
+            >
+              {differenceInDays(new Date(), new Date(entry.data.publishDate)) >
+              179
+                ? `${formatDistanceToNow(new Date(entry.data.publishDate), {
+                    addSuffix: true,
+                  })}`
+                : format(new Date(entry.data.publishDate), 'MMM dd, yyyy')}
+            </time>
+          </div>
         </li>
       ))
     }
   </ul>
+  <script is:inline>
+    console.log('%c Over the seaside ', 'color: #ff7f50');
+    console.log('%c I see my future drown in the sea ', 'color: #ff7f50');
+    console.log('%c Driving on a coastal way ', 'color: #ff7f50');
+    console.log("%c I'm getting away from this city ", 'color: #ff7f50');
+    console.log(
+      '%c 〈Coastal Night Out〉 by Land Of Peace (랜드오브피스) ',
+      'background: #fafcd1;color: #ff7f50',
+    );
+  </script>
 </PostListingLayout>
-<script is:inline>
-  console.log('%c Over the seaside ', 'color: #ff7f50');
-  console.log('%c I see my future drown in the sea ', 'color: #ff7f50');
-  console.log('%c Driving on a coastal way ', 'color: #ff7f50');
-  console.log("%c I'm getting away from this city ", 'color: #ff7f50');
-  console.log(
-    '%c 〈Coastal Night Out〉 by Land Of Peace (랜드오브피스) ',
-    'background: #fafcd1;color: #ff7f50',
-  );
-</script>

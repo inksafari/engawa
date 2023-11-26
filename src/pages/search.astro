@@ -1,0 +1,25 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title='Search'>
+  <script src='/pagefind/pagefind-ui.js' type='text/javascript' slot='meta'
+  ></script>
+  <link href='/pagefind/pagefind-ui.css' rel='stylesheet' slot='meta' />
+  <div id='search' class='pagefind_searchbar' aria-label='Search'></div>
+  <script is:inline slot='footer'>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      new PagefindUI({ element: '#search', resetStyles: false });
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === '/' || event.key === '.') {
+        console.log('you pressed the slash');
+        event.preventDefault();
+        document.querySelector('div#search input').focus();
+      }
+    });
+  </script>
+</BaseLayout>
+<!-- @credit:
+  https://lirantal.com/blog/2023-01-01_-how_to_add_client-side_search_to_your_astro_blog_static_website/ -->

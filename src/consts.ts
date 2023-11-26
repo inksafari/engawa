@@ -2,8 +2,8 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 // ---------------------------------------------------------------------
 export let siteOwner = {
-  name: '',
-  twitterHandle: '',
+  //name: '',
+  twitterHandle: 'inksafari',
 };
 // ---------------------------------------------------------------------
 export let webFinger = {
@@ -38,15 +38,15 @@ export let feedUrls = {
 // Date.prototype.toLocaleDateString() parameters,
 // found in src/components/FormattedDate.astro.
 export let dateOpts = {
-  locale: RSS_LANG,
+  locale: 'en-US',
   options: {
-    weekday: 'short',
+    //weekday: 'short',
     //era: 'short',
     //dayPeriod: 'long',
     year: 'numeric',
-    month: 'narrow',
+    month: 'short', //'narrow',
     day: '2-digit',
-    hour: 'numeric',
+    //hour: 'numeric',
     //minute: '2-digit',
     //second: 'numeric',
     hourCycle: 'h11',

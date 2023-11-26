@@ -10,10 +10,7 @@
 ## backlogs
 
 - cjk
-  - han.min.css
   - webfont
-- prettier
-- [microformats](https://indieweb.org/microformats)
 - description
 - anchor links
 - chat bubbles
@@ -21,12 +18,9 @@
 - categories
 - unit/e2e tests
 - fonts optimization at build time (subfont).
-- image manipulation (@astrojs/images).
-  - avif
+- image manipulation ( w/ [Picture component](https://astro.build/blog/astro-330/#picture-component) )
   - resizing
-  - srcset
   - lazy loading with blurred placeholders
-  - custom markup
   - zoom
 - post series
 - eslint
@@ -45,7 +39,7 @@
 - Markdown & MDX support.
 - ATOM/JSON Feed support.
 - [Pagefind](https://pagefind.app/) static search library integration.
-- Uses [starry-night](https://github.com/wooorm/starry-night) via [@Microflash/rehype-starry-night](https://github.com/Microflash/rehype-starry-night) (with `light` theme) for syntax highlighting.
+- Uses [starry-night](https://github.com/wooorm/starry-night) via [@Microflash/rehype-starry-night](https://github.com/Microflash/rehype-starry-night) (with [light](https://github.com/wooorm/starry-night/blob/main/style/light.css) theme) for syntax highlighting.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -64,13 +58,14 @@ All commands are run from the root of the project, from a terminal:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Personalization Configuration
+## Configuration
 
 - .env
 - [consts.ts](src/consts.ts)
 - [Footer.astro](src/components/Footer.astro)
   - [Year.svelte](src/components/Year.svelte)
 - [Favicon.astro](src/components/Favicon.astro)
+- [generateRSSFeed.js](src/utilities/generateRSSFeed.js)
 
 ### Setup `.env`
 
@@ -107,10 +102,10 @@ isDraft: true
 ## Credits
 
 - This theme was inspired by
-  - [rakuishi.com](https://github.com/rakuishi/rakuishi.com)
+  - [boucheron.org](https://github.com/beardicus/boucheron.org)
   - [tonydang.blog](https://github.com/tonydangblog/blog/tree/main/apps/frontend/src/content/pages/now)(layouts & now page)
   - [Silvia Maggi](https://silviamaggidesign.com/colophon/)(colophon page)
-  - [naiyerasif/site](https://github.com/naiyerasif/site)
+  - [naiyerasif/site](https://github.com/naiyerasif/site)(syntax highlighting)
 - SVG Favicon by [SVG Repo](https://www.svgrepo.com/svg/126349/bird-with-bow-tie?edit=true).
 - Watercolor texture by [Freepik](https://www.freepik.com/free-vector/pastel-watercolor-painted-background_13962241.htm).
 
@@ -118,7 +113,7 @@ isDraft: true
 
 ## Licenses
 
-The source code of this site is available under [MPL-2.0](https://www.mozilla.org/MPL/2.0/), the content under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). All images are copyright to their respective owners.
+All images and media are copyright to their respective owners.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- #fff6d5 -- #ffe589 #fffdcc

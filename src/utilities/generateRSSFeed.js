@@ -18,22 +18,22 @@ function pubDate(dateStr) {
 // TODO: 1.remark/rehype plugins 2.html-entities
 // https://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Latin-1_characters
 // https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
-function articlePipeline(markdown) {
+function articlePipeline(input) {
   const processor = unified()
     .use(remarkParse)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .freeze();
 
-  const toHtml = processor.processSync(String(markdown));
-  const result = sanitizeHtml(toHtml.value);
-  // const output = result.replace(/\n/g, '');
+  const output = processor.processSync(String(input));
+  const result = sanitizeHtml(output.value);
+  // const content = result.replace(/\n/g, '');
 
   return result;
 }
 
 function compileHTMLForRSS(post) {
-  const postUrl = getURLFromEntry(post.slug, 'then')
+  const postUrl = getURLFromEntry(post.slug, 'then');
   const primaryHTML = articlePipeline(post.body);
 
   // <p>

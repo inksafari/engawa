@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '~/layouts/BaseLayout.astro';
+import '../styles/layout_list.js';
 import BaseHead from '~/components/BaseHead.astro';
-import GlobalStyles from '~/components/GlobalStyles.astro';
 import Hant from '~/components/Hant.astro';
-import { HTM_LANG, RSS_LANG } from '~/consts';
+import Bar from '~/components/Bar.astro';
+import Footer from '~/components/Footer.astro';
+import { siteOwner, SITE_TITLE, HTM_LANG } from '~/consts';
 ---
 
 <!doctype html>
@@ -11,28 +12,34 @@ import { HTM_LANG, RSS_LANG } from '~/consts';
   dir='ltr'
   lang={HTM_LANG}
   class='han-init'
-  xmlns='http://www.w3.org/1999/xhtml'
-  xml:lang={RSS_LANG}
-  prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# cc: http://creativecommons.org/ns#'
+  prefix='og: https://ogp.me/ns# website: https://ogp.me/ns/website# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
     <BaseHead {...Astro.props} />
-    <GlobalStyles />
     <slot name='meta' />
   </head>
-  <body itemscope='' itemtype='https://schema.org/CollectionPage'>
-    <BaseLayout>
-      <Fragment slot='main'>
-        <main
-          class='layout h-feed hfeed'
-          itemprop='mainEntity'
-          itemscope=''
-          itemtype='https://schema.org/DataFeed'
-        >
-          <slot />
-        </main>
-      </Fragment>
-      <Hant />
-    </BaseLayout>
+  <body
+    class='h-feed'
+    itemscope
+    itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
+  >
+    <Bar />
+    <div id='wrapper'>
+      <header
+        class='site-header'
+        itemscope
+        itemtype='http://schema.org/WPHeader'
+      >
+        <h1 class='site-title p-name' itemprop='headline name'>
+          {SITE_TITLE}
+        </h1>
+        <p class='site-desc' itemprop='description text'>
+          This site contains stuff and things from @{siteOwner.twitterHandle}.
+        </p>
+      </header>
+      <slot />
+      <Footer />
+    </div>
+    <Hant />
   </body>
 </html>

@@ -3,7 +3,7 @@
 .cache/
 
 # dependencies
-node_modules
+node_modules/
 
 # build output
 .astro/
@@ -28,7 +28,10 @@ pnpm-debug.log*
 .vale/
 public/assets/fonts/
 scripts/deploy.sh
+firebase.json
+.firebaserc
 
 # temp
 src/content/then/
+src/styles/input/
 src/styles/

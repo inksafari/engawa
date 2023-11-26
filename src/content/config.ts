@@ -27,6 +27,8 @@ const post_schema = {
       return date.toISOString();
     })
     .optional(),
+  prev: z.string().max(250).optional(),
+  next: z.string().max(250).optional(),
   //categories: z.array(z.string()).default(['uncategorized']).optional(),
 };
 

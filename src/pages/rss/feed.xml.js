@@ -37,11 +37,13 @@ async function compilePostsForRSS(posts) {
 }
 const posts = await fetchPosts({ collection: 'then' });
 const items = await compilePostsForRSS(posts);
+const TTL = 86400;
 
 const headersData = {
   status: 200,
   headers: {
-    'Content-Type': 'application/atom+xml',
+    'Cache-Control': `s-maxage=${TTL}, stale-while-revalidate`,
+    'Content-Type': 'text/xml; charset=UTF-8', // 'Content-Type': 'application/atom+xml',
   },
 };
 

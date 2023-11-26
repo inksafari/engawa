@@ -17,7 +17,12 @@ const baseConfig = {
   server: {
     port: parseInt(SERVER_PORT),
   },
+  trailingSlash: 'never',
   compressHTML: false,
+  build: {
+    inlineStylesheets: 'always',
+  },
+  scopedStyleStrategy: 'attribute',
   integrations: [
     svelte(),
     mdx(markdownOptions),

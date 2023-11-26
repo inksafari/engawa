@@ -9,6 +9,7 @@ import { defineConfig } from 'vitest/config';
 const config = {
   plugins: [
     //svelte({ hot: !process.env.VITEST }),
+    // or https://www.getlocalcert.net/
     //sslPlugin(),
     //FontaineTransform.vite({
     // avoid flash of unstyled text by interjecting fallback system fonts
@@ -41,11 +42,18 @@ const config = {
   optimizeDeps: {
     allowNodeBuiltins: true,
   },
-  //build: {
-  //rollupOptions: {
-  //external: ['url-join'],
-  //}
-  //},
+  build: {
+    assetsInlineLimit: 10096,
+    rollupOptions: {
+      external: [
+        //'url-join',
+        '/pagefind/pagefind.js',
+        '/pagefind/pagefind-ui.js',
+        '/pagefind/pagefind-ui.css',
+      ],
+    },
+  },
+  //ssr: { noExternal: ['open-props'], },
   //test: {
   //globals: true,
   //environment: 'jsdom',
