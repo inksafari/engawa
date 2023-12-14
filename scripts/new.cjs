@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
+const { exec } = require('node:child_process');
 const { format } = require('date-fns');
-const { exec } = require('child_process');
 
 const slug = process.argv[2];
 if (!slug) {
@@ -24,7 +24,7 @@ const filename = `${format(date, 'yyyy-MM-dd')}_${slug}.mdx`;
 const dest = path.join(process.cwd(), 'src/content/then', filename);
 fs.writeFileSync(dest, yaml);
 exec(`open ${dest}`);
-// or
+// Or
 // https://github.com/bdevos/appjeniksaan-site/blob/main/create.ts
 // https://github.com/KraHsu/HsuBlog/blob/main/hsublog-cli.ts
 // https://github.com/naiyerasif/site/blob/main/etc/bin/post.js

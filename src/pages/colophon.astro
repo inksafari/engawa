@@ -1,8 +1,8 @@
 ---
-import { getEntryBySlug } from 'astro:content';
+import { getEntry } from 'astro:content';
 import PageLayout from '~/layouts/PageLayout.astro';
 
-const entry = await getEntryBySlug('page', 'colophon');
+const entry = await getEntry('page', 'colophon');
 const { Content } = await entry.render();
 ---
 

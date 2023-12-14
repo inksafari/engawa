@@ -7,18 +7,20 @@ function createNode(text) {
   node.textContent = text;
   return node;
 }
+
 export function copyNode(node) {
   const clone = node.cloneNode(true);
-  clone
-    .querySelectorAll('[aria-hidden]')
-    .forEach((ignorable) => ignorable.remove());
+  for (const ignorable of clone.querySelectorAll('[aria-hidden]'))
+    ignorable.remove();
   if ('clipboard' in navigator) {
     return navigator.clipboard.writeText(clone.textContent || '');
   }
+
   const selection = getSelection();
   if (selection == null) {
     return Promise.reject(new Error());
   }
+
   selection.removeAllRanges();
   const range = document.createRange();
   range.selectNodeContents(clone);
@@ -27,17 +29,20 @@ export function copyNode(node) {
   selection.removeAllRanges();
   return Promise.resolve();
 }
+
 export function copyText(text) {
   if ('clipboard' in navigator) {
     return navigator.clipboard.writeText(text);
   }
-  const body = document.body;
+
+  const { body } = document;
   if (!body) {
     return Promise.reject(new Error());
   }
+
   const node = createNode(text);
-  body.appendChild(node);
+  body.append(node);
   copyNode(node);
-  body.removeChild(node);
+  node.remove();
   return Promise.resolve();
 }

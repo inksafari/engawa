@@ -15,9 +15,11 @@ import { SERVER_PORT, SITE_URL } from '~/consts';
 const baseConfig = {
   site: SITE_URL,
   server: {
-    port: parseInt(SERVER_PORT),
+    port: Number.parseInt(SERVER_PORT),
   },
   trailingSlash: 'never',
+  /* https://docs.astro.build/en/guides/prefetch/ */
+  // prefetch: true,
   compressHTML: false,
   build: {
     inlineStylesheets: 'always',
@@ -29,15 +31,14 @@ const baseConfig = {
     compress(astroCompressOptions),
   ],
   markdown: markdownOptions,
-  redirects:
-  {
-    "/feed": '/rss',
+  redirects: {
+    '/feed': '/rss',
   },
   /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
   /* https://docs.astro.build/en/guides/assets/#using-sharp */
-  //image: {
-    //entrypoint: './src/imageService.ts',
-  //},
+  // image: {
+  // entrypoint: './src/imageService.ts',
+  // },
 };
 
 // isProd && { baseConfig.integrations.push(serviceWorker()) }

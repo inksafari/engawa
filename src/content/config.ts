@@ -9,27 +9,27 @@ const page_schema = {
 
 const post_schema = {
   ...page_schema,
-  //image: z.string().optional(),
-  //image_alt: z.string().optional(),
-  //image_caption: z.string().optional(),
+  // image: z.string().optional(),
+  // image_alt: z.string().optional(),
+  // image_caption: z.string().optional(),
   publishDate: z
     .string()
     .or(z.date())
-    .transform((val) => {
-      const date = new Date(val);
+    .transform((value) => {
+      const date = new Date(value);
       return date.toISOString();
     }),
   updatedDate: z
     .string()
     .or(z.date())
-    .transform((val) => {
-      const date = new Date(val);
+    .transform((value) => {
+      const date = new Date(value);
       return date.toISOString();
     })
     .optional(),
   prev: z.string().max(250).optional(),
   next: z.string().max(250).optional(),
-  //categories: z.array(z.string()).default(['uncategorized']).optional(),
+  // categories: z.array(z.string()).default(['uncategorized']).optional(),
 };
 
 export const collections = {

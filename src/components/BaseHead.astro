@@ -34,7 +34,10 @@ const domain = SITE_DOMAIN.toUpperCase();
  * https://github.com/yuheiy/yuheiy.com-v6/blob/main/src/components/Layout.astro
  * https://github.com/yamanoku/archives/blob/main/src/components/BaseHead.astro
  */
-const normalizedPathname = Astro.url.pathname.replace(/\.html$/, '').split('/').join('');
+const normalizedPathname = Astro.url.pathname
+  .replace(/\.html$/, '')
+  .split('/')
+  .join('');
 const canonicalURL: URL = new URL(normalizedPathname, SITE_URL);
 const permalink = `${canonicalURL.href}`;
 //const pathName = canonicalURL.pathname.split('/').join('');

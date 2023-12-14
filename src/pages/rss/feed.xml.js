@@ -1,4 +1,3 @@
-export const prerender = true;
 import { atom } from 'xast-util-feed';
 import { toXml } from 'xast-util-to-xml';
 import {
@@ -12,6 +11,8 @@ import {
 import { pubDate, compileHTMLForRSS } from '~/utilities/generateRSSFeed';
 import { fetchPosts } from '~/utilities/getPosts';
 import { getURLFromEntry } from '~/utilities/getPermaLink';
+
+export const prerender = true;
 
 const author = {
   name: SITE_DOMAIN,
@@ -32,12 +33,13 @@ async function compilePostsForRSS(posts) {
     title: post.data.title,
     url: getURLFromEntry(post.slug, 'then'),
     published: pubDate(post.data.publishDate),
-    //descriptionHtml: compileHTMLForRSS(post),
+    // descriptionHtml: compileHTMLForRSS(post),
   }));
 }
+
 const posts = await fetchPosts({ collection: 'then' });
 const items = await compilePostsForRSS(posts);
-const TTL = 86400;
+const TTL = 86_400;
 
 const headersData = {
   status: 200,

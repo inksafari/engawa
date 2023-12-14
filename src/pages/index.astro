@@ -1,11 +1,10 @@
 ---
-import {
-  differenceInDays,
-  format,
-  formatDistanceToNow,
-  parseISO,
-} from 'date-fns';
+// import {
+//   differenceInDays,
+//   formatDistanceToNow,
+// } from 'date-fns';
 import PostListingLayout from '~/layouts/PostListingLayout.astro';
+import dayjs from '~/utilities/dayjs';
 import { getURLFromEntry } from '~/utilities/getPermaLink';
 import { fetchPosts } from '~/utilities/getPosts';
 const entries = await fetchPosts({ collection: 'then' });
@@ -16,9 +15,7 @@ const entries = await fetchPosts({ collection: 'then' });
   <ul class='post-list' data-pagefind-ignore>
     {
       entries.flatMap((entry) => (
-        <li
-          class='post-stub h-entry'
-        >
+        <li class='post-stub h-entry'>
           <a
             href={getURLFromEntry(entry.slug, 'then')}
             title={`Permalink to ${entry.data.title}`}
@@ -31,16 +28,20 @@ const entries = await fetchPosts({ collection: 'then' });
           </a>
           <div class='post-stub-date'>
             <time
-              datetime={parseISO(entry.data.publishDate)}
+              datetime={dayjs(entry.data.publishDate).tz().toISOString()}
               class='dt-published'
-              //itemprop='datePublished'
+              itemprop='datePublished'
             >
+              {/* dayjs(entry.data.publishDate).toNow() */}
+              {dayjs(entry.data.publishDate).format('LL')}
+              {/*
               {differenceInDays(new Date(), new Date(entry.data.publishDate)) >
               179
                 ? `${formatDistanceToNow(new Date(entry.data.publishDate), {
                     addSuffix: true,
                   })}`
                 : format(new Date(entry.data.publishDate), 'MMM dd, yyyy')}
+              */}
             </time>
           </div>
         </li>

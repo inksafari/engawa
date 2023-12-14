@@ -4,6 +4,7 @@
  * https://gist.github.com/RickCogley/d4246b9f2817a401f0943149c255697d
  */
 import { Application } from 'https://deno.land/x/oak@v12.6.0/mod.ts';
+
 const app = new Application();
 
 // Logger
@@ -51,5 +52,6 @@ app.use(async (ctx) => {
 });
 
 await app.listen({ port: 8081 });
-// or partykit
+// Or partykit
 // https://docs.partykit.io/examples/
+// https://github.com/hola-soy-milk/astro-party/

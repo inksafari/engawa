@@ -30,6 +30,7 @@ public/assets/fonts/
 scripts/deploy.sh
 firebase.json
 .firebaserc
+.firebase/
 
 # temp
 src/content/then/

@@ -1,18 +1,20 @@
 import { ClipboardCopyElement } from './clipboard-copy-element.js';
-const root = typeof globalThis !== 'undefined' ? globalThis : window;
+
+const root = typeof globalThis === 'undefined' ? window : globalThis;
 try {
   root.ClipboardCopyElement = ClipboardCopyElement.define();
-} catch (e) {
+} catch (error) {
   if (
     !(
       root.DOMException &&
-      e instanceof DOMException &&
-      e.name === 'NotSupportedError'
+      error instanceof DOMException &&
+      error.name === 'NotSupportedError'
     ) &&
-    !(e instanceof ReferenceError)
+    !(error instanceof ReferenceError)
   ) {
-    throw e;
+    throw error;
   }
 }
-export default ClipboardCopyElement;
+
 export * from './clipboard-copy-element.js';
+export { ClipboardCopyElement as default } from './clipboard-copy-element.js';

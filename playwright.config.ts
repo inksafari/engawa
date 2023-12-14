@@ -27,7 +27,7 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'Microsoft Edge',
-      use: { ...devices['Desktop Edge'], channel: 'msedge-dev' }, // or 'msedge'
+      use: { ...devices['Desktop Edge'], channel: 'msedge-dev' }, // Or 'msedge'
     },
     {
       name: 'Desktop Safari',

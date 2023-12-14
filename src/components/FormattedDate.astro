@@ -1,17 +1,18 @@
 ---
 //import { Intl, Temporal } from '@js-temporal/polyfill';
 import { dateOpts } from '~/consts';
+//import dayjs from '~/utilities/dayjs';
 
 interface Props extends astroHTML.JSX.TimeHTMLAttributes {
   date: Date; //Temporal.PlainDate | Date;
   //dateTimeOptions?: Intl.DateTimeFormatOptions;
   class?: string;
-  //itemprop?: string;
+  itemprop?: string;
 }
 
 const {
   class: className = 'dt-published',
-  //itemprop: itemProp = 'datePublished',
+  itemprop: itemProp = 'datePublished',
 } = Astro.props;
 let date = new Date(Astro.props.date);
 //if (Number.isNaN(date.getTime())) {
@@ -19,7 +20,8 @@ let date = new Date(Astro.props.date);
 //}
 const readableDate = date.toLocaleDateString(dateOpts.locale, dateOpts.options);
 ---
-<!--<time class={className} datetime={date.toISOString()} itemprop={itemProp}>-->
-<time class={className} datetime={date.toISOString()}>
+
+{/* {dayjs(entry.data.publishDate).tz().toISOString()} */}
+<time class={className} datetime={date.toISOString()} itemprop={itemProp}></time>
   {readableDate}
 </time>

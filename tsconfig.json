@@ -1,4 +1,5 @@
 {
+  // @see https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "types": ["astro/client"],
@@ -6,8 +7,18 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "strictNullChecks": true,
-    "allowJs": true
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    // "noFallthroughCasesInSwitch": true, => Prefer ESLint validation
+    // "noUnusedLocals": true, => Prefer ESLint validation
+    // "noUnusedParameters": true, => Prefer ESLint validation
+    "pretty": true,
+    "sourceMap": true,
+    "strictNullChecks": true
   },
-  "exclude": ["node_modules", ".astro", "dist"]
+  "exclude": [
+    "**/.astro/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/public/**"
+  ]
 }

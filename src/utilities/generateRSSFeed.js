@@ -1,16 +1,16 @@
-import {
-  SITE_URL,
-  // siteOwner,
-} from '~/consts';
-import { getURLFromEntry } from '~/utilities/getPermaLink';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import sanitizeHtml from 'sanitize-html';
+import { getURLFromEntry } from '~/utilities/getPermaLink';
+import {
+  SITE_URL,
+  // siteOwner,
+} from '~/consts';
 
-function pubDate(dateStr) {
-  const date = new Date(dateStr);
+function pubDate(dateString) {
+  const date = new Date(dateString);
   date.setUTCHours(0);
   return date;
 }

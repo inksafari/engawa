@@ -1,15 +1,37 @@
-// @see https://github.com/stylelint/stylelint-config-standard
-module.exports = {
-  extends: 'stylelint-config-standard',
-  plugins: ['stylelint-order'],
+// rules
+import { namingConvention } from './.stylelint.rules.mjs';
+import { a11y, canIuse, possibleErrors, unknownThings } from './.stylelint.plugins.mjs'
+
+/* @see https://stylelint.io/user-guide/configure */
+const config = {
+  extends: [
+    // https://github.com/stylelint/stylelint-config-standard
+    'stylelint-config-standard',
+  ],
+  plugins: [
+    '@double-great/stylelint-a11y',
+    'stylelint-declaration-block-no-ignored-properties',
+    'stylelint-declaration-strict-value',
+    'stylelint-no-unsupported-browser-features',
+    'stylelint-plugin-defensive-css',
+    'stylelint-value-no-unknown-custom-properties',
+  ],
+  // overrides: [
+  // {
+  // files: ['*.svelte', '**/*.svelte'],
+  // customSyntax: 'postcss-html',
+  // extends: ['stylelint-config-html/svelte'],
+  // },
+  // ],
   rules: {
-    'custom-property-pattern': [
-      '^_?([A-Z][a-z0-9]+)+$|^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
-      {
-        message: 'Expected custom property name to be kebab-case or PascalCase',
-      },
-    ],
-    'order/order': ['custom-properties', 'declarations'],
-    'order/properties-alphabetical-order': true,
+    // -- rulesFromStylelint --
+    ...namingConvention,
+    // -- rulesFromPlugins --
+    ...a11y,
+    ...canIuse,
+    ...possibleErrors,
+    ...unknownThings
   },
 };
+
+export default config;

@@ -4,12 +4,12 @@
 /// <reference types="vitest" />
 /// <reference types="svelte" />
 
-interface ImportMetaEnv {
+type ImportMetaEnv = {
   readonly VITE_SITE_DOMAIN: string;
   readonly VITE_SITE_URL: string;
   readonly VITE_SITE_PORT: number;
-}
+};
 
-interface ImportMeta {
+type ImportMeta = {
   readonly env: ImportMetaEnv;
-}
+};

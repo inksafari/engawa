@@ -34,14 +34,9 @@ const moonEmoji = Moon.lunarPhaseEmoji(
     - https://www.w3.org/TR/xhtml-rdfa-primer/#default_prefixes
     -->
     <div id='wrapper'>
-      <article
-        class='h-entry heti'
-      >
+      <article class='h-entry heti'>
         <header class='entry-header'>
-          <h1
-            class='entry-title p-name'
-            data-pagefind-meta='title'
-          >
+          <h1 class='entry-title p-name' data-pagefind-meta='title'>
             <span class='entry-title-text'>{title}</span>
           </h1>
           <dl class='entry-meta'>
@@ -60,7 +55,7 @@ const moonEmoji = Moon.lunarPhaseEmoji(
                     <FormattedDate
                       date={updatedDate}
                       class='dt-updated'
-                      //itemprop='dateUpdated'
+                      itemprop='dateUpdated'
                     />
                   </dd>
                 </div>
@@ -73,16 +68,10 @@ const moonEmoji = Moon.lunarPhaseEmoji(
             </div>
           </dl>
         </header>
-        <section
-          data-pagefind-body
-          class='markdown entry-content e-content'
-        >
+        <section data-pagefind-body class='markdown entry-content e-content'>
           <slot />
         </section>
-        <nav
-          class='pager post-pagination'
-          data-pagefind-ignore
-        >
+        <nav class='pager post-pagination' data-pagefind-ignore>
           <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
           {
             prev && (
@@ -110,7 +99,8 @@ const moonEmoji = Moon.lunarPhaseEmoji(
       <Hant />
       <!-- <Heti /> -->
     </div>
-  </body><script>
-    import '../utilities/clipboard-copy/index.js';
-  </script>
+    <script>
+      import '../utilities/clipboard-copy/index.js';
+    </script>
+  </body>
 </html>
