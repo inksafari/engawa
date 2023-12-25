@@ -5,6 +5,10 @@
 # dependencies
 node_modules/
 
+# dev env
+.devbox/
+devbox.d/
+
 # build output
 .astro/
 .unlighthouse/

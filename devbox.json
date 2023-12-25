@@ -1,0 +1,7 @@
+{
+  "packages": ["nodejs@latest", "nodePackages.pnpm@latest", "just@latest"],
+  "shell": {
+    "init_hook": ["echo 'Configure this in devbox.json'"],
+    "scripts": {}
+  }
+}

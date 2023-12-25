@@ -1,11 +1,15 @@
-import { remarkPlugins } from './markdown/remark.js';
-import { rehypePlugins } from './markdown/rehype.js';
+import { remarkPlugins } from './markdown/remark.js'
+import { rehypePlugins } from './markdown/rehype.js'
 
 const markdownOptions = {
-  syntaxHighlight: false,
+  // syntaxHighlight: false,
+  // shikiConfig: {
+  // theme: 'css-variables',
+  // wrap: true,
+  // },
   remarkPlugins,
   rehypePlugins,
-};
+}
 
 /* https://github.com/astro-community/AstroCompress */
 const astroCompressOptions = {
@@ -15,6 +19,6 @@ const astroCompressOptions = {
   html: true,
   img: false,
   svg: false,
-};
+}
 
-export { astroCompressOptions, markdownOptions };
+export { astroCompressOptions, markdownOptions }

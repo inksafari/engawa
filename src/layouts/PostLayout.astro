@@ -1,18 +1,30 @@
 ---
-import '../styles/layout_post.js';
-import { Moon, Hemisphere } from 'lunarphase-js';
-import BaseHead from '~/components/BaseHead.astro';
-import Hant from '~/components/Hant.astro';
+import type { CollectionEntry } from 'astro:content'
+import type { MarkdownHeading } from 'astro'
+import '../styles/layout_post.js'
+import { Moon, Hemisphere } from 'lunarphase-js'
+import BaseHead from '~/components/BaseHead.astro'
+import Hant from '~/components/Hant.astro'
 //import Heti from '~/components/Heti.astro';
-import FormattedDate from '~/components/FormattedDate.astro';
-import Bar from '~/components/Bar.astro';
-import Footer from '~/components/Footer.astro';
-import { HTM_LANG } from '~/consts';
-const { url, title, publishDate, updatedDate, prev, next } = Astro.props;
+import FormattedDate from '~/components/FormattedDate.astro'
+import Bar from '~/components/Bar.astro'
+import Footer from '~/components/Footer.astro'
+import { HTM_LANG } from '~/consts'
+
+interface Props {
+  post: CollectionEntry<'then'>
+  headings: MarkdownHeading[]
+}
+
+const { post, headings } = Astro.props
+const {
+  data: { title, publishDate, updatedDate, prev, next },
+} = post
+
 const moonEmoji = Moon.lunarPhaseEmoji(
   new Date(publishDate),
   Hemisphere.NORTHERN,
-);
+)
 ---
 
 <!doctype html>
@@ -23,7 +35,7 @@ const moonEmoji = Moon.lunarPhaseEmoji(
   prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead {...Astro.props} />
+    <BaseHead title={title} />
     <slot name='meta' />
   </head>
   <body>
@@ -36,7 +48,11 @@ const moonEmoji = Moon.lunarPhaseEmoji(
     <div id='wrapper'>
       <article class='h-entry heti'>
         <header class='entry-header'>
-          <h1 class='entry-title p-name' data-pagefind-meta='title'>
+          <h1
+            class='entry-title p-name'
+            data-pagefind-meta='title'
+            transition:name={`blog-${title}-title`}
+          >
             <span class='entry-title-text'>{title}</span>
           </h1>
           <dl class='entry-meta'>
@@ -71,36 +87,40 @@ const moonEmoji = Moon.lunarPhaseEmoji(
         <section data-pagefind-body class='markdown entry-content e-content'>
           <slot />
         </section>
-        <nav class='pager post-pagination' data-pagefind-ignore>
-          <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
-          {
-            prev && (
-              <div class='left stack'>
-                &laquo;&nbsp;
-                <a href={prev} rel='prev'>
-                  Prev
-                </a>
-              </div>
-            )
-          }
-          {
-            next && (
-              <div class='right stack'>
-                <a href={next} rel='next'>
-                  Next
-                </a>
-                &nbsp;&raquo;
-              </div>
-            )
-          }
-        </nav>
+        <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
+        {
+          (prev || next) && (
+            <nav class='pager post-pagination' data-pagefind-ignore>
+              {prev && (
+                <span class='left stack'>
+                  <a href={prev} rel='prev'>
+                    Prev
+                  </a>
+                </span>
+              )}
+              {next && (
+                <span class='right stack'>
+                  <a href={next} rel='next'>
+                    Next
+                  </a>
+                </span>
+              )}
+            </nav>
+          )
+        }
         <Footer />
       </article>
       <Hant />
       <!-- <Heti /> -->
     </div>
-    <script>
-      import '../utilities/clipboard-copy/index.js';
-    </script>
+    <!-- ← → -->
+    <style scoped>
+      .prev a::before {
+        content: '« ';
+      }
+      .next a::after {
+        content: ' »';
+      }
+    </style>
   </body>
 </html>

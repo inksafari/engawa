@@ -11,10 +11,8 @@
 - cjk
   - webfont
 - description
-- anchor links
 - chat bubbles
 - page transitions
-- categories
 - unit/e2e tests
 - fonts optimization at build time (subfont).
 - image manipulation ( w/ [Picture component](https://astro.build/blog/astro-330/#picture-component) )
@@ -39,13 +37,15 @@
   [Content Collections](https://docs.astro.build/guides/content-collections/)
   with [Zod schemas](/src/content/config.ts).
 - Markdown & MDX support.
-- ATOM/JSON Feed support.
+- Atom/JSON Feed support.
 - [Pagefind](https://pagefind.app/) static search library integration.
-- Uses [starry-night](https://github.com/wooorm/starry-night) via
-  [@Microflash/rehype-starry-night](https://github.com/Microflash/rehype-starry-night)
+- Uses [Expressive Code](https://github.com/expressive-code/expressive-code) via
+  [remark-expressive-code](https://github.com/expressive-code/expressive-code/blob/main/packages/remark-expressive-code/README.md)
   (with
-  [light](https://github.com/wooorm/starry-night/blob/main/style/light.css)
-  theme) for syntax highlighting.
+  [default](https://github.com/expressive-code/expressive-code/blob/main/packages/remark-expressive-code/README.md#themes)
+  themes) for syntax highlighting.
+- Set Up a Development Environment with
+  [Devbox](https://www.jetpack.io/devbox/).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
