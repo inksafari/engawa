@@ -1,9 +1,9 @@
-import { defineConfig } from 'vitest/config';
-// import { FontaineTransform } from 'fontaine';
-// import { defineConfig } from 'vite';
-// import { svelte } from '@sveltejs/vite-plugin-svelte';
-// import sslPlugin from '@vitejs/plugin-basic-ssl';
-// import path from 'path';
+import { defineConfig } from 'vitest/config'
+// import { FontaineTransform } from 'fontaine'
+// import { defineConfig } from 'vite'
+// import { svelte } from '@sveltejs/vite-plugin-svelte'
+// import sslPlugin from '@vitejs/plugin-basic-ssl'
+// import path from 'path'
 
 // https://vitejs.dev/config/
 const config = {
@@ -41,19 +41,21 @@ const config = {
   },
   optimizeDeps: {
     allowNodeBuiltins: true,
+    // exclude: ['@resvg/resvg-js'],
   },
   build: {
     assetsInlineLimit: 10_096,
     rollupOptions: {
       external: [
         // 'url-join',
-        '/pagefind/pagefind.js',
-        '/pagefind/pagefind-ui.js',
-        '/pagefind/pagefind-ui.css',
       ],
     },
   },
-  // ssr: { noExternal: ['open-props'], },
+  ssr: {
+    noExternal: [
+      // 'open-props'
+    ],
+  },
   // test: {
   // globals: true,
   // environment: 'jsdom',
@@ -63,7 +65,7 @@ const config = {
   // setupFiles: './src/tests/vitest/vitest-setup.ts',
   // include: ['src/tests/vitest/**/*.{js,ts}'],
   // },
-};
+}
 
 /** @type {import('vite').UserConfig} */
-export default defineConfig(config);
+export default defineConfig(config)

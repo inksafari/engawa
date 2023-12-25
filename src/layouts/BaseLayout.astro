@@ -1,10 +1,16 @@
 ---
-import '../styles/layout_base.js';
-import BaseHead from '~/components/BaseHead.astro';
-import Hant from '~/components/Hant.astro';
-import Bar from '~/components/Bar.astro';
-import Footer from '~/components/Footer.astro';
-import { HTM_LANG, RSS_LANG } from '~/consts';
+import '../styles/layout_base.js'
+import BaseHead from '~/components/BaseHead.astro'
+import Hant from '~/components/Hant.astro'
+import Bar from '~/components/Bar.astro'
+import Footer from '~/components/Footer.astro'
+import { HTM_LANG, SITE_DESCRIPTION } from '~/consts'
+// interface Props {
+// meta: SiteMeta;
+// }
+const {
+  meta: { title, description = SITE_DESCRIPTION },
+} = Astro.props
 ---
 
 <!doctype html>
@@ -15,7 +21,7 @@ import { HTM_LANG, RSS_LANG } from '~/consts';
   prefix='og: https://ogp.me/ns# website: https://ogp.me/ns/website# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead {...Astro.props} />
+    <BaseHead title={title} description={description} />
     <slot name='meta' />
   </head>
   <body>
@@ -41,5 +47,9 @@ import { HTM_LANG, RSS_LANG } from '~/consts';
     </div>
     <Hant />
     <slot name='footer' />
-  </body>
+  </body><!--範例：
+<BaseLayout>
+  <script src='/assets/exmaple.js' type='text/javascript' slot='meta' ></script>
+</BaseLayout>
+-->
 </html>

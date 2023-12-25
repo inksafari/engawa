@@ -1,25 +1,96 @@
 ---
-import BaseLayout from '~/layouts/BaseLayout.astro';
+// 改用 Orama? ( https://github.com/oramasearch/orama )
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import { isProd } from '~/consts'
+import '@pagefind/default-ui/css/ui.css'
+const meta = {
+  title: 'Search',
+}
 ---
 
-<BaseLayout title='Search'>
-  <script src='/pagefind/pagefind-ui.js' type='text/javascript' slot='meta'
-  ></script>
-  <link href='/pagefind/pagefind-ui.css' rel='stylesheet' slot='meta' />
-  <div id='search' class='pagefind_searchbar' aria-label='Search'></div>
+<BaseLayout meta={meta}>
+  <site-search id='search' class='ms-auto'>
+    {
+      isProd ? (
+        <div class='search-container'>
+          <div
+            id='yan__search'
+            class='pagefind_searchbar'
+            aria-label='Search'
+          />
+        </div>
+      ) : (
+        <p>
+          Search is only available in production builds. <br />
+          Try building and previewing the site to test it out locally.
+        </p>
+      )
+    }
+  </site-search>
   <script is:inline slot='footer'>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      new PagefindUI({ element: '#search', resetStyles: false });
-    });
+    class SiteSearch extends HTMLElement {
+      connectedCallback() {
+        // Listen for keyboard shortcut
+        window.addEventListener('keydown', this.onWindowKeydown)
 
-    window.addEventListener('keydown', (event) => {
-      if (event.key === '/' || event.key === '.') {
-        console.log('you pressed the slash');
-        event.preventDefault();
-        document.querySelector('div#search input').focus();
+        // only add pagefind in production
+        if (import.meta.env.MODE !== 'production') return
+
+        const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1))
+        onIdle(async () => {
+          const { PagefindUI } = await import('@pagefind/default-ui')
+          /* https://pagefind.app/docs/ui/ */
+          new PagefindUI({
+            element: '#yan__search',
+            resetStyles: false,
+            showSubResults: true,
+          })
+        })
       }
-    });
+
+      disconnectedCallback() {
+        window.removeEventListener('keydown', this.onWindowKeydown)
+      }
+
+      onWindowKeydown = (event) => {
+        if (event.key === '/' || event.key === '.') {
+          console.log('you pressed the slash')
+          event.preventDefault()
+          document.querySelector('div#yan__search input').focus()
+        }
+      }
+
+      openModal = (event) => {
+        this.querySelector('input')?.focus()
+        event?.stopPropagation()
+        window.addEventListener('click', this.onWindowClick)
+      }
+
+      closeModal = () => {
+        window.removeEventListener('click', this.onWindowClick)
+      }
+    }
+    customElements.define('site-search', SiteSearch)
   </script>
+  <style is:global>
+    :root {
+      --pagefind-ui-font: inherit;
+    }
+  </style>
+  <style>
+    .search-container {
+      margin-block-start: var(--size-3);
+      margin-block-end: var(--size-6);
+    }
+    #yan__search {
+      /* https://pagefind.app/docs/ui-usage/#customising-the-styles */
+      --pagefind-ui-background: var(--yan-color-background-primary);
+      --pagefind-ui-border: var(--yan-color-border);
+      --pagefind-ui-border-width: 1px;
+    }
+  </style>
 </BaseLayout>
-<!-- @credit:
-  https://lirantal.com/blog/2023-01-01_-how_to_add_client-side_search_to_your_astro_blog_static_website/ -->
+<!-- @credits:
+  - https://lirantal.com/blog/2023-01-01_-how_to_add_client-side_search_to_your_astro_blog_static_website/
+  - https://github.com/chrismwilliams/astro-theme-cactus/blob/main/src/components/layout/Header.astro
+-->
