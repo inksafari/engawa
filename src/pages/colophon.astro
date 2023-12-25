@@ -1,9 +1,9 @@
 ---
-import { getEntry } from 'astro:content';
-import PageLayout from '~/layouts/PageLayout.astro';
+import { getEntry } from 'astro:content'
+import PageLayout from '~/layouts/PageLayout.astro'
 
-const entry = await getEntry('page', 'colophon');
-const { Content } = await entry.render();
+const entry = await getEntry('page', 'colophon')
+const { Content } = await entry.render()
 ---
 
 <PageLayout {...entry.data}>

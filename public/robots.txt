@@ -1,14 +1,101 @@
+#
+# robots.txt ( https://www.robotstxt.org/robotstxt.html )
+#
+
+# Apple
+User-Agent: Applebot
+Disallow: /
+
+# Common Crawl
 User-agent: CCBot
 Disallow: /
 
-User-agent: GPTBot
+# Discord
+User-agent: Discordbot
 Disallow: /
 
-User-agent: ChatGPT-User
-Disallow: /
-
+# Google Bard
 User-agent: Google-Extended
 Disallow: /
 
-User-agent: Twitterbot
+# Google Bots
+# https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers
+User-agent: Googlebot
+User-agent: Googlebot-mobile
+User-agent: Googlebot-Image
+User-agent: Googlebot-News
+User-agent: Googlebot-Video
+User-agent: AdsBot-Google
+User-agent: AdsBot-Google-Mobile
+User-Agent: AdsBot-Google-Mobile-Apps
+User-agent: Mediapartners
+User-agent: Mediapartners-Google
 Disallow: /
+
+# OpenAI
+User-agent: GPTBot
+Disallow: /
+User-agent: ChatGPT-User
+Disallow: /
+
+# Meta
+User-Agent: FacebookBot
+Disallow: /
+User-agent: facebookexternalhit
+Disallow: /
+
+# Microsoft
+User-agent: Bingbot
+Disallow: /
+User-agent: LinkedInBot
+Disallow: /
+
+# Pinterest
+User-Agent: Pinterestbot
+Disallow: /
+
+# Telegram
+User-agent: TelegramBot
+Disallow: /
+
+# Yandex
+User-agent: Yandex
+Disallow: /
+
+# zh-hans
+User-agent: 360Spider
+User-agent: Baiduspider
+User-agent: BaiduSpider-ads
+User-agent: ByteSpider
+User-agent: HaosouSpider
+User-agent: HaosoSpider
+User-agent: PetalBot
+User-agent: Sogouspider
+User-agent: Sogou blog
+User-agent: Sogou inst spider
+User-agent: Sogou News Spider
+User-agent: Sogou Orion Spider
+User-agent: Sogou spider2
+User-agent: Sogou web spider
+User-agent: Sogou wap spider
+User-agent: ToutiaoSpider
+User-agent: Yisouspider
+Disallow: /
+
+# Disallow everything.
+User-agent: *
+Disallow: /
+
+# Twitter
+# User-agent: Twitterbot
+# Allow: /assets/images
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Disallow:
+Allow: /*
+
+# Wait 500 seconds between successive requests.
+Crawl-delay: 500
+
+# Sitemap: https://exmaple.net/sitemap.xml
