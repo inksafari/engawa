@@ -1,31 +1,35 @@
 ---
-export const prerender = true;
-//import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-//import PageLayout from '~/layouts/PageLayout.astro';
-import PostLayout from '~/layouts/PostLayout.astro';
-import VertLayout from '~/layouts/VertLayout.astro';
-import { fetchPosts } from '~/utilities/getPosts';
+export const prerender = true
+//import { getCollection, getEntry, getEntries } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import type { MarkdownHeading } from 'astro'
+//import PageLayout from '~/layouts/PageLayout.astro'
+import PostLayout from '~/layouts/PostLayout.astro'
+import VertLayout from '~/layouts/VertLayout.astro'
+import { fetchPosts } from '~/utilities/getPosts'
+import { getCleanSlug } from '~/utilities/getPermaLink'
 
 export interface Props {
-  entry: CollectionEntry<'page'> | CollectionEntry<'then'>;
+  entry: CollectionEntry<'page'> | CollectionEntry<'then'>
+  headings: MarkdownHeading[]
 }
 
 export async function getStaticPaths() {
   //const pages = await getCollection('page', (entry) => {
   //return !['home'].includes(entry.slug) && !entry.data.isDraft;
   //});
-  const posts = await fetchPosts({ collection: 'then' });
+  const allPosts = await fetchPosts({ collection: 'then' })
+  const posts = allPosts.map(getCleanSlug)
 
   //return [...pages, ...posts].map((entry) => ({
   return [...posts].flatMap((entry) => ({
     params: { slug: String(entry.slug) },
     props: { entry },
-  }));
+  }))
 }
 
-const { entry, ...attributes } = Astro.props as Props;
-const { Content, remarkPluginFrontmatter } = await entry.render();
+const { entry } = Astro.props as Props
+const { Content, headings } = await entry.render()
 ---
 
 {
@@ -35,11 +39,11 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
   //</PageLayout>
   //) :
   entry.collection === 'then' ? (
-    <PostLayout {...entry.data}>
+    <PostLayout post={entry} headings={headings}>
       <Content />
     </PostLayout>
   ) : (
-    <VertLayout {...attributes}>
+    <VertLayout {...entry.data}>
       <Content />
     </VertLayout>
   )

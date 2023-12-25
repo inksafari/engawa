@@ -1,11 +1,11 @@
-import { getCollection } from 'astro:content';
+import { getCollection } from 'astro:content'
 
 /* Usage:
  * import { fetchPosts } from '~/utilities/getPosts';
  * const allPosts = fetchPosts({ collection: 'then' })
  */
 async function fetchPosts({ collection }) {
-  const now = new Date(Date.now());
+  const now = new Date(Date.now())
 
   return await getCollection(collection).then((entries) =>
     entries
@@ -20,7 +20,7 @@ async function fetchPosts({ collection }) {
           new Date(post.data.publishDate).valueOf() -
           new Date(previousPost.data.publishDate).valueOf(),
       ),
-  );
+  )
 }
 
-export { fetchPosts };
+export { fetchPosts }

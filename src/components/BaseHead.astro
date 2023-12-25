@@ -1,5 +1,5 @@
 ---
-import Favicon from '~/components/Favicon.astro';
+import Favicon from '~/components/Favicon.astro'
 import {
   isBuild,
   isProd,
@@ -8,25 +8,26 @@ import {
   SITE_URL,
   SITE_DESCRIPTION,
   feedUrls,
-} from '~/consts';
+} from '~/consts'
 
 export interface Props {
-  title?: string;
-  excerpt?: string;
-  isIndex?: boolean;
+  title?: string
+  excerpt?: string
+  isIndex?: boolean
 }
 
-const { title, excerpt, isIndex } = Astro.props as Props;
+const { title, excerpt, isIndex } = Astro.props as Props
 
-const preconnectUrls = ['https://cdnjs.cloudflare.com'];
-const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0'];
+const preconnectUrls = ['https://cdnjs.cloudflare.com']
+const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0']
 
+const titleSeparator = '•'
 const metaTitle = title // Astro.props.title
-  ? `${title} • ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
-  : SITE_TITLE;
+  ? `${title} ${titleSeparator} ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
+  : SITE_TITLE
 
-const metaDescription = excerpt ?? SITE_DESCRIPTION;
-const domain = SITE_DOMAIN.toUpperCase();
+const metaDescription = excerpt ?? SITE_DESCRIPTION
+const domain = SITE_DOMAIN.toUpperCase()
 
 /* canonicalURL
  * ------------
@@ -37,9 +38,9 @@ const domain = SITE_DOMAIN.toUpperCase();
 const normalizedPathname = Astro.url.pathname
   .replace(/\.html$/, '')
   .split('/')
-  .join('');
-const canonicalURL: URL = new URL(normalizedPathname, SITE_URL);
-const permalink = `${canonicalURL.href}`;
+  .join('')
+const canonicalURL: URL = new URL(normalizedPathname, SITE_URL)
+const permalink = `${canonicalURL.href}`
 //const pathName = canonicalURL.pathname.split('/').join('');
 //const ogpImageURL = canonicalURL.pathname === '/'
 //? new URL('/assets/images/ogp-image.png', Astro.url)
@@ -110,7 +111,7 @@ const permalink = `${canonicalURL.href}`;
   href={feedUrls.json}
   rel='alternate'
   title={`JSON Feed for ${domain}`}
-  type='application/json'
+  type='application/feed+json'
 />
 <meta name='generator' content='Drupal 7 (https://www.drupal.org)' />
 <!-- @source:
