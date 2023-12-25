@@ -38,28 +38,37 @@
 lint:
   parallel: true
   commands:
-    pkg:audit:
+    pkgs:audit:
       run: pnpm audit
     text:redpen:
       files: git ls-files
       glob: "*.{md,mdx}"
-      run: vale sync; vale {files}
+      run: vale sync; vale {files} --output=line > node_modules/.cache/vale_report.txt
     css:
-      files: git ls-files
       glob: "*.css"
-      run: pnpx stylelint {files} --config .stylelint.config.mjs --allow-empty-input --cache --cache-strategy content --cache-location .cache/.stylelintcache
-    js:
+      run: pnpx stylelint {files} --config .stylelint.config.mjs --cache --cache-strategy content --cache-location .cache/.stylelintcache --allow-empty-input --formatter string --output-file node_modules/.cache/css_report.txt
+    js:eslint:
       files: git ls-files
       glob: "*.{js,cjs,mjs,ts,astro,svelte}"
-      run: pnpx eslint {files} --config eslint.config.js --cache --cache-strategy content --cache-location .cache/.eslintcache
+      run: pnpx eslint {files} --config eslint.config.js --cache --cache-strategy content --cache-location node_modules/.cache/.eslintcache --format html --output-file .cache/js_report.html
+    js:xo:
+      glob: "*.{cjs,mjs,js,ts}"
+      run: xo > .cache/xo_report.txt
+    fmt:
+      files: git ls-files
+      glob: "*.{css,cjs,mjs,js,ts,md,mdx,json,astro,svelte}"
+      run: prettier --write {files} --ignore-path .prettierignore --log-level warn --cache --cache-strategy content --cache-location node_modules/.cache/.prettiercache
 
 pre-commit:
   parallel: true
   commands:
-    secret:leak:
+    secrets:leak:
       run: gitleaks detect --source . -v
+    code:fmt:
+      glob: "*.{css,cjs,mjs,js,ts,md,mdx,json,astro,svelte}"
+      run: pnpx prettier --write {staged_files} --log-level error --ignore-path .prettierignore --cache --cache-strategy content --cache-location node_modules/.cache/.prettiercache
 
 commit-msg:
   commands:
-    commitlint:
+    commit:lint:
       run: pnpm dlx commitlint --edit $1
