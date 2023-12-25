@@ -1,7 +1,7 @@
 // https://github.com/xojs/xo
 module.exports = {
   prettier: true,
-  // semicolon: false,
+  semicolon: false,
   space: true,
   rules: {
     'capitalized-comments': 'off',
@@ -19,4 +19,4 @@ module.exports = {
     'import/extensions': 'off',
     'max-params': ['error', 2],
   },
-};
+}

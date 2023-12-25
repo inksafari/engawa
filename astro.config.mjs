@@ -1,15 +1,15 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro/config'
 /* --- Integrations ( https://astro.build/integrations ) --- */
-import svelte from '@astrojs/svelte';
-import mdx from '@astrojs/mdx';
-import compress from 'astro-compress';
+import svelte from '@astrojs/svelte'
+import mdx from '@astrojs/mdx'
+import compress from 'astro-compress'
 /* -- Configuration -- */
 import {
   astroCompressOptions,
   markdownOptions,
-} from './src/plugins/plugins.config.js';
+} from './src/plugins/plugins.config.js'
 /* -- Environment Variables -- */
-import { SERVER_PORT, SITE_URL } from '~/consts';
+import { SERVER_PORT, SITE_URL } from '~/consts'
 
 // https://astro.build/config
 const baseConfig = {
@@ -19,7 +19,9 @@ const baseConfig = {
   },
   trailingSlash: 'never',
   /* https://docs.astro.build/en/guides/prefetch/ */
-  // prefetch: true,
+  prefetch: {
+    defaultStrategy: 'viewport',
+  },
   compressHTML: false,
   build: {
     inlineStylesheets: 'always',
@@ -33,14 +35,15 @@ const baseConfig = {
   markdown: markdownOptions,
   redirects: {
     '/feed': '/rss',
+    '/feeds': '/rss',
   },
   /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
   /* https://docs.astro.build/en/guides/assets/#using-sharp */
   // image: {
   // entrypoint: './src/imageService.ts',
   // },
-};
+}
 
 // isProd && { baseConfig.integrations.push(serviceWorker()) }
 
-export default defineConfig(baseConfig);
+export default defineConfig(baseConfig)

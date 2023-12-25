@@ -1,20 +1,21 @@
-import globals from 'globals';
-import jsPlugin from '@eslint/js';
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import astroParser from 'astro-eslint-parser';
-import astroPlugin from 'eslint-plugin-astro';
-import svxParser from 'svelte-eslint-parser';
-import svxPlugin from 'eslint-plugin-svelte';
-import { default as noUnsanitized } from 'eslint-plugin-no-unsanitized';
+import globals from 'globals'
+import jsPlugin from '@eslint/js'
+import tsParser from '@typescript-eslint/parser'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import astroParser from 'astro-eslint-parser'
+import astroPlugin from 'eslint-plugin-astro'
+import svxParser from 'svelte-eslint-parser'
+import svxPlugin from 'eslint-plugin-svelte'
+import { default as noUnsanitized } from 'eslint-plugin-no-unsanitized'
 // import { default as onlyWarn } from 'eslint-plugin-only-warn';
-import perfectionist from 'eslint-plugin-perfectionist';
-import sonarjs from 'eslint-plugin-sonarjs';
-import xss from 'eslint-plugin-xss';
+import perfectionist from 'eslint-plugin-perfectionist'
+import sonarjs from 'eslint-plugin-sonarjs'
+import xss from 'eslint-plugin-xss'
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
+    // https://github.com/antfu/eslint-config/blob/main/src/globs.ts
     ignores: [
       '.astro/**',
       '.unlighthouse/**',
@@ -35,7 +36,7 @@ export default [
     },
   },
   {
-    files: ['**/*.{mjs,cjs,js}'],
+    files: ['**/*.?([cm])[jt]s?(x)'],
     ignores: ['**/*.map.*'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -53,6 +54,9 @@ export default [
         ...globals.browser,
         ...globals.node,
         matchMedia: true,
+        document: 'readonly',
+        navigator: 'readonly',
+        window: 'readonly',
       },
     },
     plugins: {
@@ -124,6 +128,9 @@ export default [
         parser: '@typescript-eslint/parser',
         project: './tsconfig.json',
       },
+      globals: {
+        Astro: 'readonly',
+      },
     },
     plugins: {
       astro: astroPlugin,
@@ -170,4 +177,4 @@ export default [
       ],
     },
   },
-];
+]

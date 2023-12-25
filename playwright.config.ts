@@ -1,6 +1,6 @@
 // WARNING: 尚未設定與測試
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { defineConfig, devices } from '@playwright/test';
+import type { PlaywrightTestConfig } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * See https://playwright.dev/docs/test-configuration
@@ -44,6 +44,6 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-};
+}
 
-export default defineConfig(config);
+export default defineConfig(config)

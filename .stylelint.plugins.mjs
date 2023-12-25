@@ -30,7 +30,7 @@ const possibleErrors = {
     // 'custom-property-fallbacks': [ true, {
     // 'ignore': [
     // Ignore all custom properties that don't contain `--yan-`.
-    /// ^((?!\( *?--yan-).)*$/
+    // ^((?!\( *?--yan-).)*$/
     // ]
     // }
     {
@@ -44,7 +44,6 @@ const possibleErrors = {
     },
   ],
 }
-
 
 const unknownThings = {
   // plugin: stylelint-value-no-unknown-custom-properties
@@ -68,29 +67,27 @@ const unknownThings = {
       // '/padding/',
       'background-color',
       'background-image',
-      'z-index'
+      'z-index',
     ],
     {
       ignoreKeywords: {
-        '': [
-          'inherit'
-        ],
-        'background-color': [
-          'currentColor', 'transparent', 'inherit'
-        ],
-        'background-image': [
-          '100%', 'auto'
-        ],
+        '': ['inherit'],
+        'background-color': ['currentColor', 'transparent', 'inherit'],
+        'background-image': ['100%', 'auto'],
         '/color/': [
-          'currentColor', 'inherit', 'initial', 'transparent', 'unset'
+          'currentColor',
+          'inherit',
+          'initial',
+          'transparent',
+          'unset',
         ],
       },
       expandShorthand: true,
       recurseLonghand: true,
       message: 'Custom expected ${types} for "${value}" of "${property}"',
       disableFix: true,
-    }
+    },
   ],
-};
+}
 
-export { a11y, canIuse, possibleErrors, unknownThings };
+export { a11y, canIuse, possibleErrors, unknownThings }

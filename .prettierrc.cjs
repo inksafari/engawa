@@ -11,7 +11,7 @@ module.exports = {
   jsxSingleQuote: true,
   useTabs: false,
   tabWidth: 2,
- // semi: false,
+  semi: false,
   trailingComma: 'all',
   overrides: [
     {
@@ -34,4 +34,4 @@ module.exports = {
       },
     },
   ],
-};
+}
