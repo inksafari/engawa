@@ -34,6 +34,7 @@ async function compilePostsForRSS(posts) {
     url: getURLFromEntry(post.slug, 'then'),
     // 程式自動轉換為 ISO-8601 時間格式
     published: post.data.publishDate,
+    // modified: post.data.updatedDate,
     descriptionHtml: compileHTMLForRSS(post),
   }))
 }

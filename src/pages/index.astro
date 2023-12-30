@@ -1,10 +1,10 @@
 ---
+import spacetime from 'spacetime'
 import PostListingLayout from '~/layouts/PostListingLayout.astro'
-import dayjs from '~/utilities/dayjs'
-import { formatISOString } from '~/utilities/date.utils'
+import { formatISOString, tzHelper } from '~/utilities/date.utils'
 import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
 import { fetchPosts } from '~/utilities/getPosts'
-const currentTime = dayjs()
+const currentTime = spacetime.now()
 const allPosts = await fetchPosts({ collection: 'then' })
 const entries = allPosts.map(getCleanSlug)
 //const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
@@ -32,9 +32,9 @@ const entries = allPosts.map(getCleanSlug)
               class='dt-published'
               itemprop='datePublished'
             >
-              {dayjs(entry.data.publishDate).diff(currentTime, 'day') > -179
-                ? dayjs(entry.data.publishDate).format('LL')
-                : dayjs(entry.data.publishDate).fromNow()}
+              {currentTime.diff(tzHelper(entry.data.publishDate), 'days') > -179
+                ? tzHelper(entry.data.publishDate).format('nice-year')
+                : currentTime.since(tzHelper(entry.data.publishDate)).rounded}
             </time>
           </div>
         </li>

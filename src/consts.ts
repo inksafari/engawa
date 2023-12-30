@@ -23,7 +23,7 @@ export const SITE_DOMAIN = import.meta.env.VITE_SITE_DOMAIN
 export const SITE_URL = isProd ? LIVE_URL : LOCALHOST_URL
 export const SITE_TITLE = 'Slow Sour'
 export const SITE_DESCRIPTION = 'Where everyday is gameday.'
-export const copyrightYear = '2023'
+export const copyrightYear = '2024'
 export const WEBMENTIONS_URL = import.meta.env.VITE_WEBMENTION_URL
 // ---------------------------------------------------------------------
 export const HTM_LANG = 'zh-Hant-TW'

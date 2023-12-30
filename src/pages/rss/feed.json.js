@@ -1,8 +1,21 @@
-import { SITE_DOMAIN, SITE_URL, SITE_TITLE, RSS_LANG, feedUrls } from '~/consts'
+import spacetime from 'spacetime'
+import {
+  copyrightYear,
+  feedUrls,
+  RSS_LANG,
+  SITE_DOMAIN,
+  SITE_TITLE,
+  SITE_TZ,
+  SITE_URL,
+} from '~/consts'
 import { compileHTMLForRSS } from '~/utilities/generateRSSFeed'
 import { formatRFC3339 } from '~/utilities/date.utils'
 import { fetchPosts } from '~/utilities/getPosts'
 import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
+
+// new Date().getFullYear()
+const nowDate = spacetime.now().goto(SITE_TZ).goto(null).year()
+const copyrightYearFrom = Number(copyrightYear) ? copyrightYear : nowDate
 
 export const prerender = true
 
@@ -14,6 +27,7 @@ async function compilePostsForRSS(posts) {
   const postDetails = posts.flatMap((post) => ({
     title: post.data.title,
     date_published: formatRFC3339(post.data.publishDate),
+    // date_modified: formatRFC3339(post.data.updatedDate),
     url: getURLFromEntry(post.slug, 'then'),
     id: getURLFromEntry(post.slug, 'then'),
     content_html: compileHTMLForRSS(post),
@@ -34,7 +48,7 @@ const feed = {
   feed_url: `${feedUrls.json}`,
   authors: [author],
   language: RSS_LANG,
-  copyright: `© ${new Date().getFullYear()}-present, ${SITE_DOMAIN}`,
+  copyright: `© ${copyrightYearFrom}-present, ${SITE_DOMAIN}`,
   items,
 }
 

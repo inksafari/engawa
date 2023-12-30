@@ -2,13 +2,18 @@
 import type { CollectionEntry } from 'astro:content'
 import type { MarkdownHeading } from 'astro'
 import '../styles/layout_post.js'
-import { Moon, Hemisphere } from 'lunarphase-js'
+import { Moon } from 'lunarphase-js'
 import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
-//import Heti from '~/components/Heti.astro';
+// import Heti from '~/components/Heti.astro'
 import FormattedDate from '~/components/FormattedDate.astro'
 import Bar from '~/components/Bar.astro'
 import Footer from '~/components/Footer.astro'
+import {
+  formatISOString,
+  getHemisphere,
+  yearPast,
+} from '~/utilities/date.utils'
 import { HTM_LANG } from '~/consts'
 
 interface Props {
@@ -21,10 +26,10 @@ const {
   data: { title, publishDate, updatedDate, prev, next },
 } = post
 
-const moonEmoji = Moon.lunarPhaseEmoji(
-  new Date(publishDate),
-  Hemisphere.NORTHERN,
-)
+const postDate = formatISOString(publishDate)
+const moonEmoji = Moon.lunarPhaseEmoji(new Date(postDate), {
+  hemisphere: getHemisphere(publishDate), //Hemisphere.NORTHERN,
+})
 ---
 
 <!doctype html>
@@ -63,6 +68,12 @@ const moonEmoji = Moon.lunarPhaseEmoji(
                 <FormattedDate date={publishDate} />
               </dd>
             </div>
+            <!-- Year Progress Bar -->
+            <div class='entry-meta-item'>
+              <dt class='entry-meta-label'>Year</dt>
+              <dd class='entry-meta-value'>{yearPast(publishDate)}</dd>
+            </div>
+            <!-- updatedDate -->
             {
               updatedDate && (
                 <div class='entry-meta-item'>
@@ -94,14 +105,14 @@ const moonEmoji = Moon.lunarPhaseEmoji(
               {prev && (
                 <span class='left stack'>
                   <a href={prev} rel='prev'>
-                    Prev
+                    &laquo;&nbsp;Prev
                   </a>
                 </span>
               )}
               {next && (
                 <span class='right stack'>
                   <a href={next} rel='next'>
-                    Next
+                    Next&nbsp;&raquo;
                   </a>
                 </span>
               )}
@@ -113,14 +124,5 @@ const moonEmoji = Moon.lunarPhaseEmoji(
       <Hant />
       <!-- <Heti /> -->
     </div>
-    <!-- ← → -->
-    <style scoped>
-      .prev a::before {
-        content: '« ';
-      }
-      .next a::after {
-        content: ' »';
-      }
-    </style>
   </body>
 </html>

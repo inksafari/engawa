@@ -2,75 +2,39 @@
 // 改用 Orama? ( https://github.com/oramasearch/orama )
 import BaseLayout from '~/layouts/BaseLayout.astro'
 import { isProd } from '~/consts'
-import '@pagefind/default-ui/css/ui.css'
+// FIXME: 跑不出來
+// import { PagefindUI } from '@pagefind/default-ui'
+// import styles from '@pagefind/default-ui/css/ui.css'
 const meta = {
   title: 'Search',
 }
 ---
 
 <BaseLayout meta={meta}>
-  <site-search id='search' class='ms-auto'>
-    {
-      isProd ? (
-        <div class='search-container'>
-          <div
-            id='yan__search'
-            class='pagefind_searchbar'
-            aria-label='Search'
-          />
-        </div>
-      ) : (
-        <p>
-          Search is only available in production builds. <br />
-          Try building and previewing the site to test it out locally.
-        </p>
-      )
-    }
-  </site-search>
+  <script src='/pagefind/pagefind-ui.js' type='text/javascript' slot='meta'
+  ></script>
+  <link href='/pagefind/pagefind-ui.css' rel='stylesheet' slot='meta' />
+  {
+    isProd ? (
+      <div class='search-container'>
+        <div id='yan__search' class='pagefind_searchbar' aria-label='Search' />
+      </div>
+    ) : (
+      <p>
+        Search is only available in production builds. <br />
+        Try building and previewing the site to test it out locally.
+      </p>
+    )
+  }
   <script is:inline slot='footer'>
-    class SiteSearch extends HTMLElement {
-      connectedCallback() {
-        // Listen for keyboard shortcut
-        window.addEventListener('keydown', this.onWindowKeydown)
-
-        // only add pagefind in production
-        if (import.meta.env.MODE !== 'production') return
-
-        const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1))
-        onIdle(async () => {
-          const { PagefindUI } = await import('@pagefind/default-ui')
-          /* https://pagefind.app/docs/ui/ */
-          new PagefindUI({
-            element: '#yan__search',
-            resetStyles: false,
-            showSubResults: true,
-          })
-        })
-      }
-
-      disconnectedCallback() {
-        window.removeEventListener('keydown', this.onWindowKeydown)
-      }
-
-      onWindowKeydown = (event) => {
-        if (event.key === '/' || event.key === '.') {
-          console.log('you pressed the slash')
-          event.preventDefault()
-          document.querySelector('div#yan__search input').focus()
-        }
-      }
-
-      openModal = (event) => {
-        this.querySelector('input')?.focus()
-        event?.stopPropagation()
-        window.addEventListener('click', this.onWindowClick)
-      }
-
-      closeModal = () => {
-        window.removeEventListener('click', this.onWindowClick)
-      }
-    }
-    customElements.define('site-search', SiteSearch)
+    window.addEventListener('DOMContentLoaded', (event) => {
+      /* https://pagefind.app/docs/ui/ */
+      new PagefindUI({
+        element: '#yan__search',
+        resetStyles: false,
+        showSubResults: false,
+      })
+    })
   </script>
   <style is:global>
     :root {

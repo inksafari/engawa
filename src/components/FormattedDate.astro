@@ -1,11 +1,12 @@
 ---
 // import { Intl, Temporal } from '@js-temporal/polyfill'
-import { getFormattedDate } from '~/utilities/date.utils'
+// import { getFormattedDate } from '~/utilities/date.utils'
+import { formatISOString, formatDateString } from '~/utilities/date.utils'
 
 // type Props = HTMLAttributes<'time'> & {
 interface Props extends astroHTML.JSX.TimeHTMLAttributes {
   date: Date //Temporal.PlainDate | Date;
-  dateTimeOptions?: Intl.DateTimeFormatOptions
+  // dateTimeOptions?: Intl.DateTimeFormatOptions
   class?: string
   itemprop?: string
 }
@@ -14,11 +15,16 @@ const {
   class: className = 'dt-published',
   itemprop: itemProp = 'datePublished',
 } = Astro.props
-let date = new Date(Astro.props.date)
-const dateTimeOptions = Astro.props.dateTimeOptions
-const readableDate = getFormattedDate(date, dateTimeOptions)
+// let date = new Date(Astro.props.date)
+// const dateTimeOptions = Astro.props.dateTimeOptions
+// const readableDate = getFormattedDate(date, dateTimeOptions)
+const readableDate = formatDateString(Astro.props.date)
 ---
 
-<time class={className} datetime={date.toISOString()} itemprop={itemProp}>
+<time
+  class={className}
+  datetime={formatISOString(Astro.props.date)}
+  itemprop={itemProp}
+>
   {readableDate}
 </time>

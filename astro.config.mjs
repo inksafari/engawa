@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import mdx from '@astrojs/mdx'
 import compress from 'astro-compress'
+
 /* -- Configuration -- */
 import {
   astroCompressOptions,

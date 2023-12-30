@@ -1,11 +1,29 @@
 // A quick script that generates a new post template for a Astro site.
-import { format } from 'https://deno.land/std@0.210.0/datetime/mod.ts'
 import slug from 'limax'
+import spacetime from 'spacetime'
+
+const SITE_TZ = 'Asia/Taipei'
+
+function formatRFC3339(date) {
+  const tzDate = spacetime(date).goto(SITE_TZ)
+  const pattern = 'yyyy-MM-ddTHH:mm:ssZZZZ'
+  const result = tzDate.unixFmt(pattern)
+
+  return result
+}
+
+function formatPlainDate(date) {
+  const tzDate = spacetime(date).goto(SITE_TZ)
+  const pattern = 'yyyy-MM-dd'
+  const result = tzDate.unixFmt(pattern)
+
+  return result
+}
 
 const slugifier = (string_) => slug(string_, { tone: false })
 const postData = (title, slug) => `---
 title: '${title}'
-publishDate: ${format(new Date(), 'yyyy-MM-dd HH:mm')}
+publishDate: ${formatRFC3339(new Date())}
 slug: '${slug}'
 tags:
   - 雑記
@@ -16,7 +34,7 @@ isIndex: false
 `
 
 const path = (slug) =>
-  `./src/content/then/${format(new Date(), 'yyyy-MM-dd')}_${slug}.mdx`
+  `./src/content/then/test/${formatPlainDate(new Date())}_${slug}.mdx`
 
 const pageExists = async (slug) => {
   try {

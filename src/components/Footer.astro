@@ -1,8 +1,11 @@
 ---
-import { SITE_DOMAIN, SITE_URL, copyrightYear } from '~/consts'
 import Year from '~/components/Year.svelte'
+import { copyrightYear, SITE_DOMAIN, SITE_URL } from '~/consts'
+import { removeTrailingSlash } from '~/utilities/getPermaLink'
+
 let searchPageSlug = 'search'
-let searchPageUrl = new URL(searchPageSlug, SITE_URL)
+let searchPageLoc = new URL(searchPageSlug, SITE_URL)
+let searchPageUrl = removeTrailingSlash(searchPageLoc)
 ---
 
 <footer class='site-footer' itemscope itemtype='https://schema.org/WPFooter'>

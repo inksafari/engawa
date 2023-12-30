@@ -1,5 +1,5 @@
-import { dateOpts } from '~/consts'
-import dayjs from '~/utilities/dayjs'
+import spacetime from 'spacetime'
+import { dateOpts, SITE_TZ } from '../consts'
 
 function getFormattedDate(date, options) {
   const dateFormat = new Intl.DateTimeFormat(dateOpts.locale, dateOpts.options)
@@ -42,34 +42,81 @@ function getRelativeTime(timestamp) {
   return rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex])
 }
 
-// for Atom and JSON Feed ( 2017-05-17T10:02:12-05:00 )
-function formatRFC3339(date) {
-  // https://day.js.org/docs/en/display/format
-  const pattern = 'YYYY-MM-DDTHH:mm:ssZ'
-  const utc = dayjs(date).utc()
+function tzHelper(date) {
+  const result = spacetime(date).goto(SITE_TZ).goto(null)
 
-  return utc.tz().format(pattern)
+  return result
 }
 
 // 2017-05-17T15:02:12.000Z
 function formatISOString(date) {
-  // https://day.js.org/docs/en/display/format
-  const utc = dayjs(date).utc()
+  const tzDate = tzHelper(date)
+  const result = tzDate.format('iso-utc')
 
-  return utc.toISOString()
+  return result
+}
+
+// Converting date to ISO 8601 format with timezone offset
+// 2021-05-10T05:59:48.000+08:00
+function formatLocalISOString(date) {
+  const tzDate = tzHelper(date)
+  const result = tzDate.format('iso', 'correct offset')
+
+  return result
+}
+
+// for Atom and JSON Feed ( 2017-05-17T10:02:12-05:00 )
+function formatRFC3339(date) {
+  const tzDate = tzHelper(date)
+  // date-fns-tz: "yyyy-MM-dd'T'HH:mm:ssxxx"
+  // day.js: 'YYYY-MM-DDTHH:mm:ssZ'
+  const pattern = 'yyyy-MM-ddTHH:mm:ssZZZZ'
+  const result = tzDate.unixFmt(pattern)
+
+  return result
 }
 
 function formatPlainDate(date) {
-  const pattern = 'YYYY-MM-DD'
-  const utc = dayjs(date).utc()
+  const tzDate = tzHelper(date)
+  const pattern = 'yyyy-MM-dd' // day.js: 'YYYY-MM-DD'
+  const result = tzDate.unixFmt(pattern)
 
-  return utc.tz().format(pattern)
+  return result
+}
+
+// May 10th, 2021
+function formatDateString(date) {
+  const tzDate = tzHelper(date)
+  const result = tzDate.format('nice-year')
+
+  return result
+}
+
+function yearPast(date) {
+  const tzDate = tzHelper(date)
+  const prog = Number.parseFloat(tzDate.progress().year).toFixed(2)
+  const result = prog * 100 + '%'
+
+  return result
+}
+
+// North / South
+function getHemisphere(date) {
+  const tzDate = tzHelper(date)
+  const result = tzDate.hemisphere()
+
+  return result
 }
 
 export {
   getFormattedDate,
   getRelativeTime,
-  formatRFC3339,
+  tzHelper,
   formatISOString,
+  formatLocalISOString,
+  formatRFC3339,
   formatPlainDate,
+  formatDateString,
+  yearPast,
+  getHemisphere,
 }

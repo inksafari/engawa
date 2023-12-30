@@ -1,9 +1,20 @@
-// @creidt: https://github.com/kexiZeroing/kexiZeroing.github.io/blob/main/scripts/get-updatetime.js
+// @credit: https://github.com/kexiZeroing/kexiZeroing.github.io/blob/main/scripts/get-updatetime.js
 // This file will add or update `updatedDate` attribute to markdown files frontmatter
 import fs from 'node:fs'
 import path from 'node:path'
+import spacetime from 'spacetime'
 
-const dirPath = 'src/content/then'
+const SITE_TZ = 'Asia/Taipei'
+
+function formatRFC3339(date) {
+  const tzDate = spacetime(date).goto(SITE_TZ)
+  const pattern = 'yyyy-MM-ddTHH:mm:ssZZZZ'
+  const result = tzDate.unixFmt(pattern)
+
+  return result
+}
+
+const dirPath = 'src/content/then/temp'
 
 async function updateFrontmatter() {
   const files = fs.readdirSync(dirPath).filter((file) => {
@@ -18,10 +29,13 @@ async function updateFrontmatter() {
     const match = regex.exec(content)
     if (match) {
       const oldFrontmatter = match[1]
-      const newDate = new Date().toISOString()
+      const newDate = new Date()
+      // or
+      // new Date().toISOString()
+      // or
       // new Date(execSync(`git log -1 --format="%aI" ${filePath}`).toString().trim())
       // const newDateString = newDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).replace(',', '')
-      const newDateString = newDate.toString()
+      const newDateString = formatRFC3339(newDate)
       const newUpdatedDate = `updatedDate: ${newDateString}`
 
       let newFrontmatter = oldFrontmatter.replace(

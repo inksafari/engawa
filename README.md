@@ -72,6 +72,8 @@ All commands are run from the root of the project, from a terminal:
   - [Year.svelte](src/components/Year.svelte)
 - [Favicon.astro](src/components/Favicon.astro)
 - [generateRSSFeed.js](src/utilities/generateRSSFeed.js)
+- [get-updatetime.mjs](scripts/get-updatetime.mjs)
+- [new.mjs](scripts/new.mjs)
 - Modify the files in the /public folder:
   - favicon
   - robots.txt -> update the Sitemap url to your own domain
