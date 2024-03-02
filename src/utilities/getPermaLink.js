@@ -1,3 +1,5 @@
+// import path from 'node:path'
+// import urlJoin from 'url-join'
 import slug from 'limax' // or `transliteration`
 import { SITE_URL } from '~/consts'
 
@@ -14,16 +16,23 @@ function getCleanSlug(post) {
   }
 }
 
-// Or `url-join`
 function getURLFromEntry(slug, collection) {
   switch (collection) {
     case 'page': {
-      return new URL(slug, SITE_URL)
-    } // `${SITE_URL}/${slug}`;
+      // const result = urlJoin(SITE_URL, collection, slug)
+      // const result = new URL(path.join(collection, slug), SITE_URL)
+      const result = new URL(slug, SITE_URL)
+
+      return result
+    }
 
     case 'then': {
-      return new URL(slug, SITE_URL)
-    } // `${SITE_URL}/${slug}`;
+      // const result = urlJoin(SITE_URL, 'post', slug)
+      // const result = new URL(path.join('post', slug), SITE_URL)
+      const result = new URL(slug, SITE_URL)
+
+      return result
+    }
 
     default: {
       return 'ERROR!'

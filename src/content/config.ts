@@ -1,5 +1,5 @@
 /* https://docs.astro.build/en/guides/content-collections */
-import { defineCollection, z as zod } from 'astro:content'
+import { defineCollection, z as zod, type ImageFunction } from 'astro:content'
 import uniqolor from 'uniqolor'
 
 function removeDupsAndLowerCase(array: string[]) {
@@ -65,6 +65,7 @@ const blogCollection = defineCollection({
       updatedDate: zod.coerce.date().optional(),
       prev: zod.string().max(250).optional(),
       next: zod.string().max(250).optional(),
+      bibliography: zod.array(zod.string().url()).optional(),
     }),
 })
 
