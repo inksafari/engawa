@@ -2,12 +2,33 @@
 # robots.txt ( https://www.robotstxt.org/robotstxt.html )
 #
 
+
+User-agent: python-requests
+Disallow: /
+User-agent: Scrapy
+Disallow: /
+User-agent: Java
+Disallow: /
+
+# Anthropic Claude
+# https://darkvisitors.com/agents/anthropic-ai
+User-agent: anthropic-ai
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
 # Apple
 User-Agent: Applebot
 Disallow: /
 
 # Common Crawl
 User-agent: CCBot
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
 Disallow: /
 
 # Discord
@@ -50,12 +71,22 @@ Disallow: /
 User-agent: LinkedInBot
 Disallow: /
 
+# webz.io
+User-agent: Omgilibot
+Disallow: /
+User-agent: Omgili
+Disallow: /
+
 # Pinterest
 User-Agent: Pinterestbot
 Disallow: /
 
 # Telegram
 User-agent: TelegramBot
+Disallow: /
+
+# X(formerly "Twitter")
+User-agent: Twitterbot
 Disallow: /
 
 # Yandex
@@ -86,10 +117,6 @@ Disallow: /
 User-agent: *
 Disallow: /
 
-# Twitter
-# User-agent: Twitterbot
-# Allow: /assets/images
-
 # DuckDuckGo
 User-agent: DuckDuckBot
 Disallow:
@@ -99,3 +126,6 @@ Allow: /*
 Crawl-delay: 500
 
 # Sitemap: https://exmaple.net/sitemap.xml
+
+# Credits:
+# https://neil-clarke.com/block-the-bots-that-feed-ai-models-by-scraping-your-website/

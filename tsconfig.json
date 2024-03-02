@@ -2,12 +2,12 @@
   // @see https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "types": ["astro/client"],
+    "types": ["astro/client", "src/types/*.d.ts"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
     },
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
     // "noFallthroughCasesInSwitch": true, => Prefer ESLint validation
     // "noUnusedLocals": true, => Prefer ESLint validation
     // "noUnusedParameters": true, => Prefer ESLint validation
@@ -15,6 +15,7 @@
     "sourceMap": true,
     "strictNullChecks": true
   },
+  // "include": ["src/types/*.d.ts", "src/**/*.astro", "src/**/*.ts"],
   "exclude": [
     "**/.astro/**",
     "**/dist/**",

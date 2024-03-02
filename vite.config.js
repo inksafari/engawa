@@ -1,15 +1,20 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config' // import { defineConfig } from 'vite'
+import browserslist from 'browserslist'
+import { browserslistToTargets as CSSBrowserslistToTargets } from 'lightningcss'
 // import { FontaineTransform } from 'fontaine'
-// import { defineConfig } from 'vite'
 // import { svelte } from '@sveltejs/vite-plugin-svelte'
 // import sslPlugin from '@vitejs/plugin-basic-ssl'
 // import path from 'path'
+
+// config
+const browserslistConfig = browserslist.loadConfig({ path: process.cwd() })
 
 // https://vitejs.dev/config/
 const config = {
   plugins: [
     // svelte({ hot: !process.env.VITEST }),
-    // or https://www.getlocalcert.net/
+    // or {step, mkcert, https://www.getlocalcert.net/ }
+    // 透過step查詢網站數位憑證： step certificate inspect https://smallstep.com
     // sslPlugin(),
     // FontaineTransform.vite({
     // avoid flash of unstyled text by interjecting fallback system fonts
@@ -41,21 +46,28 @@ const config = {
   },
   optimizeDeps: {
     allowNodeBuiltins: true,
-    // exclude: ['@resvg/resvg-js'],
+    exclude: [
+      'limax',
+      //'@resvg/resvg-js'
+    ],
+  },
+  // https://lightningcss.dev/docs.html#with-vite
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      targets: CSSBrowserslistToTargets(browserslistConfig),
+      drafts: {
+        customMedia: true,
+      },
+      cssModules: true,
+    },
   },
   build: {
     assetsInlineLimit: 10_096,
-    rollupOptions: {
-      external: [
-        // 'url-join',
-      ],
-    },
+    cssMinify: 'lightningcss',
+    // rollupOptions: {external: [ /* ...*/ ],},
   },
-  ssr: {
-    noExternal: [
-      // 'open-props'
-    ],
-  },
+  // ssr: { noExternal: [ 'open-props'],},
   // test: {
   // globals: true,
   // environment: 'jsdom',
