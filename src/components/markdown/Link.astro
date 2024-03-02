@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+type Props = HTMLAttributes<'a'>
+
+const { href, class: className } = Astro.props
+const url = new URL(href, Astro.url)
+const isExternal = url.host !== Astro.url.host
+const isActive = url.href === Astro.url.href || url.href === Astro.url.href.replace(/\/$/, '')
+---
+
+<a
+  href={href}
+  class:list={[className, { active: isActive }]}
+  itemprop='url'
+  aria-current={isActive ? 'page' : null}
+  rel={isExternal ? 'nofollow noopener noreferrer' : null}
+  ><slot /></a
+>
+<style>
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+  a.active {
+    font-weight: bolder;
+  }
+  /* a.active::after { content: '←'; } */
+</style>

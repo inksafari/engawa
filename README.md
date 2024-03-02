@@ -68,6 +68,7 @@ All commands are run from the root of the project, from a terminal:
 
 - .env
 - [consts.ts](src/consts.ts)
+- [Header.astro](src/components/Header.astro)
 - [Footer.astro](src/components/Footer.astro)
   - [Year.svelte](src/components/Year.svelte)
 - [Favicon.astro](src/components/Favicon.astro)
@@ -118,16 +119,23 @@ isDraft: true
     (layouts & now page)
   - [Silvia Maggi](https://silviamaggidesign.com/colophon/) (colophon page)
   - [naiyerasif/site](https://github.com/naiyerasif/site) (syntax highlighting)
-- SVG Favicon by
-  [SVG Repo](https://www.svgrepo.com/svg/126349/bird-with-bow-tie?edit=true).
 - Watercolor texture by
   [Freepik](https://www.freepik.com/free-vector/pastel-watercolor-painted-background_13962241.htm).
+- SVG icons:
+  - [SVG Repo](https://www.svgrepo.com/svg/126349/bird-with-bow-tie?edit=true)
+  - [Feather icons](https://feathericons.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## License
 
+<!-- The source code for this project is available under the GPLv3 License. -->
+
 All images and media are copyright to their respective owners.
+Font licenses: Open Font License (OFL)
+
+- [LXGW Bright TC](https://github.com/lxgw/LxgwBright) (Chinese and English font)
+- [Lotion](https://font.nina.coffee/) (monospaced code font)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- #fff6d5 -- #ffe589 #fffdcc

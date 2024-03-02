@@ -1,5 +1,6 @@
 ---
 import Year from '~/components/Year.svelte'
+import Navigation from '~/components/Navigation.astro'
 import { copyrightYear, SITE_DOMAIN, SITE_URL } from '~/consts'
 import { removeTrailingSlash } from '~/utilities/getPermaLink'
 
@@ -8,16 +9,22 @@ let searchPageLoc = new URL(searchPageSlug, SITE_URL)
 let searchPageUrl = removeTrailingSlash(searchPageLoc)
 ---
 
-<footer class='site-footer' itemscope itemtype='https://schema.org/WPFooter'>
-  <p class='creds' itemprop='copyrightNotice'>
-    &copy;<span itemprop='copyrightYear'>
-      <Year from={copyrightYear} /></span
-    >&nbsp;<a href='/' class='footer-link' itemprop='url' rel='author'
-      ><span translate='no' class='p-author h-card' itemprop='copyrightHolder'
-        >{SITE_DOMAIN}</span
-      ></a
-    >.&nbsp;<a href={searchPageUrl} class='footer-link' itemprop='url'
-      >/search</a
-    >
-  </p>
+<footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
+  <div class='legal'>
+    <span itemprop='copyrightNotice'>
+      <span class='copy'>&copy;</span><span
+        class='year'
+        itemprop='copyrightYear'
+      >
+        <Year from={copyrightYear} /></span
+      >&nbsp;<a href='/' class='footer-link' itemprop='url' rel='author'
+        ><span translate='no' class='p-author h-card' itemprop='copyrightHolder'
+          >{SITE_DOMAIN}</span
+        ></a
+      >
+    </span>
+  </div>
+  <div class='nav'>
+    <Navigation />
+  </div>
 </footer>

@@ -1,0 +1,55 @@
+---
+// @source: https://jonneal.dev/blog/better-elements-with-astro/
+// TODO: 開啟VoiceOver測試
+// https://www.aditus.io/patterns/multiple-navigation-landmarks/
+// https://a11ysupport.io/tech/aria/aria-current_attribute
+// import Link from '~/components/markdown/Link.astro'
+// import { navItems } from '~/consts'
+import { SITE_URL } from '~/consts'
+import { removeTrailingSlash } from '~/utilities/getPermaLink'
+
+let searchPageSlug = 'search'
+let searchPageLoc = new URL(searchPageSlug, SITE_URL)
+let searchPageUrl = removeTrailingSlash(searchPageLoc)
+---
+
+<nav aria-label='primary' id='primary-navigation'>
+  <ul
+    role='list'
+    itemscope
+    itemtype='https://www.schema.org/SiteNavigationElement'
+  >
+  <!--
+    {
+      navItems.map((item) => (
+        <li itemprop='name'>
+          <Link href={item.url}>{item.name}</Link>
+        </li>
+      ))
+    }
+  -->
+    <li itemprop='name'>
+      <a href={searchPageUrl} rel='prefetch-intent'>
+        <span class='nav-text'>/search</span>
+      </a>
+    </li>
+    <li itemprop='name'>
+      <a href='/colophon'>
+        <span class='nav-text'>colophon</span>
+        </a
+      >
+    </li>
+    <!-- &#8239; -->
+    <li itemprop='name'>
+      <a href='/rss'>
+        <span class='nav-text-cap'>rss</span><img
+          class='rss'
+          src='/assets/img/rss.svg'
+          alt='RSS Feed'
+          title='RSS Feed'
+          loading='lazy'
+        /></a
+      >
+    </li>
+  </ul>
+</nav>

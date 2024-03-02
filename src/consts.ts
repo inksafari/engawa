@@ -1,5 +1,5 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+import { removeTrailingSlash } from '~/utilities/getPermaLink'
+
 // ---------------------------------------------------------------------
 export const siteOwner = {
   // name: '',
@@ -15,6 +15,7 @@ export const webFinger = {
 export const SCRIPT = process.env.npm_lifecycle_script || ''
 export const isBuild = SCRIPT.includes('astro build')
 export const isProd = import.meta.env.MODE === 'production'
+export const isDev = import.meta.env.MODE !== 'production'
 export const SERVER_PORT = import.meta.env.VITE_SITE_PORT
 export const LOCALHOST_URL = `http://localhost:${SERVER_PORT}`
 export const LIVE_URL = import.meta.env.VITE_SITE_URL
@@ -55,3 +56,12 @@ export const dateOpts = {
   },
 }
 // ---------------------------------------------------------------------
+const searchPageSlug = 'search'
+const searchPageLoc = new URL(searchPageSlug, SITE_URL)
+const searchPageUrl = removeTrailingSlash(searchPageLoc)
+
+export const navItems = [
+  { name: '/Search', url: searchPageUrl },
+  { name: 'Colophon', url: 'colophon' },
+  { name: 'RSS', url: 'rss' },
+]

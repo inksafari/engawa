@@ -2,7 +2,7 @@
 import '../styles/layout_page.js'
 import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
-import Bar from '~/components/Bar.astro'
+import Header from '~/components/Header.astro'
 import Footer from '~/components/Footer.astro'
 import { HTM_LANG } from '~/consts'
 ---
@@ -22,32 +22,20 @@ import { HTM_LANG } from '~/consts'
     itemscope
     itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
   >
-    <Bar />
-    <div id='wrapper'>
-      <header
-        class='site-header'
-        itemscope
-        itemtype='https://schema.org/WPHeader'
-      >
-        <nav>
-          <h1>
-            <!-- &#8617;&nbsp; -->
-            <a href='/' rel='home' itemprop='url'>return to /home</a>
-          </h1>
-        </nav>
-      </header>
+    <Header />
+    <main id='main-content'>
       <article class='h-entry'>
-        <header class='page-header'>
+        <section class='page-header'>
           <h1 class='page-title p-name' itemprop='headline name'>
             <span class='page-title-text'>{Astro.props.title}</span>
           </h1>
-        </header>
-        <section class='markdown page-content e-content' itemprop='text'>
-          <slot />
         </section>
+        <div class='markdown page-content e-content' itemprop='text'>
+          <slot />
+        </div>
       </article>
-      <Footer />
-    </div>
+    </main>
+    <Footer />
     <Hant />
     <slot name='footer' />
   </body>
