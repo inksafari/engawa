@@ -5,7 +5,8 @@ type Props = HTMLAttributes<'a'>
 const { href, class: className } = Astro.props
 const url = new URL(href, Astro.url)
 const isExternal = url.host !== Astro.url.host
-const isActive = url.href === Astro.url.href || url.href === Astro.url.href.replace(/\/$/, '')
+const isActive =
+  url.href === Astro.url.href || url.href === Astro.url.href.replace(/\/$/, '')
 ---
 
 <a
@@ -13,8 +14,7 @@ const isActive = url.href === Astro.url.href || url.href === Astro.url.href.repl
   class:list={[className, { active: isActive }]}
   itemprop='url'
   aria-current={isActive ? 'page' : null}
-  rel={isExternal ? 'nofollow noopener noreferrer' : null}
-  ><slot /></a
+  rel={isExternal ? 'nofollow noopener noreferrer' : null}><slot /></a
 >
 <style>
   a {

@@ -11,12 +11,13 @@ const meta = {
 ---
 
 <BaseLayout meta={meta}>
-  <script src='/pagefind/pagefind-ui.js' type='text/javascript' slot='meta'
+  <script src='/pagefind/pagefind-ui.js' slot='meta' crossorigin='anonymous'
   ></script>
   <link href='/pagefind/pagefind-ui.css' rel='stylesheet' slot='meta' />
   {
     isProd ? (
       <div class='search-container'>
+        <p>Use the search field below to search for blog posts.</p>
         <div id='yan__search' class='pagefind_searchbar' aria-label='Search' />
       </div>
     ) : (
@@ -26,7 +27,7 @@ const meta = {
       </p>
     )
   }
-  <script is:inline slot='footer'>
+  <script crossorigin='anonymous' is:inline slot='footer'>
     window.addEventListener('DOMContentLoaded', (event) => {
       /* https://pagefind.app/docs/ui/ */
       new PagefindUI({
