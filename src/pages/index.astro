@@ -1,4 +1,6 @@
 ---
+export const prerender = true
+
 import spacetime from 'spacetime'
 import PostListingLayout from '~/layouts/PostListingLayout.astro'
 import { formatISOString, tzHelper } from '~/utilities/date.utils'
@@ -7,6 +9,7 @@ import { fetchPosts } from '~/utilities/getPosts'
 const currentTime = spacetime.now()
 const allPosts = await fetchPosts({ collection: 'then' })
 const entries = allPosts.map(getCleanSlug)
+
 //const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
 ---
 
@@ -26,7 +29,7 @@ const entries = allPosts.map(getCleanSlug)
               {entry.data.title}
             </span>
           </a>
-          <div class='post-stub-date'>
+          <div class='post-stub-meta'>
             <time
               datetime={formatISOString(entry.data.publishDate)}
               class='dt-published'

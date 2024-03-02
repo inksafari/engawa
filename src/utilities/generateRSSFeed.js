@@ -63,4 +63,16 @@ function compileHTMLForRSS(post) {
   return sanitizeHtml(primaryHTML + additionalHTML)
 }
 
-export { compileHTMLForRSS }
+/* https://github.com/moeyua/astro-theme-typography/blob/main/src/utils/index.ts */
+function getPostDescription(post) {
+  if (post.data.excerpt) {
+    return post.data.excerpt
+  }
+
+  const html = articlePipeline(post.body)
+  const allowedTags = [...sanitizeHtml.defaults.allowedTags, 'img']
+  const sanitized = sanitizeHtml(html, { allowedTags })
+  return sanitized.slice(0, 250)
+}
+
+export { articlePipeline, compileHTMLForRSS, getPostDescription }

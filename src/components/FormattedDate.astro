@@ -1,7 +1,11 @@
 ---
 // import { Intl, Temporal } from '@js-temporal/polyfill'
 // import { getFormattedDate } from '~/utilities/date.utils'
-import { formatISOString, formatDateString } from '~/utilities/date.utils'
+import {
+  formatISOString,
+  formatDateString,
+  yearPast,
+} from '~/utilities/date.utils'
 
 // type Props = HTMLAttributes<'time'> & {
 interface Props extends astroHTML.JSX.TimeHTMLAttributes {
@@ -25,6 +29,10 @@ const readableDate = formatDateString(Astro.props.date)
   class={className}
   datetime={formatISOString(Astro.props.date)}
   itemprop={itemProp}
+  data-pagefind-meta='date[datetime]'
 >
   {readableDate}
+  <div class='screen-reader screen-reader-focusable'>
+    ({yearPast(Astro.props.date)} of the year has passed)
+  </div>
 </time>

@@ -5,6 +5,7 @@
 /// <reference types="vitest" />
 /// <reference types="svelte" />
 
+// https://vitejs.dev/guide/env-and-mode#intellisense-for-typescript
 type ImportMetaEnv = {
   readonly VITE_SITE_DOMAIN: string
   readonly VITE_SITE_URL: string

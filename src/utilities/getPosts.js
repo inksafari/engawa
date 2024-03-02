@@ -1,5 +1,8 @@
 import { getCollection } from 'astro:content'
 
+const orderByDateDesc = (previousPost, post) =>
+  post.data.publishDate.valueOf() - previousPost.data.publishDate.valueOf()
+
 /* Usage:
  * import { fetchPosts } from '~/utilities/getPosts';
  * const allPosts = fetchPosts({ collection: 'then' })
@@ -15,12 +18,8 @@ async function fetchPosts({ collection }) {
           : true,
       )
       .filter((entry) => new Date(entry.data.publishDate) < now)
-      .sort(
-        (previousPost, post) =>
-          new Date(post.data.publishDate).valueOf() -
-          new Date(previousPost.data.publishDate).valueOf(),
-      ),
+      .toSorted(orderByDateDesc),
   )
 }
 
-export { fetchPosts }
+export { fetchPosts, orderByDateDesc }

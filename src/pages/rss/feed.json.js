@@ -5,10 +5,14 @@ import {
   RSS_LANG,
   SITE_DOMAIN,
   SITE_TITLE,
+  SITE_DESCRIPTION,
   SITE_TZ,
   SITE_URL,
 } from '~/consts'
-import { compileHTMLForRSS } from '~/utilities/generateRSSFeed'
+import {
+  compileHTMLForRSS,
+  // getPostDescription
+} from '~/utilities/generateRSSFeed'
 import { formatRFC3339 } from '~/utilities/date.utils'
 import { fetchPosts } from '~/utilities/getPosts'
 import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
@@ -28,6 +32,7 @@ async function compilePostsForRSS(posts) {
     title: post.data.title,
     date_published: formatRFC3339(post.data.publishDate),
     // date_modified: formatRFC3339(post.data.updatedDate),
+    // summary: getPostDescription(post),
     url: getURLFromEntry(post.slug, 'then'),
     id: getURLFromEntry(post.slug, 'then'),
     content_html: compileHTMLForRSS(post),
@@ -44,6 +49,7 @@ const feed = {
   title: SITE_TITLE,
   // icon: '/android-chrome-512x512.png',
   // favicon: '/apple-touch-icon.png',
+  description: SITE_DESCRIPTION,
   home_page_url: SITE_URL,
   feed_url: `${feedUrls.json}`,
   authors: [author],

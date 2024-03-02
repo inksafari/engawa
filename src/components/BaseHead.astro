@@ -1,4 +1,6 @@
 ---
+import type { SiteMeta } from '~/types'
+import { ViewTransitions } from 'astro:transitions'
 import Favicon from '~/components/Favicon.astro'
 import {
   isBuild,
@@ -10,14 +12,8 @@ import {
   feedUrls,
 } from '~/consts'
 
-export interface Props {
-  title?: string
-  excerpt?: string
-  isIndex?: boolean
-}
-
-const { title, excerpt, isIndex } = Astro.props as Props
-
+type Props = SiteMeta
+const { title, description = SITE_DESCRIPTION, isIndex } = Astro.props
 const preconnectUrls = ['https://cdnjs.cloudflare.com']
 const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0']
 
@@ -25,8 +21,6 @@ const titleSeparator = '•'
 const metaTitle = title // Astro.props.title
   ? `${title} ${titleSeparator} ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
   : SITE_TITLE
-
-const metaDescription = excerpt ?? SITE_DESCRIPTION
 const domain = SITE_DOMAIN.toUpperCase()
 
 /* canonicalURL
@@ -55,21 +49,23 @@ const permalink = `${canonicalURL.href}`
 />
 <!-- <base href={SITE_URL} /> -->
 <title>{metaTitle}</title>
-{
+<!-- {
   preconnectUrls.map((url) => (
     <link rel='preconnect dns-prefetch' href={url} crossorigin />
   ))
-}
+} -->
 {
   woff2Urls.map((url) => (
     <link rel='preload' href={url} as='font' type='font/woff2' crossorigin />
   ))
 }
+<script defer='defer' src='/assets/js/han.min.js?v=3.3.0' type='module'
+></script>
+<!--
 <script
   crossorigin='anonymous'
   src='https://cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js'
   defer></script>
-<!--
 <script
   crossorigin='anonymous'
   src='https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.4/heti-addon.min.js'
@@ -82,7 +78,7 @@ const permalink = `${canonicalURL.href}`
   content='telephone=no, date=no, address=no, email=no'
 />
 <meta name='title' content={metaTitle} />
-<meta name='description' content={metaDescription} />
+<meta name='description' content={description} />
 <link rel='canonical' href={canonicalURL} data-pagefind-meta='url[href]' />
 <Favicon />
 <!-- https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag -->
@@ -113,6 +109,7 @@ const permalink = `${canonicalURL.href}`
   type='application/feed+json'
 />
 <meta name='generator' content='Drupal 7 (https://www.drupal.org)' />
+<ViewTransitions />
 <!-- @source:
 https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro
 -->

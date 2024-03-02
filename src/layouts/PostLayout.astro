@@ -1,35 +1,36 @@
 ---
-import type { CollectionEntry } from 'astro:content'
+// import type { CollectionEntry } from 'astro:content'
 import type { MarkdownHeading } from 'astro'
+import type { Post } from '~/types'
 import '../styles/layout_post.js'
 import { Moon } from 'lunarphase-js'
 import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
 // import Heti from '~/components/Heti.astro'
+import Header from '~/components/Header.astro'
 import FormattedDate from '~/components/FormattedDate.astro'
-import Bar from '~/components/Bar.astro'
 import Footer from '~/components/Footer.astro'
-import {
-  formatISOString,
-  getHemisphere,
-  yearPast,
-} from '~/utilities/date.utils'
-import { HTM_LANG } from '~/consts'
+import { formatISOString, getHemisphere } from '~/utilities/date.utils'
+// import { getPostDescription } from '~/utilities/generateRSSFeed'
+import { HTM_LANG, SITE_DESCRIPTION } from '~/consts'
 
 interface Props {
-  post: CollectionEntry<'then'>
+  post: Post // CollectionEntry<'then'>
   headings: MarkdownHeading[]
 }
 
-const { post, headings } = Astro.props
+const { post, headings } = Astro.props as Props
 const {
-  data: { title, publishDate, updatedDate, prev, next },
+  data: { title, excerpt, publishDate, updatedDate, prev, next },
+  slug,
 } = post
 
 const postDate = formatISOString(publishDate)
 const moonEmoji = Moon.lunarPhaseEmoji(new Date(postDate), {
-  hemisphere: getHemisphere(publishDate), //Hemisphere.NORTHERN,
+  hemisphere: getHemisphere(publishDate), // Hemisphere.NORTHERN,
 })
+
+const metaDescription = excerpt ? excerpt : SITE_DESCRIPTION // getPostDescription(post)
 ---
 
 <!doctype html>
@@ -40,78 +41,71 @@ const moonEmoji = Moon.lunarPhaseEmoji(new Date(postDate), {
   prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead title={title} />
+    <BaseHead title={title} description={metaDescription} />
     <slot name='meta' />
   </head>
   <body>
-    <Bar />
+    <Header />
     <!-- TODO: microformats
     - https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
     - https://developers.google.com/search/docs/appearance/structured-data/article
     - https://www.w3.org/TR/xhtml-rdfa-primer/#default_prefixes
     -->
-    <div id='wrapper'>
-      <article class='h-entry heti'>
+    <main id='main-content'>
+      <article
+        class='h-entry heti'
+        data-pagefind-body
+        data-pagefind-meta='kind:weblog'
+      >
         <header class='entry-header'>
           <h1
             class='entry-title p-name'
             data-pagefind-meta='title'
-            transition:name={`blog-${title}-title`}
+            transition:name={`blog-${slug}-title`}
           >
             <span class='entry-title-text'>{title}</span>
           </h1>
-          <dl class='entry-meta'>
-            <!-- timestamp -->
-            <div class='entry-meta-item'>
-              <dt class='entry-meta-label'>Created at</dt>
-              <dd class='entry-meta-value'>
-                <FormattedDate date={publishDate} />
-              </dd>
-            </div>
-            <!-- Year Progress Bar -->
-            <div class='entry-meta-item'>
-              <dt class='entry-meta-label'>Year</dt>
-              <dd class='entry-meta-value'>{yearPast(publishDate)}</dd>
-            </div>
+          <div class='entry-meta'>
+            <!-- timestamp(moon phases emoji) -->
+            <span class='entry-meta-label-text'>Posted on </span>
+            {moonEmoji}<FormattedDate date={publishDate} />
             <!-- updatedDate -->
             {
               updatedDate && (
-                <div class='entry-meta-item'>
-                  <dt class='entry-meta-label'>Updated at</dt>
-                  <dd class='entry-meta-value'>
-                    <FormattedDate
-                      date={updatedDate}
-                      class='dt-updated'
-                      itemprop='dateUpdated'
-                    />
-                  </dd>
-                </div>
+                <Fragment>
+                  <span class='entry-meta-label-separator'>·</span>
+                  <span class='entry-meta-label-text'>Updated on</span>
+                  <FormattedDate
+                    date={updatedDate}
+                    class='dt-updated'
+                    itemprop='dateUpdated'
+                  />
+                </Fragment>
               )
             }
-            <!-- Moon -->
-            <div class='entry-meta-item'>
-              <dt class='entry-meta-label'>Moon</dt>
-              <dd class='entry-meta-value'>{moonEmoji}</dd>
-            </div>
-          </dl>
+          </div>
         </header>
-        <section data-pagefind-body class='markdown entry-content e-content'>
+        <div class='markdown entry-content e-content'>
           <slot />
-        </section>
+        </div>
         <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
         {
           (prev || next) && (
-            <nav class='pager post-pagination' data-pagefind-ignore>
+            <nav
+              class='pager post-pagination'
+              aria-label='Pagination'
+              data-pagefind-ignore
+            >
               {prev && (
                 <span class='left stack'>
-                  <a href={prev} rel='prev'>
+                  <a href={prev} rel='prev' aria-label='Go to previous page'>
                     &laquo;&nbsp;Prev
                   </a>
                 </span>
               )}
               {next && (
                 <span class='right stack'>
-                  <a href={next} rel='next'>
+                  <a href={next} rel='next' aria-label='Go to next page'>
                     Next&nbsp;&raquo;
                   </a>
                 </span>
@@ -119,10 +113,10 @@ const moonEmoji = Moon.lunarPhaseEmoji(new Date(postDate), {
             </nav>
           )
         }
-        <Footer />
       </article>
-      <Hant />
-      <!-- <Heti /> -->
-    </div>
+    </main>
+
+    <Footer />
+    <Hant /><!-- or <Heti /> -->
   </body>
 </html>
