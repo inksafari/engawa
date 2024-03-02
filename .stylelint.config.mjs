@@ -1,6 +1,10 @@
 // rules
-import { namingConvention } from './.stylelint.rules.mjs';
-import { a11y, canIuse, possibleErrors, unknownThings } from './.stylelint.plugins.mjs'
+import { namingConvention } from './.stylelint.rules.mjs'
+import {
+  canIuse,
+  possibleErrors,
+  unknownThings,
+} from './.stylelint.plugins.mjs'
 
 /* @see https://stylelint.io/user-guide/configure */
 const config = {
@@ -9,7 +13,6 @@ const config = {
     'stylelint-config-standard',
   ],
   plugins: [
-    '@double-great/stylelint-a11y',
     'stylelint-declaration-block-no-ignored-properties',
     'stylelint-declaration-strict-value',
     'stylelint-no-unsupported-browser-features',
@@ -27,11 +30,11 @@ const config = {
     // -- rulesFromStylelint --
     ...namingConvention,
     // -- rulesFromPlugins --
-    ...a11y,
+    // ...a11y,
     ...canIuse,
     ...possibleErrors,
-    ...unknownThings
+    ...unknownThings,
   },
-};
+}
 
-export default config;
+export default config
