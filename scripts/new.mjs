@@ -68,3 +68,4 @@ await main()
 
 console.info('✅ Done!')
 // @source: https://github.com/bdevos/appjeniksaan-site/blob/main/create.ts
+// https://codeberg.org/darth_mall/darthmall.net/src/branch/main/manage.js

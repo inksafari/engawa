@@ -51,14 +51,16 @@ async function updateFrontmatter() {
         oldFrontmatter,
         `${newFrontmatter.trim()}`,
       )
-      fs.writeFileSync(filePath, newContent)
+      await fs.writeFileSync(filePath, newContent)
     }
   }
 }
 
-updateFrontmatter()
+updateFrontmatter().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})
 
-console.info('✅ Done!')
 // @ref:
 // https://github.com/vuejs/vitepress/blob/main/src/node/utils/getGitTimestamp.ts
 // https://docs.astro.build/en/recipes/modified-time/
