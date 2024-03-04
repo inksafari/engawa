@@ -4,12 +4,11 @@
 // https://www.aditus.io/patterns/multiple-navigation-landmarks/
 // https://a11ysupport.io/tech/aria/aria-current_attribute
 // import Link from '~/components/markdown/Link.astro'
-// import { navItems } from '~/consts'
-import { SITE_URL } from '~/consts'
 import { removeTrailingSlash } from '~/utilities/getPermaLink'
+import siteInfo, { feedUrls } from '~/consts'
 
 let searchPageSlug = 'search'
-let searchPageLoc = new URL(searchPageSlug, SITE_URL)
+let searchPageLoc = new URL(searchPageSlug, siteInfo.siteBase)
 let searchPageUrl = removeTrailingSlash(searchPageLoc)
 ---
 
@@ -19,15 +18,6 @@ let searchPageUrl = removeTrailingSlash(searchPageLoc)
     itemscope
     itemtype='https://www.schema.org/SiteNavigationElement'
   >
-    <!--
-    {
-      navItems.map((item) => (
-        <li itemprop='name'>
-          <Link href={item.url}>{item.name}</Link>
-        </li>
-      ))
-    }
-  -->
     <li itemprop='name'>
       <a href={searchPageUrl} rel='prefetch-intent'>
         <span class='nav-text'>/search</span>
@@ -40,7 +30,7 @@ let searchPageUrl = removeTrailingSlash(searchPageLoc)
     </li>
     <!-- &#8239; -->
     <li itemprop='name'>
-      <a href='/rss'>
+      <a href={feedUrls.page}>
         <span class='nav-text-cap'>rss</span><img
           class='rss'
           src='/assets/img/rss.svg'

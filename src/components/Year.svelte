@@ -1,10 +1,10 @@
 <script>
   import spacetime from 'spacetime'
-  import { SITE_TZ } from '~/consts'
+  import siteInfo from '~/consts'
   export let from //: number | undefined
 
   // new Date().getUTCFullYear()
-  let nowDate = spacetime.now().goto(SITE_TZ).goto(null).year()
+  let nowDate = spacetime.now().goto(siteInfo.tz).goto(null).year()
   let to = Number(nowDate) ? nowDate : 2024
 </script>
 

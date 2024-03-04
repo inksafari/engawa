@@ -10,13 +10,13 @@ import {
   markdownOptions,
 } from './src/plugins/plugins.config.js'
 /* -- Environment Variables -- */
-import { SERVER_PORT, SITE_URL } from '~/consts'
+import siteInfo from '~/consts'
 
 // https://astro.build/config
 const baseConfig = {
-  site: SITE_URL,
+  site: siteInfo.siteBase,
   server: {
-    port: Number.parseInt(SERVER_PORT),
+    port: Number.parseInt(siteInfo.port),
   },
   trailingSlash: 'never',
   /* https://docs.astro.build/en/guides/prefetch/ */
@@ -37,7 +37,7 @@ const baseConfig = {
   // redirects: {
   // '/feed': '/rss',
   // '/feeds': '/rss',
-  //},
+  // },
   /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
   /* https://docs.astro.build/en/guides/assets/#using-sharp */
   // image: {

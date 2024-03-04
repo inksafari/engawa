@@ -1,12 +1,7 @@
 ---
 import Year from '~/components/Year.svelte'
 import Navigation from '~/components/Navigation.astro'
-import { copyrightYear, SITE_DOMAIN, SITE_URL } from '~/consts'
-import { removeTrailingSlash } from '~/utilities/getPermaLink'
-
-let searchPageSlug = 'search'
-let searchPageLoc = new URL(searchPageSlug, SITE_URL)
-let searchPageUrl = removeTrailingSlash(searchPageLoc)
+import siteInfo from '~/consts'
 ---
 
 <footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
@@ -16,10 +11,10 @@ let searchPageUrl = removeTrailingSlash(searchPageLoc)
         class='year'
         itemprop='copyrightYear'
       >
-        <Year from={copyrightYear} /></span
+        <Year from={siteInfo.copyrightYear} /></span
       >&nbsp;<a href='/' class='footer-link' itemprop='url' rel='author'
         ><span translate='no' class='p-author h-card' itemprop='copyrightHolder'
-          >{SITE_DOMAIN}</span
+          >{siteInfo.domain}</span
         ></a
       >
     </span>

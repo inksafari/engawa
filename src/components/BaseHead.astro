@@ -1,44 +1,24 @@
 ---
-import type { SiteMeta } from '~/types'
 import { ViewTransitions } from 'astro:transitions'
+import Critical from '~/components/Critical.astro'
 import Favicon from '~/components/Favicon.astro'
-import {
-  isBuild,
-  isProd,
-  SITE_DOMAIN,
-  SITE_TITLE,
-  SITE_URL,
-  SITE_DESCRIPTION,
-  feedUrls,
-} from '~/consts'
+import { formatISOString } from '~/utilities/date.utils'
+import siteInfo, { feedUrls } from '~/consts'
+import { metaSchema } from '~/schema'
 
-type Props = SiteMeta
-const { title, description = SITE_DESCRIPTION, isIndex } = Astro.props
-const preconnectUrls = ['https://cdnjs.cloudflare.com']
-const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0']
-
+const pageInfo = metaSchema.parse(Astro.props.pageInfo)
 const titleSeparator = '•'
-const metaTitle = title // Astro.props.title
-  ? `${title} ${titleSeparator} ${SITE_TITLE}` // `${Astro.props.title} • ${SITE_TITLE}`
-  : SITE_TITLE
-const domain = SITE_DOMAIN.toUpperCase()
-
-/* canonicalURL
- * ------------
- * @sources:
- * https://github.com/yuheiy/yuheiy.com-v6/blob/main/src/components/Layout.astro
- * https://github.com/yamanoku/archives/blob/main/src/components/BaseHead.astro
- */
+const metaTitle = pageInfo.title
+  ? `${pageInfo.title} ${titleSeparator} ${siteInfo.title}`
+  : siteInfo.title
+const nicePublishDate = formatISOString(pageInfo.publishDate)
+const niceUpdatedDate = formatISOString(pageInfo.updatedDate)
+const siteDomain = siteInfo.domain.toUpperCase()
 const normalizedPathname = Astro.url.pathname
   .replace(/\.html$/, '')
   .split('/')
   .join('')
-const canonicalURL: URL = new URL(normalizedPathname, SITE_URL)
-const permalink = `${canonicalURL.href}`
-//const pathName = canonicalURL.pathname.split('/').join('');
-//const ogpImageURL = canonicalURL.pathname === '/'
-//? new URL('/assets/images/ogp-image.png', Astro.url)
-//: new URL(`/og/${pathName}.png`, Astro.url)
+const canonicalURL: URL = new URL(normalizedPathname, siteInfo.siteBase)
 ---
 
 <!-- TODO: 使用capo.js排序 https://rviscomi.github.io/capo.js/ -->
@@ -47,30 +27,8 @@ const permalink = `${canonicalURL.href}`
   name='viewport'
   content='width=device-width,initial-scale=1, maximum-scale=5'
 />
-<!-- <base href={SITE_URL} /> -->
 <title>{metaTitle}</title>
-<!-- {
-  preconnectUrls.map((url) => (
-    <link rel='preconnect dns-prefetch' href={url} crossorigin />
-  ))
-} -->
-{
-  woff2Urls.map((url) => (
-    <link rel='preload' href={url} as='font' type='font/woff2' crossorigin />
-  ))
-}
-<script defer='defer' src='/assets/js/han.min.js?v=3.3.0' type='module'
-></script>
-<!--
-<script
-  crossorigin='anonymous'
-  src='https://cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js'
-  defer></script>
-<script
-  crossorigin='anonymous'
-  src='https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.4/heti-addon.min.js'
-  defer></script>
--->
+<Critical />
 <!-- <meta name='disabled-adaptations' content='watch' /> -->
 <meta name='view-transition' content='same-origin' />
 <meta
@@ -78,12 +36,12 @@ const permalink = `${canonicalURL.href}`
   content='telephone=no, date=no, address=no, email=no'
 />
 <meta name='title' content={metaTitle} />
-<meta name='description' content={description} />
+{pageInfo.abstract && <meta name='description' content={pageInfo.abstract} />}
 <link rel='canonical' href={canonicalURL} data-pagefind-meta='url[href]' />
 <Favicon />
 <!-- https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag -->
 {
-  isIndex ? (
+  pageInfo.isIndex ? (
     <meta
       name='robots'
       content='index, follow, noarchive, noai, noimageai, max-snippet:-1, max-video-preview:-1, max-image-preview:large'
@@ -95,21 +53,42 @@ const permalink = `${canonicalURL.href}`
     />
   )
 }
-<!-- { isProd && (<>...</>} -->
+{
+  pageInfo.publishDate && (
+    <meta property='article:published_time' content={nicePublishDate} />
+  )
+}
+{
+  pageInfo.updatedDate && (
+    <meta property='article:modified_time' content={niceUpdatedDate} />
+  )
+}
 <link
   href={feedUrls.atom}
   rel='alternate'
-  title={`ATOM Feed for ${domain}`}
+  title={`ATOM Feed for ${siteDomain}`}
   type='application/atom+xml'
 />
 <link
   href={feedUrls.json}
   rel='alternate'
-  title={`JSON Feed for ${domain}`}
+  title={`JSON Feed for ${siteDomain}`}
   type='application/feed+json'
 />
 <meta name='generator' content='Drupal 7 (https://www.drupal.org)' />
+{
+  pageInfo.prev && (
+    <link rel='prev' aria-label='Previous page' href={pageInfo.prev} />
+  )
+}
+{
+  pageInfo.next && (
+    <link rel='next' aria-label='Next page' href={pageInfo.next} />
+  )
+}
 <ViewTransitions />
 <!-- @source:
-https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro
+- https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro
+- https://github.com/yuheiy/yuheiy.com-v6/blob/main/src/components/Layout.astro
+- https://github.com/yamanoku/archives/blob/main/src/components/BaseHead.astro
 -->

@@ -1,7 +1,7 @@
-// import path from 'node:path'
+// import { join } from 'node:path/posix'
 // import urlJoin from 'url-join'
 import slug from 'limax' // or `transliteration`
-import { SITE_URL } from '~/consts'
+import siteInfo from '~/consts'
 
 const slugifier = (string_) => slug(string_, { tone: false })
 
@@ -16,20 +16,32 @@ function getCleanSlug(post) {
   }
 }
 
+function fullLink(path, base = siteInfo.siteBase) {
+  return new URL(path, base).href
+}
+
 function getURLFromEntry(slug, collection) {
   switch (collection) {
     case 'page': {
-      // const result = urlJoin(SITE_URL, collection, slug)
-      // const result = new URL(path.join(collection, slug), SITE_URL)
-      const result = new URL(slug, SITE_URL)
+      // const result = urlJoin(siteInfo.siteBase, collection, slug)
+      // const result = new URL(path.join(collection, slug), siteInfo.siteBase)
+      const result = new URL(slug, siteInfo.siteBase)
 
       return result
     }
 
     case 'then': {
-      // const result = urlJoin(SITE_URL, 'post', slug)
-      // const result = new URL(path.join('post', slug), SITE_URL)
-      const result = new URL(slug, SITE_URL)
+      // const result = urlJoin(siteInfo.siteBase, 'post', slug)
+      // const result = new URL(path.join('post', slug), siteInfo.siteBase)
+      const result = new URL(slug, siteInfo.siteBase)
+
+      return result
+    }
+
+    case 'status': {
+      // const result = urlJoin(siteInfo.siteBase, 'status', slug)
+      // const result = new URL(path.join('status', slug), siteInfo.siteBase)
+      const result = new URL(slug, siteInfo.siteBase)
 
       return result
     }
@@ -46,7 +58,13 @@ function removeTrailingSlash(pathname) {
   return pathname
 }
 
-export { slugifier, getCleanSlug, getURLFromEntry, removeTrailingSlash }
+export {
+  slugifier,
+  getCleanSlug,
+  fullLink,
+  getURLFromEntry,
+  removeTrailingSlash,
+}
 // @source:
 // https://github.com/hendriknielaender/double-trouble/blob/main/src/utils/permalinks.js
 // https://github.com/gotofritz/gotofritz.github.io/blob/main/src/utils/slugRewrite.ts

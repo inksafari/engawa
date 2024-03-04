@@ -1,14 +1,5 @@
 import spacetime from 'spacetime'
-import {
-  copyrightYear,
-  feedUrls,
-  RSS_LANG,
-  SITE_DOMAIN,
-  SITE_TITLE,
-  SITE_DESCRIPTION,
-  SITE_TZ,
-  SITE_URL,
-} from '~/consts'
+import siteInfo, { feedUrls } from '~/consts'
 import {
   compileHTMLForRSS,
   // getPostDescription
@@ -17,15 +8,17 @@ import { formatRFC3339 } from '~/utilities/date.utils'
 import { fetchPosts } from '~/utilities/getPosts'
 import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
 
-// new Date().getFullYear()
-const nowDate = spacetime.now().goto(SITE_TZ).goto(null).year()
-const copyrightYearFrom = Number(copyrightYear) ? copyrightYear : nowDate
-
 export const prerender = true
 
+// new Date().getFullYear()
+const nowDate = spacetime.now().goto(siteInfo.tz).goto(null).year()
+const copyrightYearFrom = Number(siteInfo.copyrightYear)
+  ? siteInfo.copyrightYear
+  : nowDate
+
 const author = {
-  name: SITE_DOMAIN,
-  url: SITE_URL,
+  name: siteInfo.author.networks.twitter.id,
+  url: siteInfo.siteBase,
 }
 async function compilePostsForRSS(posts) {
   const postDetails = posts.flatMap((post) => ({
@@ -46,15 +39,15 @@ const items = await compilePostsForRSS(posts)
 // const TTL = 86_400
 const feed = {
   version: 'https://jsonfeed.org/version/1.1',
-  title: SITE_TITLE,
+  title: siteInfo.title,
   // icon: '/android-chrome-512x512.png',
   // favicon: '/apple-touch-icon.png',
-  description: SITE_DESCRIPTION,
-  home_page_url: SITE_URL,
+  description: siteInfo.description,
+  home_page_url: siteInfo.siteBase,
   feed_url: `${feedUrls.json}`,
   authors: [author],
-  language: RSS_LANG,
-  copyright: `© ${copyrightYearFrom}-present, ${SITE_DOMAIN}`,
+  language: siteInfo.langFeed,
+  copyright: `© ${copyrightYearFrom}-present, ${siteInfo.domain}`,
   items,
 }
 

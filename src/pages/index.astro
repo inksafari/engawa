@@ -9,11 +9,14 @@ import { fetchPosts } from '~/utilities/getPosts'
 const currentTime = spacetime.now()
 const allPosts = await fetchPosts({ collection: 'then' })
 const entries = allPosts.map(getCleanSlug)
-
 //const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
+
+const pageInfo = {
+  title: '',
+}
 ---
 
-<PostListingLayout>
+<PostListingLayout {pageInfo}>
   <ul class='post-list' data-pagefind-ignore>
     {
       entries.flatMap((entry) => (

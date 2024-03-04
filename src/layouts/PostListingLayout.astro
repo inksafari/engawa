@@ -4,20 +4,20 @@ import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
 import Header from '~/components/Header.astro'
 import Footer from '~/components/Footer.astro'
-import { siteOwner, SITE_TITLE, HTM_LANG } from '~/consts'
+import siteInfo from '~/consts'
 
-const { currentPage } = Astro.props
+const { pageInfo, currentPage } = Astro.props
 ---
 
 <!doctype html>
 <html
   dir='ltr'
-  lang={HTM_LANG}
+  lang={siteInfo.langFull}
   class='han-init'
   prefix='og: https://ogp.me/ns# website: https://ogp.me/ns/website# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead {...Astro.props} />
+    <BaseHead {pageInfo} />
     <slot name='meta' />
   </head>
   <body

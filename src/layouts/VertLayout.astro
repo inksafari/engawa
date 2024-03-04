@@ -2,17 +2,17 @@
 // WARNING: 還沒寫
 import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
-import { HTM_LANG, RSS_LANG } from '~/consts'
+import siteInfo from '~/consts'
 ---
 
 <!-- https://www.w3.org/TR/xhtml-rdfa/ --><!doctype html>
 <html
   dir='rtl'
-  lang={HTM_LANG}
+  lang={siteInfo.langFull}
   class='han-init'
   version='XHTML+RDFa 1.1'
   xmlns='http://www.w3.org/1999/xhtml'
-  xml:lang={RSS_LANG}
+  xml:lang={siteInfo.langFull}
   xmlns:og='https://ogp.me/ns#'
   xmlns:website='https://ogp.me/ns/website#'
   xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'

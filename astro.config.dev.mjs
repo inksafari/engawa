@@ -3,23 +3,22 @@ import { defineConfig } from 'astro/config'
 /* --- Integrations ( https://astro.build/integrations ) --- */
 import svelte from '@astrojs/svelte'
 import mdx from '@astrojs/mdx'
-import compress from 'astro-compress'
 // import sentry from '@sentry/astro'
 // import spotlightjs from '@spotlightjs/astro'
 /* -- Configuration -- */
 import { markdownOptions } from './src/plugins/plugins.config.js'
 /* -- Environment Variables -- */
-import { SERVER_PORT, SITE_URL } from '~/consts'
+import siteInfo from '~/consts'
 
-const devConfig = {
-  site: SITE_URL,
+const developmentConfig = {
+  site: siteInfo.siteBase,
   server: {
-    port: Number.parseInt(SERVER_PORT),
+    port: Number.parseInt(siteInfo.port),
   },
   output: 'server',
-  //adapter: node({
-  //mode: 'standalone',
-  //}),
+  // adapter: node({
+  // mode: 'standalone',
+  // }),
   trailingSlash: 'never',
   /* https://docs.astro.build/en/guides/prefetch/ */
   prefetch: {
@@ -60,4 +59,4 @@ const devConfig = {
   // }
 }
 
-export default defineConfig(devConfig)
+export default defineConfig(developmentConfig)

@@ -1,7 +1,6 @@
 ---
 // import type { CollectionEntry } from 'astro:content'
 import type { MarkdownHeading } from 'astro'
-import type { Post } from '~/types'
 import '../styles/layout_post.js'
 import { Moon } from 'lunarphase-js'
 import BaseHead from '~/components/BaseHead.astro'
@@ -12,36 +11,40 @@ import FormattedDate from '~/components/FormattedDate.astro'
 import Footer from '~/components/Footer.astro'
 import { formatISOString, getHemisphere } from '~/utilities/date.utils'
 // import { getPostDescription } from '~/utilities/generateRSSFeed'
-import { HTM_LANG, SITE_DESCRIPTION } from '~/consts'
+import siteInfo from '~/consts'
 
-interface Props {
-  post: Post // CollectionEntry<'then'>
-  headings: MarkdownHeading[]
-}
+const { post } = Astro.props
+const { data, slug } = post
 
-const { post, headings } = Astro.props as Props
-const {
-  data: { title, excerpt, publishDate, updatedDate, prev, next },
-  slug,
-} = post
-
-const postDate = formatISOString(publishDate)
+const metaDescription = data.abstract ? data.abstract : siteInfo.description // getPostDescription(post)
+const prevPage = data.prev ? data.prev : undefined
+const nextPage = data.next ? data.prev : undefined
+const hasRecommendations = prevPage || nextPage
+const postDate = formatISOString(data.publishDate)
 const moonEmoji = Moon.lunarPhaseEmoji(new Date(postDate), {
-  hemisphere: getHemisphere(publishDate), // Hemisphere.NORTHERN,
+  hemisphere: getHemisphere(data.publishDate), // Hemisphere.NORTHERN,
 })
 
-const metaDescription = excerpt ? excerpt : SITE_DESCRIPTION // getPostDescription(post)
+const pageInfo = {
+  title: data.title,
+  abstract: metaDescription,
+  isIndex: data.isIndex,
+  publishDate: data.publishDate,
+  updatedDate: data.updatedDate ? data.updatedDate : undefined,
+  prev: prevPage,
+  next: nextPage,
+}
 ---
 
 <!doctype html>
 <html
   dir='ltr'
-  lang={HTM_LANG}
+  lang={siteInfo.langFull}
   class='han-init'
   prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead title={title} description={metaDescription} />
+    <BaseHead {pageInfo} />
     <slot name='meta' />
   </head>
   <body>
@@ -63,20 +66,20 @@ const metaDescription = excerpt ? excerpt : SITE_DESCRIPTION // getPostDescripti
             data-pagefind-meta='title'
             transition:name={`blog-${slug}-title`}
           >
-            <span class='entry-title-text'>{title}</span>
+            <span class='entry-title-text'>{data.title}</span>
           </h1>
           <div class='entry-meta'>
             <!-- timestamp(moon phases emoji) -->
             <span class='entry-meta-label-text'>Posted on </span>
-            {moonEmoji}<FormattedDate date={publishDate} />
+            {moonEmoji}<FormattedDate date={data.publishDate} />
             <!-- updatedDate -->
             {
-              updatedDate && (
+              data.updatedDate && (
                 <Fragment>
                   <span class='entry-meta-label-separator'>·</span>
                   <span class='entry-meta-label-text'>Updated on</span>
                   <FormattedDate
-                    date={updatedDate}
+                    date={data.updatedDate}
                     class='dt-updated'
                     itemprop='dateUpdated'
                   />
@@ -90,22 +93,26 @@ const metaDescription = excerpt ? excerpt : SITE_DESCRIPTION // getPostDescripti
         </div>
         <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
         {
-          (prev || next) && (
+          hasRecommendations && (
             <nav
               class='pager post-pagination'
               aria-label='Pagination'
               data-pagefind-ignore
             >
-              {prev && (
+              {prevPage && (
                 <span class='left stack'>
-                  <a href={prev} rel='prev' aria-label='Go to previous page'>
+                  <a
+                    href={prevPage}
+                    rel='prev'
+                    aria-label='Go to previous page'
+                  >
                     &laquo;&nbsp;Prev
                   </a>
                 </span>
               )}
-              {next && (
+              {nextPage && (
                 <span class='right stack'>
-                  <a href={next} rel='next' aria-label='Go to next page'>
+                  <a href={nextPage} rel='next' aria-label='Go to next page'>
                     Next&nbsp;&raquo;
                   </a>
                 </span>

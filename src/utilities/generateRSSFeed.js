@@ -1,24 +1,14 @@
-// import { s } from 'hastscript'
 import { unified } from 'unified'
 import remarkDirective from 'remark-directive'
-// FIXME: remark-expressive-code無法在articlePipeline使用
-// 但是 rss reader 會幫忙框出程式碼區塊，不再考慮用其他工具取代
-// import remarkExpressiveCode from 'remark-expressive-code'
 import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
-// import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-// import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
-// import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import sanitizeHtml from 'sanitize-html'
 import { getURLFromEntry } from '~/utilities/getPermaLink'
-// import {
-// SITE_URL,
-// siteOwner,
-// } from '~/consts'
+// import siteInfo from '~/consts'
 
 // 在 NetNewsWire v6.1.4 和 Reeder v4.2.8 瀏覽，文字可以完整讀取，套件效果未測
 // https://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Latin-1_characters
@@ -49,8 +39,8 @@ function compileHTMLForRSS(post) {
 
   // <p>
   //   Thanks for reading this post in your RSS reader! <br />
-  //   If you want to respond you can <a href="${SITE_URL}/contact">write me an Email</a>
-  //   or reach out on <a href="https://twitter.com/{siteOwner.twitterHandle}">Twitter</a>.
+  //   If you want to respond you can <a href="${siteInfo.siteBase}/contact">write me an Email</a>
+  //   or reach out on <a href={siteInfo.author.networks.twitter.link}>Twitter</a>.
   //  </p>
   const additionalHTML = `
     <hr />
@@ -65,14 +55,14 @@ function compileHTMLForRSS(post) {
 
 /* https://github.com/moeyua/astro-theme-typography/blob/main/src/utils/index.ts */
 function getPostDescription(post) {
-  if (post.data.excerpt) {
-    return post.data.excerpt
+  if (post.data.abstract) {
+    return post.data.abstract
   }
 
   const html = articlePipeline(post.body)
   const allowedTags = [...sanitizeHtml.defaults.allowedTags, 'img']
   const sanitized = sanitizeHtml(html, { allowedTags })
-  return sanitized.slice(0, 250)
+  return sanitized.slice(0, 160)
 }
 
 export { articlePipeline, compileHTMLForRSS, getPostDescription }

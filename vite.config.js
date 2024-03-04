@@ -48,7 +48,7 @@ const config = {
     allowNodeBuiltins: true,
     exclude: [
       'limax',
-      //'@resvg/resvg-js'
+      // '@resvg/resvg-js'
     ],
   },
   // https://lightningcss.dev/docs.html#with-vite

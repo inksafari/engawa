@@ -4,24 +4,19 @@ import BaseHead from '~/components/BaseHead.astro'
 import Hant from '~/components/Hant.astro'
 import Header from '~/components/Header.astro'
 import Footer from '~/components/Footer.astro'
-import { HTM_LANG, SITE_DESCRIPTION } from '~/consts'
-// interface Props {
-// meta: SiteMeta;
-// }
-const {
-  meta: { title, description = SITE_DESCRIPTION },
-} = Astro.props
+import siteInfo from '~/consts'
+const { pageInfo } = Astro.props
 ---
 
 <!doctype html>
 <html
   dir='ltr'
-  lang={HTM_LANG}
+  lang={siteInfo.langFull}
   class='han-init'
   prefix='og: https://ogp.me/ns# website: https://ogp.me/ns/website# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead {pageInfo} />
     <slot name='meta' />
   </head>
   <body>
@@ -29,7 +24,7 @@ const {
     <main id='main-content'>
       <header class='page-header'>
         <h1 class='page-title'>
-          <span class='page-title-text'>{Astro.props.title}</span>
+          <span class='page-title-text'>{pageInfo.title}</span>
         </h1>
       </header>
       <slot />

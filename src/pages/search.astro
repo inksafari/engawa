@@ -1,21 +1,22 @@
 ---
 // 改用 Orama? ( https://github.com/oramasearch/orama )
 import BaseLayout from '~/layouts/BaseLayout.astro'
-import { isProd } from '~/consts'
+import { isProduction } from '~/consts'
 // FIXME: 跑不出來
 // import { PagefindUI } from '@pagefind/default-ui'
 // import styles from '@pagefind/default-ui/css/ui.css'
-const meta = {
+
+const pageInfo = {
   title: 'Search',
 }
 ---
 
-<BaseLayout meta={meta}>
+<BaseLayout {pageInfo}>
   <script src='/pagefind/pagefind-ui.js' slot='meta' crossorigin='anonymous'
   ></script>
   <link href='/pagefind/pagefind-ui.css' rel='stylesheet' slot='meta' />
   {
-    isProd ? (
+    isProduction ? (
       <div class='search-container'>
         <p>Use the search field below to search for blog posts.</p>
         <div id='yan__search' class='pagefind_searchbar' aria-label='Search' />

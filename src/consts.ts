@@ -1,45 +1,55 @@
-import { removeTrailingSlash } from '~/utilities/getPermaLink'
-
 // ---------------------------------------------------------------------
-export const siteOwner = {
+const isBuild = process.env.npm_lifecycle_script || ''.includes('astro build')
+const isProduction = import.meta.env.MODE === 'production'
+const isDevelopment = import.meta.env.MODE !== 'production'
+const sitePort = import.meta.env.VITE_SITE_PORT
+const localhostUrl = `http://localhost:${sitePort}`
+const liveUrl = import.meta.env.VITE_SITE_URL
+// ---------------------------------------------------------------------
+const authorInfo = {
   // name: '',
-  twitterHandle: 'inksafari',
+  networks: {
+    twitter: {
+      platform: 'Twitter',
+      id: '@inksafari',
+      link: 'https://twitter.com/inksafari',
+    },
+    // fediverse
+    // mastodon: {
+    // platform: 'Mastodon',
+    // user: 'username',
+    // instance: 'instance.tld',
+    // id: 'username@instance.tld',
+    // link: 'https://instance.tld/@inksafari'
+    // },
+  },
 }
 // ---------------------------------------------------------------------
-export const webFinger = {
-  user: 'username',
-  instance: 'instance.tld',
-  uri: 'username@instance.tld',
+const siteInfo = {
+  title: authorInfo.networks.twitter.id,
+  description: 'Where everyday is gameday.',
+  author: authorInfo,
+  domain: import.meta.env.VITE_SITE_DOMAIN, // example.com
+  siteBase: isProduction ? liveUrl : localhostUrl, // https://example.com
+  port: sitePort,
+  // ogImage: '/images/opengraph/default.png',
+  // sitePort: import.meta.env.VITE_SITE_PORT,
+  copyrightYear: '2024',
+  tz: 'Asia/Taipei',
+  langFull: 'zh-Hant-TW', // HTML / XML
+  langFeed: 'zh-guoyu', // JSON Feed(RFC 5646)
+  langOgp: 'zh_TW', // The Open Graph protocol
 }
 // ---------------------------------------------------------------------
-export const SCRIPT = process.env.npm_lifecycle_script || ''
-export const isBuild = SCRIPT.includes('astro build')
-export const isProd = import.meta.env.MODE === 'production'
-export const isDev = import.meta.env.MODE !== 'production'
-export const SERVER_PORT = import.meta.env.VITE_SITE_PORT
-export const LOCALHOST_URL = `http://localhost:${SERVER_PORT}`
-export const LIVE_URL = import.meta.env.VITE_SITE_URL
-// ---------------------------------------------------------------------
-export const SITE_DOMAIN = import.meta.env.VITE_SITE_DOMAIN
-export const SITE_URL = isProd ? LIVE_URL : LOCALHOST_URL
-export const SITE_TITLE = 'Slow Sour'
-export const SITE_DESCRIPTION = 'Where everyday is gameday.'
-export const copyrightYear = '2024'
-export const WEBMENTIONS_URL = import.meta.env.VITE_WEBMENTION_URL
-// ---------------------------------------------------------------------
-export const HTM_LANG = 'zh-Hant-TW'
-export const RSS_LANG = 'zh-TW'
-export const OGP_LANG = 'zh_TW'
-export const SITE_TZ = 'Asia/Taipei'
-// ---------------------------------------------------------------------
-export const feedUrls = {
-  atom: `${SITE_URL}/rss/feed.xml`,
-  json: `${SITE_URL}/rss/feed.json`,
+const feedUrls = {
+  page: new URL('rss', siteInfo.siteBase),
+  atom: new URL('rss/feed.xml', siteInfo.siteBase),
+  json: new URL('rss/feed.json', siteInfo.siteBase),
 }
 // ---------------------------------------------------------------------
 // Date.prototype.toLocaleDateString() parameters,
 // found in src/components/FormattedDate.astro.
-export const dateOpts = {
+const dateOptions = {
   locale: 'en-US',
   options: {
     // weekday: 'short',
@@ -52,16 +62,15 @@ export const dateOpts = {
     // minute: '2-digit',
     // second: 'numeric',
     hourCycle: 'h11',
-    timeZone: SITE_TZ,
+    timeZone: siteInfo.tz,
   },
 }
 // ---------------------------------------------------------------------
-const searchPageSlug = 'search'
-const searchPageLoc = new URL(searchPageSlug, SITE_URL)
-const searchPageUrl = removeTrailingSlash(searchPageLoc)
-
-export const navItems = [
-  { name: '/Search', url: searchPageUrl },
-  { name: 'Colophon', url: 'colophon' },
-  { name: 'RSS', url: 'rss' },
-]
+export {
+  siteInfo as default,
+  isBuild,
+  isProduction,
+  isDevelopment,
+  feedUrls,
+  dateOptions as dateOpts,
+}

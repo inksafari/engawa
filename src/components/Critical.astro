@@ -1,0 +1,22 @@
+---
+const woff2Urls = ['/assets/fonts/han-space.woff2?v3.3.0']
+---
+
+{
+  woff2Urls.map((url) => (
+    <link rel='preload' href={url} as='font' type='font/woff2' crossorigin />
+  ))
+}
+<script defer='defer' src='/assets/js/han.min.js?v=3.3.0' type='module'
+></script>
+<!--
+<script defer='defer' src='/assets/js/heti-addon.min.js?v=0.94' type='module'
+></script>
+-->
+<style is:inline>
+  @font-face {
+    font-family: 'Han Space';
+    src: url(/assets/fonts/han-space.woff2?v3.3.0) format('woff2');
+    unicode-range: U+20;
+  }
+</style>

@@ -1,9 +1,13 @@
 ---
 import PageLayout from '~/layouts/PageLayout.astro'
 import { feedUrls } from '~/consts'
+
+const pageInfo = {
+  title: 'RSS Feeds',
+}
 ---
 
-<PageLayout title='RSS Feeds'>
+<PageLayout {pageInfo}>
   <ul>
     <li>ATOM格式： <a href={feedUrls.atom}>feed.xml</a></li>
     <li>JSON格式： <a href={feedUrls.json}>feed.json</a></li>

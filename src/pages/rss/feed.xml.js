@@ -1,30 +1,23 @@
 import { atom } from 'xast-util-feed'
 import { toXml } from 'xast-util-to-xml'
-import {
-  SITE_DOMAIN,
-  SITE_URL,
-  SITE_TITLE,
-  SITE_DESCRIPTION,
-  RSS_LANG,
-  feedUrls,
-} from '~/consts'
 import { compileHTMLForRSS } from '~/utilities/generateRSSFeed'
 import { fetchPosts } from '~/utilities/getPosts'
 import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
+import siteInfo, { feedUrls } from '~/consts'
 
 export const prerender = true
 
 const author = {
-  name: SITE_DOMAIN,
-  url: SITE_URL,
+  name: siteInfo.author.networks.twitter.id,
+  url: siteInfo.siteBase,
 }
 
 const channel = {
-  title: SITE_TITLE,
-  description: SITE_DESCRIPTION,
-  url: SITE_URL,
+  title: siteInfo.title,
+  description: siteInfo.description,
+  url: siteInfo.siteBase,
   feedUrl: feedUrls.atom,
-  lang: RSS_LANG,
+  lang: siteInfo.langFeed,
   author,
 }
 

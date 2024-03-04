@@ -1,5 +1,5 @@
 import spacetime from 'spacetime'
-import { dateOpts, SITE_TZ } from '../consts'
+import siteInfo, { dateOpts } from '../consts'
 
 function getFormattedDate(date, options) {
   const dateFormat = new Intl.DateTimeFormat(dateOpts.locale, dateOpts.options)
@@ -43,7 +43,7 @@ function getRelativeTime(timestamp) {
 }
 
 function tzHelper(date) {
-  const result = spacetime(date).goto(SITE_TZ).goto(null)
+  const result = spacetime(date).goto(siteInfo.tz).goto(null)
 
   return result
 }
