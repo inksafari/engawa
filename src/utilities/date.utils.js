@@ -1,5 +1,5 @@
 import spacetime from 'spacetime'
-import siteInfo, { dateOpts } from '../consts'
+import siteInfo, { dateOpts } from '../consts.ts'
 
 function getFormattedDate(date, options) {
   const dateFormat = new Intl.DateTimeFormat(dateOpts.locale, dateOpts.options)

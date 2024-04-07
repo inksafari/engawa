@@ -1,10 +1,9 @@
 ---
 import '../styles/layout_list.js'
-import BaseHead from '~/components/BaseHead.astro'
-import Hant from '~/components/Hant.astro'
-import Header from '~/components/Header.astro'
-import Footer from '~/components/Footer.astro'
-import siteInfo from '~/consts'
+import BaseHead from '../components/BaseHead.astro'
+import Hant from '../components/Hant.astro'
+import Footer from '../components/Footer.astro'
+import siteInfo from '../consts.ts'
 
 const { pageInfo, currentPage } = Astro.props
 ---
@@ -25,9 +24,10 @@ const { pageInfo, currentPage } = Astro.props
     itemscope
     itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
   >
-    <Header />
     <main id='main-content'>
-      <slot />
+      <div class='container'>
+        <slot />
+      </div>
     </main>
     <Footer />
     <Hant />

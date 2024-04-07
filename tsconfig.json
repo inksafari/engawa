@@ -2,7 +2,7 @@
   // @see https://github.com/withastro/astro/tree/main/packages/astro/tsconfigs
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "types": ["astro/client", "src/types/*.d.ts"],
+    "types": ["astro/client", "src/types/*.d.ts", "bun-types"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]

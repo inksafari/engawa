@@ -2,23 +2,24 @@ import { defineConfig } from 'astro/config'
 /* --- Integrations ( https://astro.build/integrations ) --- */
 import svelte from '@astrojs/svelte'
 import mdx from '@astrojs/mdx'
-import compress from 'astro-compress'
+import compress from '@playform/compress'
+import { pagefind } from './src/plugins/astro-integrations/pagefind.js'
 
 /* -- Configuration -- */
 import {
   astroCompressOptions,
   markdownOptions,
 } from './src/plugins/plugins.config.js'
-/* -- Environment Variables -- */
-import siteInfo from '~/consts'
 
-// https://astro.build/config
+/* -- Environment Variables -- */
+import siteInfo from './src/consts'
+
 const baseConfig = {
   site: siteInfo.siteBase,
   server: {
     port: Number.parseInt(siteInfo.port),
   },
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
   /* https://docs.astro.build/en/guides/prefetch/ */
   prefetch: {
     defaultStrategy: 'viewport',
@@ -32,6 +33,7 @@ const baseConfig = {
     svelte(),
     mdx(markdownOptions),
     compress(astroCompressOptions),
+    pagefind(),
   ],
   markdown: markdownOptions,
   // redirects: {
@@ -50,4 +52,5 @@ const baseConfig = {
 
 // isProd && { baseConfig.integrations.push(serviceWorker()) }
 
+// https://astro.build/config
 export default defineConfig(baseConfig)

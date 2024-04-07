@@ -1,16 +1,16 @@
 // import path from 'node:path'
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-  transformerNotationFocus,
-  transformerNotationErrorLevel,
-  // transformerRenderWhitespace,
-  transformerMetaHighlight,
-  transformerMetaWordHighlight,
-  transformerCompactLineOptions,
-  // transformerRemoveLineBreak,
-} from '@shikijs/transformers' // 'shikiji-transformers'
+// import {
+// transformerNotationDiff,
+// transformerNotationHighlight,
+// transformerNotationWordHighlight,
+// transformerNotationFocus,
+// transformerNotationErrorLevel,
+// transformerRenderWhitespace,
+// transformerMetaHighlight,
+// transformerMetaWordHighlight,
+// transformerCompactLineOptions,
+// transformerRemoveLineBreak,
+// } from '@shikijs/transformers' // 'shikiji-transformers'
 
 // https://github.com/riceball-tw/astro-blog/blob/main/astro.config.mjs
 // https://github.com/danillouz/mysite/blob/main/src/plugins/autolink-headings.mjs
@@ -46,25 +46,32 @@ const rehypePrettyCodeOptions = {
     dark: 'github-dark-dimmed',
     light: 'github-light',
   },
-  onVisitHighlightedLine(element) {
-    element.properties.className?.push('line')
+  onVisitHighlightedLine(node) {
+    node?.properties?.className?.push('highlighted')
   },
-  transformers: [
-    transformerNotationDiff(),
-    transformerNotationHighlight(),
-    transformerNotationWordHighlight(),
-    transformerNotationFocus(),
-    transformerNotationErrorLevel(),
-    // transformerRenderWhitespace(),
-    transformerMetaHighlight(),
-    transformerMetaWordHighlight(),
-    transformerCompactLineOptions(),
-    // transformerRemoveLineBreak(),
-  ],
+  onVisitHighlightedChars(node) {
+    console.log(node)
+    node?.properties?.className
+      ? node.properties.className.push('highlighted-chars')
+      : (node.properties.className = ['highlighted-chars'])
+  },
+  tokensMap: {},
+  // transformers: [
+  // transformerNotationDiff(),
+  // transformerNotationHighlight(),
+  // transformerNotationWordHighlight(),
+  // transformerNotationFocus(),
+  // transformerNotationErrorLevel(),
+  // transformerRenderWhitespace(),
+  // transformerMetaHighlight(),
+  // transformerMetaWordHighlight(),
+  // transformerCompactLineOptions(),
+  // transformerRemoveLineBreak(),
+  // ],
 }
 
 export {
   rehypeAutolinkHeadingsOptions,
   rehypeCitationOptions,
-  rehypePrettyCodeOptions,
+  // rehypePrettyCodeOptions,
 }

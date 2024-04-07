@@ -8,7 +8,7 @@ import mdx from '@astrojs/mdx'
 /* -- Configuration -- */
 import { markdownOptions } from './src/plugins/plugins.config.js'
 /* -- Environment Variables -- */
-import siteInfo from '~/consts'
+import siteInfo from './src/consts'
 
 const developmentConfig = {
   site: siteInfo.siteBase,
@@ -19,7 +19,7 @@ const developmentConfig = {
   // adapter: node({
   // mode: 'standalone',
   // }),
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
   /* https://docs.astro.build/en/guides/prefetch/ */
   prefetch: {
     defaultStrategy: 'viewport',

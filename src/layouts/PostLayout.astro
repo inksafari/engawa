@@ -1,22 +1,26 @@
 ---
-// import type { CollectionEntry } from 'astro:content'
-import type { MarkdownHeading } from 'astro'
 import '../styles/layout_post.js'
+import { fade } from 'astro:transitions'
 import { Moon } from 'lunarphase-js'
-import BaseHead from '~/components/BaseHead.astro'
-import Hant from '~/components/Hant.astro'
-// import Heti from '~/components/Heti.astro'
-import Header from '~/components/Header.astro'
-import FormattedDate from '~/components/FormattedDate.astro'
-import Footer from '~/components/Footer.astro'
-import { formatISOString, getHemisphere } from '~/utilities/date.utils'
-// import { getPostDescription } from '~/utilities/generateRSSFeed'
-import siteInfo from '~/consts'
+import BaseHead from '../components/BaseHead.astro'
+import OutdateTip from '../components/OutdateTip.astro'
+import Hant from '../components/Hant.astro'
+// import Heti from '../components/Heti.astro'
+// import Header from '../components/Header.astro'
+// import Footer from '../components/Footer.astro'
+import FormattedDate from '../components/FormattedDate.astro'
+import { formatISOString, getHemisphere } from '../utilities/date.utils.js'
+import { applyBudouXToHTML } from '../utilities/render.js'
+// import { getPostDescription } from '../utilities/generateRSSFeed.js'
+import siteInfo from '../consts.ts'
 
-const { post } = Astro.props
+const { post, updatedDate } = Astro.props
 const { data, slug } = post
 
-const metaDescription = data.abstract ? data.abstract : siteInfo.description // getPostDescription(post)
+const isOld =
+  data.publishDate < new Date(Date.now() - 31536000000) &&
+  (updatedDate === undefined || updatedDate < new Date(Date.now() - 31536000000))
+const metaDescription = data.abstract ?? siteInfo.description // getPostDescription(post)
 const prevPage = data.prev ? data.prev : undefined
 const nextPage = data.next ? data.prev : undefined
 const hasRecommendations = prevPage || nextPage
@@ -30,7 +34,7 @@ const pageInfo = {
   abstract: metaDescription,
   isIndex: data.isIndex,
   publishDate: data.publishDate,
-  updatedDate: data.updatedDate ? data.updatedDate : undefined,
+  updatedDate: updatedDate ? updatedDate : undefined,
   prev: prevPage,
   next: nextPage,
 }
@@ -45,10 +49,23 @@ const pageInfo = {
 >
   <head>
     <BaseHead {pageInfo} />
+    {
+      pageInfo.isIndex === false ? (
+        <meta
+          name='robots'
+          content='noindex, noimageindex, nofollow, noarchive, noai, noimageai'
+        />
+      ) : (
+        <meta
+          name='robots'
+          content='index, noimageindex, follow, noarchive, noai, noimageai, max-snippet:-1, max-video-preview:-1, max-image-preview:large'
+        />
+      )
+    }
     <slot name='meta' />
   </head>
   <body>
-    <Header />
+    <!-- <Header /> -->
     <!-- TODO: microformats
     - https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
     - https://developers.google.com/search/docs/appearance/structured-data/article
@@ -60,70 +77,94 @@ const pageInfo = {
         data-pagefind-body
         data-pagefind-meta='kind:weblog'
       >
-        <header class='entry-header'>
+        <!-- entry meta -->
+        <label class='sidenote-toggle'>
           <h1
             class='entry-title p-name'
             data-pagefind-meta='title'
             transition:name={`blog-${slug}-title`}
+            transition:animate={fade({ duration: 1000 })}
           >
-            <span class='entry-title-text'>{data.title}</span>
+            <Fragment set:html={applyBudouXToHTML(data.title)} />
           </h1>
-          <div class='entry-meta'>
-            <!-- timestamp(moon phases emoji) -->
-            <span class='entry-meta-label-text'>Posted on </span>
-            {moonEmoji}<FormattedDate date={data.publishDate} />
-            <!-- updatedDate -->
-            {
-              data.updatedDate && (
-                <Fragment>
-                  <span class='entry-meta-label-separator'>·</span>
-                  <span class='entry-meta-label-text'>Updated on</span>
-                  <FormattedDate
-                    date={data.updatedDate}
-                    class='dt-updated'
-                    itemprop='dateUpdated'
-                  />
-                </Fragment>
-              )
-            }
-          </div>
-        </header>
+          <!-- timestamp(moon phases emoji) -->
+          <span class='screen-reader'>Posted on </span>
+          {moonEmoji}<FormattedDate date={data.publishDate} />
+        </label>
+        <span class='sidenote left'>
+          <h1
+            class='entry-title p-name'
+            data-pagefind-meta='title'
+            transition:name={`blog-${slug}-title`}
+            transition:animate={fade({ duration: 1000 })}
+          >
+            <Fragment set:html={applyBudouXToHTML(data.title)} />
+          </h1>
+          <!-- timestamp(moon phases emoji) -->
+          <span class='screen-reader'>Posted on </span>
+          {moonEmoji}<FormattedDate date={data.publishDate} />
+        </span>
+        <span class='sidenote bottom'>
+          <h4><a href='/'>← Home</a></h4>
+        </span>
         <div class='markdown entry-content e-content'>
+          {isOld ? <OutdateTip /> : null}
           <slot />
+          <!-- updatedDate -->
+          {
+            data.updatedDate && (
+              <Fragment>
+                {/*
+                  <span class='entry-meta-label-separator'>·</span>
+                */}
+                <span class='entry-meta-label-text'>Updated on</span>
+                <FormattedDate
+                  date={data.updatedDate}
+                  class='dt-updated'
+                  itemprop='dateUpdated'
+                />
+              </Fragment>
+            )
+          }
         </div>
-        <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
-        {
-          hasRecommendations && (
-            <nav
-              class='pager post-pagination'
-              aria-label='Pagination'
-              data-pagefind-ignore
-            >
-              {prevPage && (
-                <span class='left stack'>
-                  <a
-                    href={prevPage}
-                    rel='prev'
-                    aria-label='Go to previous page'
-                  >
-                    &laquo;&nbsp;Prev
-                  </a>
-                </span>
-              )}
-              {nextPage && (
-                <span class='right stack'>
-                  <a href={nextPage} rel='next' aria-label='Go to next page'>
-                    Next&nbsp;&raquo;
-                  </a>
-                </span>
-              )}
-            </nav>
-          )
-        }
       </article>
+      <!-- 左箭頭：&larr;  v.  右箭頭&rarr; -->
+      {
+        hasRecommendations && (
+          <nav
+            class='pager post-pagination'
+            aria-label='Pagination'
+            data-pagefind-ignore
+          >
+            {prevPage && (
+              <span class='left stack'>
+                <a href={prevPage} rel='prev' aria-label='Go to previous page'>
+                  &laquo;&nbsp;Prev
+                </a>
+              </span>
+            )}
+            {nextPage && (
+              <span class='right stack'>
+                <a href={nextPage} rel='next' aria-label='Go to next page'>
+                  Next&nbsp;&raquo;
+                </a>
+              </span>
+            )}
+          </nav>
+        )
+      }
     </main>
-
-    <Footer />
+    <!-- <Footer /> -->
     <Hant /><!-- or <Heti /> -->
   </body>
 </html>
+<style is:inline>
+  body {
+    --body-bg-color: #DBEFE8;
+    background-color: var(--body-bg-color);
+  }
+
+  ::selection {
+    background-color: #F7E4E0;
+}
+</style>

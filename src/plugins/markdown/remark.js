@@ -4,6 +4,8 @@ import remarkExpressiveCode from 'remark-expressive-code'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkRuby from './remark-ruby.js'
+// import remarkModifiedTime from './remark-update.js'
+import { remarkExpressiveCodeOptions } from './remark.options.js'
 
 export const remarkPlugins = [
   remarkGfm,
@@ -14,26 +16,8 @@ export const remarkPlugins = [
       separator: ';',
     },
   ],
-  [
-    remarkExpressiveCode,
-    {
-      themes: ['material-theme-palenight', 'github-light'],
-      // themeCssSelector(theme) {
-      // return `[data-theme='${
-      // theme.name === 'github-light' ? 'light' : 'dark'
-      // }']`
-      // },
-      styleOverrides: {
-        // borderRadius: 'var(--border-radius)',
-        uiFontFamily: 'var(--font-mono)',
-        codeFontFamily: 'var(--font-mono)',
-        // codeFontSize: '0.8rem',
-        // frames: {
-        // frameBoxShadowCssValue: 'var(--box-shadow)'
-        // }
-      },
-    },
-  ],
+  [remarkExpressiveCode, remarkExpressiveCodeOptions],
   remarkA11yEmoji,
   remarkMath,
+  // remarkModifiedTime,
 ]

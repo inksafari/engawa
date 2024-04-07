@@ -1,10 +1,10 @@
 ---
 // 改用 Orama? ( https://github.com/oramasearch/orama )
-import BaseLayout from '~/layouts/BaseLayout.astro'
-import { isProduction } from '~/consts'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { isProduction } from '../consts.ts'
+// import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 // FIXME: 跑不出來
 // import { PagefindUI } from '@pagefind/default-ui'
-// import styles from '@pagefind/default-ui/css/ui.css'
 
 const pageInfo = {
   title: 'Search',
@@ -19,7 +19,15 @@ const pageInfo = {
     isProduction ? (
       <div class='search-container'>
         <p>Use the search field below to search for blog posts.</p>
-        <div id='yan__search' class='pagefind_searchbar' aria-label='Search' />
+        {/* <div id='yan__search' class='pagefind_searchbar' aria-label='Search' /> */}
+        <input
+          id='yan__search'
+          class='pagefind_searchbar'
+          aria-label='Search'
+          type='text'
+          placeholder='Search...'
+        />
+        <div id='results' />
       </div>
     ) : (
       <p>
@@ -29,14 +37,45 @@ const pageInfo = {
     )
   }
   <script crossorigin='anonymous' is:inline slot='footer'>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      /* https://pagefind.app/docs/ui/ */
-      new PagefindUI({
-        element: '#yan__search',
-        resetStyles: false,
-        showSubResults: false,
+    document
+      .querySelector('#yan__search')
+      ?.addEventListener('input', async (e) => {
+        // only load the pagefind script once
+        if (e.target.dataset.loaded !== 'true') {
+          e.target.dataset.loaded = 'true'
+          // load the pagefind script
+          window.pagefind = await import('/pagefind/pagefind.js')
+        }
+
+        // search the index using the input value
+        const search = await window.pagefind.search(e.target.value)
+
+        // clear the old results
+        document.querySelector('#results').innerHTML = ''
+
+        // add the new results
+        for (const result of search.results) {
+          const data = await result.data()
+
+          // FIXME: trailingSlash
+          document.querySelector('#results').innerHTML += `
+        <a href="${data.url}">
+          <h3>${data.meta.title}</h3>
+          <p>${data.meta.date}</p>
+          <p>${data.excerpt}</p>
+        </a>`
+        }
       })
-    })
+
+    // import { PagefindUI } from '@pagefind/default-ui';
+    // window.addEventListener('DOMContentLoaded', (event) => {
+    /* https://pagefind.app/docs/ui/ */
+    // new PagefindUI({
+    // element: '#yan__search',
+    // resetStyles: false,
+    // showSubResults: false,
+    // })
+    // })
   </script>
   <style is:global>
     :root {
@@ -53,10 +92,18 @@ const pageInfo = {
       --pagefind-ui-background: var(--yan-color-background-primary);
       --pagefind-ui-border: var(--yan-color-border);
       --pagefind-ui-border-width: 1px;
+      transition-duration: 300ms;
+      border-radius: 8px;
+    }
+
+    #yan__search:not(:has(.pagefind-ui__hidden)) {
+      padding: 16px;
+      border-radius: 16px;
     }
   </style>
 </BaseLayout>
 <!-- @credits:
   - https://lirantal.com/blog/2023-01-01_-how_to_add_client-side_search_to_your_astro_blog_static_website/
   - https://github.com/chrismwilliams/astro-theme-cactus/blob/main/src/components/layout/Header.astro
+  - https://blog.otterlord.dev/posts/astro-search/
 -->

@@ -1,12 +1,10 @@
 # ❒ @inksafari/engawa
 
 [![framework][framework-badge]][framework-url]
-[![hosting][hosting-badge]][hosting-url]
-[![GitHub commit activity][activity-badge]][activity-url]
 
 @inksafari's personal, rarely-updated blog.
 
-## backlogs
+## backlog
 
 - cjk
   - webfont
@@ -44,8 +42,6 @@
   (with
   [default](https://github.com/expressive-code/expressive-code/blob/main/packages/remark-expressive-code/README.md#themes)
   themes) for syntax highlighting.
-- Set Up a Development Environment with
-  [Devbox](https://www.jetpack.io/devbox/).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -138,7 +134,18 @@ Font licenses: Open Font License (OFL)
 - [Lotion](https://font.nina.coffee/) (monospaced code font)
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- #fff6d5 -- #ffe589 #fffdcc
+<!--
+[![framework][framework-badge]][framework-url]
+[![hosting][hosting-badge]][hosting-url]
+[![GitHub commit activity][activity-badge]][activity-url]
+[![Mozilla HTTP Observatory Grade][observatory-badge]][observatory-url]
+[observatory-badge]: https://img.shields.io/mozilla-observatory/grade/example.com?publish&style=for-the-badge&labelColor=fffdd0&logo=mozilla&logoColor=f92f0b&color=f92f0b
+[observatory-url]: https://observatory.mozilla.org
+
+Set Up a Development Environment with
+  [Devbox](https://www.jetpack.io/devbox/).
+
+#fff6d5 -- #ffe589 #fffdcc
 astro: #ff5D01 #551BAC
 深藍 404aa8
 淺綠 72ba4f 55D24E
@@ -158,12 +165,10 @@ https://img.shields.io/badge/framework-Astro-ff7f00.svg?style=for-the-badge&labe
 https://img.shields.io/badge/Hosting-Deno_Deploy-informational?style=for-the-badge&labelColor=fffdd0&logo=deno&logoColor=00a300&color=00a300
 https://img.shields.io/github/commit-activity/m/inksafari/engawa.svg?style=for-the-badge&labelColor=fffdd0&logo=github&logoColor=00a8ff&color=00a8ff
 
-[![Mozilla HTTP Observatory Grade][observatory-badge]][observatory-url]
-[observatory-badge]: https://img.shields.io/mozilla-observatory/grade/example.com?publish&style=for-the-badge&labelColor=fffdd0&logo=mozilla&logoColor=f92f0b&color=f92f0b
-[observatory-url]: https://observatory.mozilla.org
 -->
 
-[framework-badge]: https://img.shields.io/badge/framework-Astro-ff7f00.svg?style=for-the-badge&labelColor=fffdd0&logo=astro&logoColor=ff7f00
+[framework-badge]: https://img.shields.io/badge/framework-Astro-edf5ff.svg?style=for-the-badge&labelColor=edf5ff&logo=astro&logoColor=f230d5
+[framework-badge-old]: https://img.shields.io/badge/framework-Astro-ff7f00.svg?style=for-the-badge&labelColor=fffdd0&logo=astro&logoColor=ff7f00
 [hosting-badge]: https://img.shields.io/badge/Hosting-Deno_Deploy-informational?style=for-the-badge&labelColor=fffdd0&logo=deno&logoColor=00a300&color=00a300
 [activity-badge]: https://img.shields.io/github/commit-activity/m/inksafari/engawa.svg?style=for-the-badge&labelColor=fffdd0&logo=github&logoColor=00a8ff&color=00a8ff
 [framework-url]: https://astro.build

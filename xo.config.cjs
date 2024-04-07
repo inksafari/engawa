@@ -19,5 +19,8 @@ module.exports = {
     'import/extensions': 'off',
     'max-params': ['error', 2],
   },
-  ignores: ['src/plugins/markdown/remark-bibliography'],
+  ignores: [
+    // 'scripts',
+    'src/plugins/markdown/remark-bibliography',
+  ],
 }

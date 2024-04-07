@@ -1,7 +1,7 @@
 // import { join } from 'node:path/posix'
 // import urlJoin from 'url-join'
 import slug from 'limax' // or `transliteration`
-import siteInfo from '~/consts'
+import siteInfo from '../consts.ts'
 
 const slugifier = (string_) => slug(string_, { tone: false })
 

@@ -1,10 +1,9 @@
 ---
 import '../styles/layout_base.js'
-import BaseHead from '~/components/BaseHead.astro'
-import Hant from '~/components/Hant.astro'
-import Header from '~/components/Header.astro'
-import Footer from '~/components/Footer.astro'
-import siteInfo from '~/consts'
+import BaseHead from '../components/BaseHead.astro'
+import Hant from '../components/Hant.astro'
+import Footer from '../components/Footer.astro'
+import siteInfo from '../consts.ts'
 const { pageInfo } = Astro.props
 ---
 
@@ -17,10 +16,10 @@ const { pageInfo } = Astro.props
 >
   <head>
     <BaseHead {pageInfo} />
+    <meta name='robots' content='noindex, noimageindex, nofollow, noarchive, noai, noimageai' />
     <slot name='meta' />
   </head>
   <body>
-    <Header />
     <main id='main-content'>
       <header class='page-header'>
         <h1 class='page-title'>

@@ -1,4 +1,6 @@
 *               text eol=lf
+*.lockb         binary
+
 
 # Documents
 src/content/*   linguist-documentation=true

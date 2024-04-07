@@ -22,4 +22,16 @@ async function fetchPosts({ collection }) {
   )
 }
 
-export { fetchPosts, orderByDateDesc }
+async function fetchPublicPosts({ collection }) {
+  const now = new Date(Date.now())
+
+  return await getCollection(collection).then((entries) =>
+    entries
+      .filter((entry) => entry.data.isDraft !== true)
+      .filter((entry) => entry.data.isIndex !== false)
+      .filter((entry) => new Date(entry.data.publishDate) < now)
+      .toSorted(orderByDateDesc),
+  )
+}
+
+export { fetchPosts, fetchPublicPosts, orderByDateDesc }

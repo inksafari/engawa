@@ -1,12 +1,12 @@
 import spacetime from 'spacetime'
-import siteInfo, { feedUrls } from '~/consts'
+import siteInfo, { feedUrls } from '../../consts.ts'
 import {
   compileHTMLForRSS,
   // getPostDescription
-} from '~/utilities/generateRSSFeed'
-import { formatRFC3339 } from '~/utilities/date.utils'
-import { fetchPosts } from '~/utilities/getPosts'
-import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
+} from '../../utilities/generateRSSFeed.js'
+import { formatRFC3339 } from '../../utilities/date.utils.js'
+import { fetchPosts } from '../../utilities/getPosts.js'
+import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
 
 export const prerender = true
 

@@ -178,3 +178,5 @@ export default [
     },
   },
 ]
+// TODO: flat化，參考：
+// https://github.com/ricora/alg.tus-ricora.com/blob/main/eslint.config.js

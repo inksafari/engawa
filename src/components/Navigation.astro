@@ -3,42 +3,19 @@
 // TODO: 開啟VoiceOver測試
 // https://www.aditus.io/patterns/multiple-navigation-landmarks/
 // https://a11ysupport.io/tech/aria/aria-current_attribute
-// import Link from '~/components/markdown/Link.astro'
-import { removeTrailingSlash } from '~/utilities/getPermaLink'
-import siteInfo, { feedUrls } from '~/consts'
+import NavigationLink from './NavigationLink.astro'
+import { removeTrailingSlash } from '../utilities/getPermaLink.js'
+import siteInfo from '../consts.ts'
 
 let searchPageSlug = 'search'
 let searchPageLoc = new URL(searchPageSlug, siteInfo.siteBase)
 let searchPageUrl = removeTrailingSlash(searchPageLoc)
 ---
 
-<nav aria-label='primary' id='primary-navigation'>
-  <ul
-    role='list'
-    itemscope
-    itemtype='https://www.schema.org/SiteNavigationElement'
-  >
-    <li itemprop='name'>
-      <a href={searchPageUrl} rel='prefetch-intent'>
-        <span class='nav-text'>/search</span>
-      </a>
-    </li>
-    <li itemprop='name'>
-      <a href='/colophon'>
-        <span class='nav-text'>colophon</span>
-      </a>
-    </li>
-    <!-- &#8239; -->
-    <li itemprop='name'>
-      <a href={feedUrls.page}>
-        <span class='nav-text-cap'>rss</span><img
-          class='rss'
-          src='/assets/img/rss.svg'
-          alt='RSS Feed'
-          title='RSS Feed'
-          loading='lazy'
-        /></a
-      >
-    </li>
-  </ul>
+<nav id='footer-navigation' aria-label='Footer navigation'>
+  <NavigationLink href='/colophon'>colophon</NavigationLink>
+  <NavigationLink href='/now'>now</NavigationLink>
+  <NavigationLink href={searchPageUrl}>
+    <span class='nav-text'>/search</span>
+  </NavigationLink>
 </nav>

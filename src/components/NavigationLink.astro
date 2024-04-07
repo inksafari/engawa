@@ -11,7 +11,7 @@ const isActive =
 
 <a
   href={href}
-  class:list={[className, { active: isActive }]}
+  class:list={[className, { _active: isActive }]}
   itemprop='url'
   aria-current={isActive ? 'page' : null}
   rel={isExternal ? 'nofollow noopener noreferrer' : null}><slot /></a
@@ -21,8 +21,8 @@ const isActive =
     display: inline-block;
     text-decoration: none;
   }
-  a.active {
+  a._active {
     font-weight: bolder;
   }
-  /* a.active::after { content: '←'; } */
+  /* a._active::after { content: '←'; } */
 </style>

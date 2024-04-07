@@ -1,9 +1,9 @@
 import { atom } from 'xast-util-feed'
 import { toXml } from 'xast-util-to-xml'
-import { compileHTMLForRSS } from '~/utilities/generateRSSFeed'
-import { fetchPosts } from '~/utilities/getPosts'
-import { getCleanSlug, getURLFromEntry } from '~/utilities/getPermaLink'
-import siteInfo, { feedUrls } from '~/consts'
+import { compileHTMLForRSS } from '../../utilities/generateRSSFeed.js'
+import { fetchPosts } from '../../utilities/getPosts.js'
+import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
+import siteInfo, { feedUrls } from '../../consts.ts'
 
 export const prerender = true
 

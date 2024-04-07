@@ -3,11 +3,11 @@ export const prerender = true
 // import { getCollection, getEntry, getEntries } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import type { MarkdownHeading } from 'astro'
-// import PageLayout from '~/layouts/PageLayout.astro'
-import PostLayout from '~/layouts/PostLayout.astro'
-import VertLayout from '~/layouts/VertLayout.astro'
-import { fetchPosts } from '~/utilities/getPosts'
-import { getCleanSlug } from '~/utilities/getPermaLink'
+// import PageLayout from '../layouts/PageLayout.astro'
+import PostLayout from '../layouts/PostLayout.astro'
+import VertLayout from '../layouts/VertLayout.astro'
+import { fetchPosts } from '../utilities/getPosts.js'
+import { getCleanSlug } from '../utilities/getPermaLink.js'
 
 export interface Props {
   entry: CollectionEntry<'page'> | CollectionEntry<'then'>
@@ -29,10 +29,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props
-const { Content, headings } = await entry.render()
+const { Content, headings, remarkPluginFrontmatter } = await entry.render()
 // const { post } = entry
 // const { data, render } = post
-// const { Content, headings } = await render()
+// const { Content, headings, remarkPluginFrontmatter } = await render()
 ---
 
 {
@@ -42,7 +42,11 @@ const { Content, headings } = await entry.render()
   //</PageLayout>
   //) :
   entry.collection === 'then' ? (
-    <PostLayout post={entry} headings={headings}>
+    <PostLayout
+      post={entry}
+      headings={headings}
+      updatedDate={remarkPluginFrontmatter.updatedDate}
+    >
       <Content />
     </PostLayout>
   ) : (

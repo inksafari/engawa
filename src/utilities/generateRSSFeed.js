@@ -7,8 +7,9 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeStringify from 'rehype-stringify'
 import sanitizeHtml from 'sanitize-html'
-import { getURLFromEntry } from '~/utilities/getPermaLink'
-// import siteInfo from '~/consts'
+// import { formatPlainDate, formatISOString } from '../utilities/date.utils.js'
+import { getURLFromEntry } from '../utilities/getPermaLink.js'
+// import siteInfo from '../consts.ts'
 
 // 在 NetNewsWire v6.1.4 和 Reeder v4.2.8 瀏覽，文字可以完整讀取，套件效果未測
 // https://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Latin-1_characters

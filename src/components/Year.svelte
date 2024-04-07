@@ -1,6 +1,6 @@
 <script>
   import spacetime from 'spacetime'
-  import siteInfo from '~/consts'
+  import siteInfo from '../consts.ts'
   export let from //: number | undefined
 
   // new Date().getUTCFullYear()

@@ -1,6 +1,6 @@
 ---
-import PageLayout from '~/layouts/PageLayout.astro'
-import { feedUrls } from '~/consts'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { feedUrls } from '../../consts.ts'
 
 const pageInfo = {
   title: 'RSS Feeds',
@@ -9,8 +9,12 @@ const pageInfo = {
 
 <PageLayout {pageInfo}>
   <ul>
-    <li>ATOM格式： <a href={feedUrls.atom}>feed.xml</a></li>
-    <li>JSON格式： <a href={feedUrls.json}>feed.json</a></li>
+    <li>
+      ATOM格式： <a href={feedUrls.atom} rel='prefetch-intent'>feed.xml</a>
+    </li>
+    <li>
+      JSON格式： <a href={feedUrls.json} rel='prefetch-intent'>feed.json</a>
+    </li>
   </ul>
 </PageLayout>
 <!-- @sources:

@@ -9,7 +9,7 @@ import {
   rehypeAutolinkHeadingsOptions,
   // rehypeCitationOptions,
   // rehypePrettyCodeOptions,
-} from '~/plugins/markdown/rehype.options'
+} from './rehype.options.js'
 
 export const rehypePlugins = [
   rehypeRaw,

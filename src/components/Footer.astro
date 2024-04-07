@@ -1,25 +1,43 @@
 ---
-import Year from '~/components/Year.svelte'
-import Navigation from '~/components/Navigation.astro'
-import siteInfo from '~/consts'
+import Year from './Year.svelte'
+// import Navigation from './Navigation.astro'
+import siteInfo, { feedUrls } from '../consts.ts'
 ---
 
 <footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
   <div class='legal'>
-    <span itemprop='copyrightNotice'>
-      <span class='copy'>&copy;</span><span
-        class='year'
-        itemprop='copyrightYear'
-      >
-        <Year from={siteInfo.copyrightYear} /></span
-      >&nbsp;<a href='/' class='footer-link' itemprop='url' rel='author'
-        ><span translate='no' class='p-author h-card' itemprop='copyrightHolder'
-          >{siteInfo.domain}</span
-        ></a
-      >
-    </span>
-  </div>
-  <div class='nav'>
-    <Navigation />
-  </div>
+    <!-- © 2023-2024 example.com -->
+    <div itemprop='copyrightNotice'>
+      <span class='copy'>&copy;</span>
+      <span class='year' itemprop='copyrightYear'>
+        <Year from={siteInfo.copyrightYear} />
+      </span>
+      &nbsp;
+      <a href='/' class='footer-link' itemprop='url' rel='author'>
+        <span translate='no' class='p-author h-card' itemprop='copyrightHolder'>
+          {siteInfo.domain}
+        </span>
+      </a>
+    </div><!-- /copyrightNotice -->
+    <!--
+    &nbsp;
+    <a
+      title='RSS Feed'
+      class='rss-container'
+      href={feedUrls.page}
+      target='_blank'
+      rel='noreferrer'
+    >
+      <span class='text-cap'>rss</span>
+      <img
+        class='rss'
+        src='/assets/img/rss.svg'
+        alt='RSS Feed Icon'
+        title='RSS Feed Icon'
+        loading='lazy'
+      />
+    </a>
+    -->
+  </div><!-- /legel -->
+  <!-- <Navigation /> -->
 </footer>

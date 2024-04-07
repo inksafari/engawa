@@ -1,7 +1,7 @@
 import { z as zod } from 'astro:content'
 import uniqolor from 'uniqolor'
-import { fullLink } from '~/utilities/getPermaLink'
-import siteInfo from '~/consts'
+import { fullLink } from './utilities/getPermaLink.js'
+import siteInfo from './consts'
 
 function getDefaultColor() {
   return uniqolor.random({ saturation: 90, lightness: [70, 90] }).color
@@ -67,7 +67,7 @@ const metaSchema = zod.object({
   abstract,
   isIndex,
   publishDate: zod.coerce.date().optional(),
-  updatedDate,
+  updatedDate: zod.coerce.date().optional(),
   tags,
   prev: sameSiteUrl,
   next: sameSiteUrl,

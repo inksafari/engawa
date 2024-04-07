@@ -1,0 +1,4 @@
+# https://mise.jdx.dev/
+[tools]
+bun = "1.1.1"
+node = "20.12.1"

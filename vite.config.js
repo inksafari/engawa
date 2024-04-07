@@ -1,13 +1,15 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config' // import { defineConfig } from 'vite'
 import browserslist from 'browserslist'
 import { browserslistToTargets as CSSBrowserslistToTargets } from 'lightningcss'
 // import { FontaineTransform } from 'fontaine'
 // import { svelte } from '@sveltejs/vite-plugin-svelte'
 // import sslPlugin from '@vitejs/plugin-basic-ssl'
-// import path from 'path'
 
 // config
 const browserslistConfig = browserslist.loadConfig({ path: process.cwd() })
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vitejs.dev/config/
 const config = {
@@ -41,8 +43,10 @@ const config = {
     },
   },
   resolve: {
-    alias: { '~/': `${process.cwd()}/src/` },
-    // Or alias: [{ find: '@', replacement: path.resolve(__dirname,'./src') }],
+    '~': path.resolve(__dirname, './src'),
+    // alias: { '~/': `${process.cwd()}/src/` },
+    // alias: [{ find: '~', replacement: path.resolve(__dirname,'./src') }],
+    // alias: { '~': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   optimizeDeps: {
     allowNodeBuiltins: true,
