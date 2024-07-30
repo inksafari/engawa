@@ -1,0 +1,75 @@
+---
+export const prerender = true
+
+import spacetime from 'spacetime'
+import Bar from '../../components/Bar.astro'
+import PostListingLayout from '../../layouts/PostListingLayout.astro'
+import { formatISOString, tzHelper } from '../../utilities/date.utils.js'
+import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
+import { fetchPosts } from '../../utilities/getPosts.js'
+const currentTime = spacetime.now()
+const allPosts = await fetchPosts({ collection: 'posts' })
+const entries = allPosts.map(getCleanSlug)
+//const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
+import siteInfo from '../../consts'
+
+const pageInfo = {
+  title: '',
+  abstract: siteInfo.description,
+}
+---
+
+<PostListingLayout {pageInfo}>
+  <h3>ramblings</h3>
+  <Bar />
+  <ul class='post-list' data-pagefind-ignore>
+    {
+      entries.flatMap((entry) => (
+        <li class='post-stub h-entry'>
+          <a
+            data-astro-prefetch
+            href={getURLFromEntry(entry.slug, 'posts')}
+            title={`Permalink to ${entry.data.title}`}
+            itemprop='url'
+            class='u-url u-uid'
+          >
+            <span class='post-stub-title p-name' itemprop='name'>
+              {entry.data.title}
+            </span>
+          </a>
+          <div class='post-stub-meta'>
+            <time
+              datetime={formatISOString(entry.data.publishDate)}
+              class='dt-published'
+              itemprop='datePublished'
+            >
+              {currentTime.diff(tzHelper(entry.data.publishDate), 'days') > -179
+                ? tzHelper(entry.data.publishDate).format('nice-year')
+                : currentTime.since(tzHelper(entry.data.publishDate)).rounded}
+            </time>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <script is:inline>
+    console.log('%c Over the seaside ', 'color: #ff7f50')
+    console.log('%c I see my future drown in the sea ', 'color: #ff7f50')
+    console.log('%c Driving on a coastal way ', 'color: #ff7f50')
+    console.log("%c I'm getting away from this city ", 'color: #ff7f50')
+    console.log(
+      '%c 〈Coastal Night Out〉 by Land Of Peace (랜드오브피스) ',
+      'background: #fafcd1;color: #ff7f50',
+    )
+  </script>
+  <style is:inline>
+    body {
+      --body-bg-color: #f0eadf;
+      background-color: var(--body-bg-color);
+    }
+
+    ::selection {
+      background-color: #fef65b;
+    }
+  </style>
+</PostListingLayout>

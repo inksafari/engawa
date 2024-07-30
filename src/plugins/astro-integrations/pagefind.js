@@ -1,9 +1,11 @@
-// ref: https://github.com/ricora/alg.tus-ricora.com/blob/main/src/lib/astro-integrations/pagefind.ts
-import { fileURLToPath } from 'node:url'
+// ref:
+// https://github.com/ricora/alg.tus-ricora.com/blob/main/src/lib/astro-integrations/pagefind.ts
+// https://github.com/wry-red/site/blob/main/src/utils/integration/pagefind.ts
 import { existsSync } from 'node:fs'
-import * as path from 'node:path'
-import sirv from 'sirv'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createIndex } from 'pagefind'
+import sirv from 'sirv'
 
 export const pagefind = () => {
   let outDir

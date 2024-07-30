@@ -1,12 +1,12 @@
-import { unified } from 'unified'
+import rehypeKatex from 'rehype-katex'
+import rehypeRaw from 'rehype-raw'
+import rehypeStringify from 'rehype-stringify'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
-import rehypeKatex from 'rehype-katex'
-import rehypeRaw from 'rehype-raw'
-import rehypeStringify from 'rehype-stringify'
-import sanitizeHtml from 'sanitize-html'
+import sanitizeHtml from 'sanitize-html' // ultrahtml
+import { unified } from 'unified'
 // import { formatPlainDate, formatISOString } from '../utilities/date.utils.js'
 import { getURLFromEntry } from '../utilities/getPermaLink.js'
 // import siteInfo from '../consts.ts'
@@ -36,14 +36,14 @@ function articlePipeline(input) {
 
 function compileHTMLForRSS(post) {
   const postUrl = getURLFromEntry(post.slug, 'then')
-  const primaryHTML = articlePipeline(post.body)
+  const primaryHtml = articlePipeline(post.body)
 
   // <p>
   //   Thanks for reading this post in your RSS reader! <br />
   //   If you want to respond you can <a href="${siteInfo.siteBase}/contact">write me an Email</a>
   //   or reach out on <a href={siteInfo.author.networks.twitter.link}>Twitter</a>.
   //  </p>
-  const additionalHTML = `
+  const additionalHtml = `
     <hr />
     <p>
       <a href="${postUrl}">
@@ -51,10 +51,11 @@ function compileHTMLForRSS(post) {
       </a>
     </p>
   `
-  return sanitizeHtml(primaryHTML + additionalHTML)
+  return sanitizeHtml(primaryHtml + additionalHtml)
 }
 
 /* https://github.com/moeyua/astro-theme-typography/blob/main/src/utils/index.ts */
+/* https://github.com/syhily/yufan.me/blob/astro/src/pages/feed.ts */
 function getPostDescription(post) {
   if (post.data.abstract) {
     return post.data.abstract

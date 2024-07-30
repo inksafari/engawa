@@ -1,9 +1,9 @@
 import { atom } from 'xast-util-feed'
 import { toXml } from 'xast-util-to-xml'
-import { compileHTMLForRSS } from '../../utilities/generateRSSFeed.js'
-import { fetchPosts } from '../../utilities/getPosts.js'
-import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
 import siteInfo, { feedUrls } from '../../consts.ts'
+import { compileHTMLForRSS } from '../../utilities/generateRssFeed.js'
+import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
+import { fetchPosts } from '../../utilities/getPosts.js'
 
 export const prerender = true
 
@@ -21,10 +21,10 @@ const channel = {
   author,
 }
 
-async function compilePostsForRSS(posts) {
+async function compilePostsForRss(posts) {
   return posts.flatMap((post) => ({
     title: post.data.title,
-    url: getURLFromEntry(post.slug, 'then'),
+    url: getURLFromEntry(post.slug, 'posts'),
     // 程式自動轉換為 ISO-8601 時間格式
     published: post.data.publishDate,
     // modified: post.data.updatedDate,
@@ -32,12 +32,12 @@ async function compilePostsForRSS(posts) {
   }))
 }
 
-const allPosts = await fetchPosts({ collection: 'then' })
+const allPosts = await fetchPosts({ collection: 'posts' })
 const posts = allPosts.map(getCleanSlug)
-const items = await compilePostsForRSS(posts)
+const items = await compilePostsForRss(posts)
 const TTL = 86_400
 
-// TODO: 1.test 2.在newsreader app(Thunderbird/Den)瀏覽效果
+// TODO: https://validator.w3.org/feed/
 // 在 NetNewsWire v6.1.4 和 Reeder v4.2.8 瀏覽，文字可以完整讀取，套件效果未測
 // https://github.com/kubosho/blog.kubosho.com/tree/master/src/feed
 // https://github.com/alex-grover/alexgrover.me/blob/main/tests/rss.test.ts

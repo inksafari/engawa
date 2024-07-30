@@ -1,10 +1,10 @@
-// rules
-import { namingConvention } from './.stylelint.rules.mjs'
 import {
   canIuse,
   possibleErrors,
   unknownThings,
 } from './.stylelint.plugins.mjs'
+// rules
+import { namingConvention } from './.stylelint.rules.mjs'
 
 /* @see https://stylelint.io/user-guide/configure */
 const config = {

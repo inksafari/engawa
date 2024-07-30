@@ -1,25 +1,27 @@
 ---
 import '../styles/layout_post.js'
 import { fade } from 'astro:transitions'
+import { Head } from 'astro-capo'
 import { Moon } from 'lunarphase-js'
 import BaseHead from '../components/BaseHead.astro'
-import OutdateTip from '../components/OutdateTip.astro'
-import Hant from '../components/Hant.astro'
 // import Heti from '../components/Heti.astro'
 // import Header from '../components/Header.astro'
 // import Footer from '../components/Footer.astro'
 import FormattedDate from '../components/FormattedDate.astro'
-import { formatISOString, getHemisphere } from '../utilities/date.utils.js'
-import { applyBudouXToHTML } from '../utilities/render.js'
+import Hant from '../components/Hant.astro'
+import OutdateTip from '../components/OutdateTip.astro'
 // import { getPostDescription } from '../utilities/generateRSSFeed.js'
 import siteInfo from '../consts.ts'
+import { formatISOString, getHemisphere } from '../utilities/date.utils.js'
+import { applyBudouXToHTML } from '../utilities/render.js'
 
 const { post, updatedDate } = Astro.props
 const { data, slug } = post
 
 const isOld =
   data.publishDate < new Date(Date.now() - 31536000000) &&
-  (updatedDate === undefined || updatedDate < new Date(Date.now() - 31536000000))
+  (updatedDate === undefined ||
+    updatedDate < new Date(Date.now() - 31536000000))
 const metaDescription = data.abstract ?? siteInfo.description // getPostDescription(post)
 const prevPage = data.prev ? data.prev : undefined
 const nextPage = data.next ? data.prev : undefined
@@ -47,7 +49,7 @@ const pageInfo = {
   class='han-init'
   prefix='og: https://ogp.me/ns# article: https://ogp.me/ns/article# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
-  <head>
+  <Head>
     <BaseHead {pageInfo} />
     {
       pageInfo.isIndex === false ? (
@@ -63,7 +65,7 @@ const pageInfo = {
       )
     }
     <slot name='meta' />
-  </head>
+  </Head>
   <body>
     <!-- <Header /> -->
     <!-- TODO: microformats
@@ -156,15 +158,14 @@ const pageInfo = {
     </main>
     <!-- <Footer /> -->
     <Hant /><!-- or <Heti /> -->
-  </body>
-</html>
-<style is:inline>
-  body {
-    --body-bg-color: #DBEFE8;
-    background-color: var(--body-bg-color);
-  }
+  </body><style is:inline>
+    body {
+      --body-bg-color: #dbefe8;
+      background-color: var(--body-bg-color);
+    }
 
-  ::selection {
-    background-color: #F7E4E0;
-}
-</style>
+    ::selection {
+      background-color: #f7e4e0;
+    }
+  </style>
+</html>

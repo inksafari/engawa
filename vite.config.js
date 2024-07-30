@@ -1,8 +1,8 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { defineConfig } from 'vitest/config' // import { defineConfig } from 'vite'
 import browserslist from 'browserslist'
-import { browserslistToTargets as CSSBrowserslistToTargets } from 'lightningcss'
+import { browserslistToTargets as cssBrowserslistToTargets } from 'lightningcss'
+import { defineConfig } from 'vitest/config' // import { defineConfig } from 'vite'
 // import { FontaineTransform } from 'fontaine'
 // import { svelte } from '@sveltejs/vite-plugin-svelte'
 // import sslPlugin from '@vitejs/plugin-basic-ssl'
@@ -11,13 +11,31 @@ import { browserslistToTargets as CSSBrowserslistToTargets } from 'lightningcss'
 const browserslistConfig = browserslist.loadConfig({ path: process.cwd() })
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// https://github.com/thuvasooriya/thuvasooriya.github.io/blob/main/astro.config.ts
+function rawFonts(ext) {
+  return {
+    name: 'vite-plugin-raw-fonts',
+    transform(_, id) {
+      if (ext.some((e) => id.endsWith(e))) {
+        const buffer = fs.readFileSync(id)
+        return {
+          code: `export default ${JSON.stringify(buffer)}`,
+          map: null,
+        }
+      }
+    },
+  }
+}
+
 // https://vitejs.dev/config/
 const config = {
   plugins: [
+    rawFonts(['.ttf', '.woff']),
     // svelte({ hot: !process.env.VITEST }),
     // or {step, mkcert, https://www.getlocalcert.net/ }
     // 透過step查詢網站數位憑證： step certificate inspect https://smallstep.com
     // sslPlugin(),
+    // https://www.hehehai.cn/posts/chinese-web-font-optimize
     // FontaineTransform.vite({
     // avoid flash of unstyled text by interjecting fallback system fonts
     // https://developer.chrome.com/blog/framework-tools-font-fallback/#using-fontaine-library
@@ -59,7 +77,7 @@ const config = {
   css: {
     transformer: 'lightningcss',
     lightningcss: {
-      targets: CSSBrowserslistToTargets(browserslistConfig),
+      targets: cssBrowserslistToTargets(browserslistConfig),
       drafts: {
         customMedia: true,
       },
@@ -72,15 +90,15 @@ const config = {
     // rollupOptions: {external: [ /* ...*/ ],},
   },
   // ssr: { noExternal: [ 'open-props'],},
-  // test: {
-  // globals: true,
-  // environment: 'jsdom',
+  //test: {
+  //globals: true,
+  //environment: 'jsdom',
   // deps: {
   // inline: ['vitest-canvas-mock'],
   // },
-  // setupFiles: './src/tests/vitest/vitest-setup.ts',
-  // include: ['src/tests/vitest/**/*.{js,ts}'],
-  // },
+  // setupFiles: 'test/vitest-setup.ts',
+  //include: ['test/**/*.{js,ts}'],
+  //},
 }
 
 /** @type {import('vite').UserConfig} */

@@ -1,11 +1,11 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
-import Critical from './Critical.astro'
-import Favicon from './Favicon.astro'
-import { formatISOString } from '../utilities/date.utils.js'
-import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 import siteInfo, { feedUrls } from '../consts.ts'
 import { metaSchema } from '../schema.js'
+import { formatISOString } from '../utilities/date.utils.js'
+import { removeTrailingSlash } from '../utilities/getPermaLink.js'
+import Critical from './Critical.astro'
+import Favicon from './Favicon.astro'
 
 const pageInfo = metaSchema.parse(Astro.props.pageInfo)
 const titleSeparator = '•'
@@ -20,13 +20,13 @@ const normalizedPathname = Astro.url.pathname
   .replace(/\.html$/, '')
   .split('/')
   .join('')
-const canonicalURL: URL = new URL(
+const canonicalUrl: URL = new URL(
   removeTrailingSlash(normalizedPathname),
   siteInfo.siteBase,
 )
 ---
 
-<!-- TODO: 使用capo.js排序 https://rviscomi.github.io/capo.js/ -->
+<!-- 使用 astro-capo 排序 ( https://github.com/natemoo-re/astro-capo ) -->
 <meta charset='utf-8' />
 <meta
   name='viewport'
@@ -42,7 +42,7 @@ const canonicalURL: URL = new URL(
 />
 <meta name='title' content={metaTitle} />
 <meta name='description' content={metaDescription} />
-<link rel='canonical' href={canonicalURL} data-pagefind-meta='url[href]' />
+<link rel='canonical' href={canonicalUrl} data-pagefind-meta='url[href]' />
 <Favicon />
 <!-- https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag -->
 <!-- noai/noimageai 不是通用規則 -->
@@ -80,6 +80,10 @@ const canonicalURL: URL = new URL(
   )
 }
 <ViewTransitions />
+<link href='https://www.inksafari.net/' rel='me' />
+<link href='https://twitter.com/inksafari' rel='me' />
+<link href='https://codeberg.org/inksafari' rel='me' />
+<link href='https://github.com/inksafari' rel='me' />
 <!-- @source:
 - https://seo.box/
 - https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro

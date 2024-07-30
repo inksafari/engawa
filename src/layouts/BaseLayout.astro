@@ -1,8 +1,9 @@
 ---
 import '../styles/layout_base.js'
+import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
-import Hant from '../components/Hant.astro'
 import Footer from '../components/Footer.astro'
+import Hant from '../components/Hant.astro'
 import siteInfo from '../consts.ts'
 const { pageInfo } = Astro.props
 ---
@@ -14,11 +15,14 @@ const { pageInfo } = Astro.props
   class='han-init'
   prefix='og: https://ogp.me/ns# website: https://ogp.me/ns/website# rdfs: http://www.w3.org/2000/01/rdf-schema#'
 >
-  <head>
+  <Head>
     <BaseHead {pageInfo} />
-    <meta name='robots' content='noindex, noimageindex, nofollow, noarchive, noai, noimageai' />
+    <meta
+      name='robots'
+      content='noindex, noimageindex, nofollow, noarchive, noai, noimageai'
+    />
     <slot name='meta' />
-  </head>
+  </Head>
   <body>
     <main id='main-content'>
       <header class='page-header'>

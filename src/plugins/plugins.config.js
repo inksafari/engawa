@@ -1,3 +1,4 @@
+import { rehypePlugins } from './markdown/rehype.js'
 // import {
 // transformerNotationDiff,
 // transformerNotationHighlight,
@@ -11,7 +12,27 @@
 // transformerRemoveLineBreak,
 // } from '@shikijs/transformers'
 import { remarkPlugins } from './markdown/remark.js'
-import { rehypePlugins } from './markdown/rehype.js'
+
+/* https://www.astroicon.dev/reference/configuration/ */
+/* https://iconify.design/ */
+const astroIconOptions = {
+  // iconDir: 'src/assets/icons',
+  include: {
+    'fa6-brands': ['linkedin', 'square-github'],
+    'fa6-solid': ['calendar', 'clock', 'eye', 'tag'],
+    lucide: ['info', 'hammer', 'sun-medium', 'moon', 'search', 'rss'],
+  },
+  svgoOptions: {
+    plugins: [
+      {
+        name: 'inlineStyles',
+        params: {
+          onlyMatchedOnce: false,
+        },
+      },
+    ],
+  },
+}
 
 const markdownOptions = {
   syntaxHighlight: false, // 'shiki',
@@ -44,15 +65,22 @@ const astroCompressOptions = {
   // Logger: 0,
   // CSS: { comments: true },
   CSS: false,
-  // FIXME: sortClassName
-  // https://astro-compress.nikolahristov.tech/Variable/HTML.HTML
   HTML: {
-    sortAttributes: false,
-    sortClassName: false,
+    'html-minifier-terser': {
+      decodeEntities: true,
+      minifyCSS: true,
+      minifyJS: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      sortAttributes: false,
+      sortClassName: false,
+    },
   },
   Image: false,
   JavaScript: false,
   SVG: false,
 }
 
-export { astroCompressOptions, markdownOptions }
+export { astroCompressOptions, astroIconOptions, markdownOptions }

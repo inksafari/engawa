@@ -1,5 +1,4 @@
-// import { join } from 'node:path/posix'
-// import urlJoin from 'url-join'
+import path from 'node:path/posix' // import urlJoin from 'url-join'
 import slug from 'limax' // or `transliteration`
 import siteInfo from '../consts.ts'
 
@@ -22,7 +21,7 @@ function fullLink(path, base = siteInfo.siteBase) {
 
 function getURLFromEntry(slug, collection) {
   switch (collection) {
-    case 'page': {
+    case 'pages': {
       // const result = urlJoin(siteInfo.siteBase, collection, slug)
       // const result = new URL(path.join(collection, slug), siteInfo.siteBase)
       const result = new URL(slug, siteInfo.siteBase)
@@ -30,10 +29,10 @@ function getURLFromEntry(slug, collection) {
       return result
     }
 
-    case 'then': {
+    case 'posts': {
       // const result = urlJoin(siteInfo.siteBase, 'post', slug)
-      // const result = new URL(path.join('post', slug), siteInfo.siteBase)
-      const result = new URL(slug, siteInfo.siteBase)
+      // const result = new URL(slug, siteInfo.siteBase)
+      const result = new URL(path.join('blog', slug), siteInfo.siteBase)
 
       return result
     }
@@ -54,7 +53,9 @@ function getURLFromEntry(slug, collection) {
 
 function removeTrailingSlash(pathname) {
   const matchTrailingSlash = /\w+\/$/
-  if (matchTrailingSlash.test(pathname)) return pathname.slice(0, -1)
+  if (matchTrailingSlash.test(pathname)) {
+    return pathname.slice(0, -1)
+  }
   return pathname
 }
 

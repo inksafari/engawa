@@ -1,14 +1,16 @@
 import { z as zod } from 'astro:content'
 import uniqolor from 'uniqolor'
-import { fullLink } from './utilities/getPermaLink.js'
 import siteInfo from './consts'
+import { fullLink } from './utilities/getPermaLink.js'
 
 function getDefaultColor() {
   return uniqolor.random({ saturation: 90, lightness: [70, 90] }).color
 }
 
 function removeDupsAndLowerCase(array) {
-  if (array.length === 0) return array
+  if (array.length === 0) {
+    return array
+  }
   const distinctItems = new Set(array)
   return [...distinctItems]
 }
@@ -36,9 +38,18 @@ const sameSiteUrl = zod.preprocess(
 const bibliography = zod.array(zod.string().url()).optional()
 const tags = zod
   .array(zod.string())
+  .min(1)
+  .max(10)
   .default(['unsorted'])
   .transform(removeDupsAndLowerCase)
   .optional()
+
+// https://zenn.dev/yukiyada/articles/d5681300a7fc28
+const blogCategory = zod.union([
+  zod.literal('tech'),
+  zod.literal('life'),
+  zod.literal('other'),
+])
 
 // ts:
 // export type Post = import('astro:content').CollectionEntry<'posts'>
@@ -57,6 +68,7 @@ const postSchema = zod.object({
   updatedDate,
   themeColor,
   tags,
+  // category: blogCategory,
   prev: sameSiteUrl,
   next: sameSiteUrl,
   bibliography,

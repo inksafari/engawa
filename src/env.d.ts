@@ -5,8 +5,10 @@
 /// <reference types="vitest" />
 /// <reference types="svelte" />
 
+import type { isTypeNode, isTypeOfExpression } from 'typescript'
+
 declare module '@pagefind/default-ui' {
-  class PagefindUI {
+  class PagefindUi {
     constructor(options: {
       element?: string | HTMLElement
       bundlePath?: string
@@ -28,12 +30,14 @@ declare module '@pagefind/default-ui' {
 }
 
 // https://vitejs.dev/guide/env-and-mode#intellisense-for-typescript
+// https://github.com/withastro/roadmap/discussions/590#discussioncomment-7535686
+// https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 type ImportMetaEnv = {
   readonly VITE_SITE_DOMAIN: string
   readonly VITE_SITE_URL: string
   readonly VITE_SITE_PORT: number
   readonly VITE_WEBMENTION_URL: string
-  // readonly WEBMENTION_API_KEY: string
+  // readonly VITE_WEBMENTION_API_KEY: string
 }
 
 type ImportMeta = {

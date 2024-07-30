@@ -1,4 +1,5 @@
 // ---------------------------------------------------------------------
+// TODO: https://docs.astro.build/en/reference/configuration-reference/#experimentalenv
 const isBuild = process.env.npm_lifecycle_script || ''.includes('astro build')
 const isProduction = import.meta.env.MODE === 'production'
 const isDevelopment = import.meta.env.MODE !== 'production'

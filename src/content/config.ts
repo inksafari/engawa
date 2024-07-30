@@ -1,6 +1,6 @@
 /* https://docs.astro.build/en/guides/content-collections */
 import { defineCollection } from 'astro:content'
-import { postSchema, pageSchema, statusSchema } from '~/schema'
+import { pageSchema, postSchema, statusSchema } from '~/schema'
 
 const pageCollection = defineCollection({
   type: 'content',
@@ -19,6 +19,6 @@ const statusCollection = defineCollection({
 
 export const collections = {
   page: pageCollection,
-  then: postCollection,
+  blog: postCollection,
   status: statusCollection,
 }

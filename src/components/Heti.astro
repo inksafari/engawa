@@ -6,11 +6,12 @@
     heti.autoSpacing()
   }
 
+  document.addEventListener('astro:after-swap', loadindHeti);
   if (document.readyState === 'loading') {
     // Loading hasn't finished yet
-    document.addEventListener('DOMContentLoaded', loadindHeti)
+    document.addEventListener('DOMContentLoaded', loadindHeti);
   } else {
     // `DOMContentLoaded` has already fired
-    loadindHeti()
+    loadindHeti;
   }
 </script>

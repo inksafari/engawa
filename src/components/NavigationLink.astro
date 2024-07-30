@@ -4,8 +4,8 @@ type Props = HTMLAttributes<'a'>
 
 const { href, class: className } = Astro.props
 const url = new URL(href, Astro.url)
-const isExternal = url.host !== Astro.url.host
-const isActive =
+const _isExternal = url.host !== Astro.url.host
+const _isActive =
   url.href === Astro.url.href || url.href === Astro.url.href.replace(/\/$/, '')
 ---
 
@@ -13,8 +13,8 @@ const isActive =
   href={href}
   class:list={[className, { _active: isActive }]}
   itemprop='url'
-  aria-current={isActive ? 'page' : null}
-  rel={isExternal ? 'nofollow noopener noreferrer' : null}><slot /></a
+  aria-current={_isActive ? 'page' : null}
+  rel={_isExternal ? 'nofollow noopener noreferrer' : null}><slot /></a
 >
 <style>
   a {
@@ -25,4 +25,13 @@ const isActive =
     font-weight: bolder;
   }
   /* a._active::after { content: '←'; } */
+
+  /* https://ab.github.io/jekyll-theme-tufte/blog/ */
+  a._active:before {
+    content: '\27e8';
+  }
+
+  a._active:after {
+    content: '\27e9';
+  }
 </style>

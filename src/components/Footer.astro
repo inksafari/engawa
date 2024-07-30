@@ -1,7 +1,7 @@
 ---
-import Year from './Year.svelte'
 // import Navigation from './Navigation.astro'
 import siteInfo, { feedUrls } from '../consts.ts'
+import Year from './Year.svelte'
 ---
 
 <footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
@@ -13,7 +13,7 @@ import siteInfo, { feedUrls } from '../consts.ts'
         <Year from={siteInfo.copyrightYear} />
       </span>
       &nbsp;
-      <a href='/' class='footer-link' itemprop='url' rel='author'>
+      <a href='/' class='footer-link' itemprop='url' rel='author' data-testid='link'>
         <span translate='no' class='p-author h-card' itemprop='copyrightHolder'>
           {siteInfo.domain}
         </span>

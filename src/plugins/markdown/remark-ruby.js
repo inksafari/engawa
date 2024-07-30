@@ -1,9 +1,9 @@
+import { toString as _toString } from 'mdast-util-to-string'
 // yoinked from here:
 // https://codeberg.org/kamov/kamoshi.org/src/branch/main/src/utils/remark/ruby.
 // demo: https://kamoshi.org/posts/ruby-in-markdown/
 // usage: {日本語}(にほんご)の{文法}(ぶんぽう)は{難}(むずか)しい
 import { CONTINUE, SKIP, visit } from 'unist-util-visit'
-import { toString } from 'mdast-util-to-string'
 
 function toHtml([text, help]) {
   return `<ruby>${text}<rp>(</rp><rt>${help}</rt><rp>)</rp></ruby>`
@@ -24,9 +24,11 @@ function createRuby(text, help, options) {
 export const remarkRuby = (options) => {
   return (tree) => {
     visit(tree, 'textDirective', (node, index, parent) => {
-      if (node.name !== 'ruby') return CONTINUE
+      if (node.name !== 'ruby') {
+        return CONTINUE
+      }
 
-      const text = toString(node)
+      const text = _toString(node)
       const help = node.attributes?.help
       const ruby = {
         type: 'html',

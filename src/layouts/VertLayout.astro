@@ -1,5 +1,6 @@
 ---
 // WARNING: 還沒寫
+import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
 import Hant from '../components/Hant.astro'
 import siteInfo from '../consts.ts'
@@ -18,10 +19,10 @@ import siteInfo from '../consts.ts'
   xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'
   xmlns:cc='https://creativecommons.org/ns#'
 >
-  <head>
+  <Head>
     <BaseHead {...Astro.props} />
     <slot name='meta' />
-  </head>
+  </Head>
   <body>
     <slot name='main' />
     <Hant />

@@ -1,0 +1,35 @@
+# https://ls-lint.org/
+ls:
+  tests:
+    .js: lowercase
+    .ts: lowercase
+
+  src:
+    .astro: PascalCase
+    .css: kebab-case
+    .d.ts: camelcase
+    .js: kebab-case
+    .ts: camelCase
+
+    pages:
+      .astro: lowercase
+
+    plugins:
+      .js: kebab-case | pointcase
+
+    styles:
+      .js: snake_case
+
+    utilities:
+      .js: camelCase | pointcase
+
+ignore:
+  - .astro
+  - .git
+  - .github
+  - .scaffdog
+  - '*.config.js'
+  - node_modules
+  - coverage
+  - dist
+  - src/pages/[...slug].astro

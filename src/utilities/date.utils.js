@@ -1,4 +1,4 @@
-import spacetime from 'spacetime'
+import spacetime from 'spacetime' // '@internationalized/date'
 import siteInfo, { dateOpts } from '../consts.ts'
 
 function getFormattedDate(date, options) {
@@ -95,7 +95,7 @@ function formatDateString(date) {
 function yearPast(date) {
   const tzDate = tzHelper(date)
   const prog = Number.parseFloat(tzDate.progress().year).toFixed(2)
-  const result = prog * 100 + '%'
+  const result = `${prog * 100}%`
 
   return result
 }

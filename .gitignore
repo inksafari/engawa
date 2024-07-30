@@ -11,11 +11,15 @@ devbox.d/
 
 # build output
 .astro/
+.spec.ts-snapshots/
+.spec.js-snapshots/
+search.spec.js-snapshots/
 .unlighthouse/
 dist/
 coverage/
 playwright-report/
 test-results/
+test/reports/
 
 # logs
 npm-debug.log*
@@ -31,12 +35,14 @@ pnpm-debug.log*
 .diff
 .vale/
 public/assets/fonts/
-scripts/deploy.sh
 firebase.json
 .firebaserc
 .firebase/
+.wrangler/
 
 # temp
-src/content/then/
+temp.diff
+src/content/posts/
 src/styles/input/
+src/styles/_fonts/
 src/styles/

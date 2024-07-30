@@ -35,3 +35,5 @@ async function fetchPublicPosts({ collection }) {
 }
 
 export { fetchPosts, fetchPublicPosts, orderByDateDesc }
+// TODO: pinned post
+// https://github.com/kirontoo/astro-theme-cody/blob/main/src/utils/post.ts

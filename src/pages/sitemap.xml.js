@@ -1,12 +1,12 @@
 // 刻完程式碼，才發現 xast-util-sitemap pkg，強烈建議使用 xast-util-sitemap
 // https://github.com/syntax-tree/xast-util-sitemap
 import { u } from 'unist-builder'
-import { x } from 'xastscript'
 import { toXml } from 'xast-util-to-xml'
+import { x } from 'xastscript'
 import siteInfo from '../consts.ts'
-import { fetchPublicPosts } from '../utilities/getPosts.js'
+import { formatISOString, formatPlainDate } from '../utilities/date.utils.js'
 import { getCleanSlug, getURLFromEntry } from '../utilities/getPermaLink.js'
-import { formatPlainDate, formatISOString } from '../utilities/date.utils.js'
+import { fetchPublicPosts } from '../utilities/getPosts.js'
 
 export const prerender = true
 
@@ -18,14 +18,14 @@ const channel = {
 
 async function compilePostsForSitemap(posts) {
   return posts.flatMap((post) => ({
-    url: getURLFromEntry(post.slug, 'then'),
+    url: getURLFromEntry(post.slug, 'posts'),
     // FIXME: updatedDate留空，也會自動補上現在日期，只能暫時先刪 updatedDate
     lastmod: formatISOString(post.data.publishDate),
     priority: '0.60',
   }))
 }
 
-const allPosts = await fetchPublicPosts({ collection: 'then' })
+const allPosts = await fetchPublicPosts({ collection: 'posts' })
 const posts = allPosts.map(getCleanSlug)
 const postData = await compilePostsForSitemap(posts)
 
@@ -42,9 +42,9 @@ function sitemapBuilder(channel, data) {
       const datum = data[index]
       const children = []
 
-      if (!datum.url && !datum.lastmod && !datum.priority) {
+      if (!(datum.url || datum.lastmod || datum.priority)) {
         throw new Error(
-          'Expected either `slug` or `date` to be set in entry `' + index + '`',
+          `Expected either \`slug\` or \`date\` to be set in entry \`${index}\``,
         )
       }
 
@@ -57,8 +57,9 @@ function sitemapBuilder(channel, data) {
         children.push(x('lastmod', datum.lastmod))
       }
 
-      if (datum.priority)
+      if (datum.priority) {
         children.push(x('priority', Number(datum.priority).toFixed(2)))
+      }
 
       items.push(x('url', children))
     }

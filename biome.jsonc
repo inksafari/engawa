@@ -1,0 +1,82 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "files": {
+    "ignore": [
+      "public/*",
+      "scripts/*",
+      "**/smoke/**",
+      "**/fixtures/**",
+      "**/vendor/**"
+    ]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main",
+    "useIgnoreFile": true
+  },
+  "organizeImports": {
+    "enabled": false
+  },
+  "linter": { "enabled": false },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto"
+  },
+  "javascript": {
+    "globals": ["Astro"],
+    "formatter": {
+      "arrowParentheses": "always",
+      "attributePosition": "auto",
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    },
+    "formatter": {
+      "indentStyle": "space",
+      "trailingCommas": "none"
+    }
+  },
+  "overrides": [
+    {
+      "include": ["package.json"],
+      "json": {
+        "formatter": {
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "include": ["*.css"],
+      "javascript": {
+        "formatter": {
+          "trailingCommas": "none",
+          "quoteStyle": "double"
+        }
+      }
+    },
+    {
+      "include": ["*.astro"],
+      "javascript": {
+        "formatter": {
+          "quoteStyle": "single"
+        }
+      }
+    }
+  ]
+}

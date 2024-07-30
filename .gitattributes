@@ -5,8 +5,14 @@
 # Documents
 src/content/*   linguist-documentation=true
 *.txt           linguist-documentation=false linguist-detectable=true
-*.pdf           diff=astextplain
-*.PDF           diff=astextplain
+
+# Media flles
+#*.pdf           filter=lfs diff=lfs merge=lfs -text
+#*.png           filter=lfs diff=lfs merge=lfs -text
+#*.jpg           filter=lfs diff=lfs merge=lfs -text
+#*.avif          filter=lfs diff=lfs merge=lfs -text
+#*.webp          filter=lfs diff=lfs merge=lfs -text
+# public/video/* filter=lfs diff=lfs merge=lfs -text
 
 # Serialisation
 *.csv           text

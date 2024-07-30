@@ -3,14 +3,14 @@ export const prerender = true
 // import { getCollection, getEntry, getEntries } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import type { MarkdownHeading } from 'astro'
-// import PageLayout from '../layouts/PageLayout.astro'
-import PostLayout from '../layouts/PostLayout.astro'
-import VertLayout from '../layouts/VertLayout.astro'
-import { fetchPosts } from '../utilities/getPosts.js'
-import { getCleanSlug } from '../utilities/getPermaLink.js'
+// import PageLayout from '../../layouts/PageLayout.astro'
+import PostLayout from '../../layouts/PostLayout.astro'
+import VertLayout from '../../layouts/VertLayout.astro'
+import { getCleanSlug } from '../../utilities/getPermaLink.js'
+import { fetchPosts } from '../../utilities/getPosts.js'
 
 export interface Props {
-  entry: CollectionEntry<'page'> | CollectionEntry<'then'>
+  entry: CollectionEntry<'pages'> | CollectionEntry<'posts'>
   headings: MarkdownHeading[]
 }
 
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   //const pages = await getCollection('page', (entry) => {
   //return !['home'].includes(entry.slug) && !entry.data.isDraft;
   //});
-  const allPosts = await fetchPosts({ collection: 'then' })
+  const allPosts = await fetchPosts({ collection: 'posts' })
   const posts = allPosts.map(getCleanSlug)
 
   //return [...pages, ...posts].map((entry) => ({
@@ -41,7 +41,7 @@ const { Content, headings, remarkPluginFrontmatter } = await entry.render()
   //<Content />
   //</PageLayout>
   //) :
-  entry.collection === 'then' ? (
+  entry.collection === 'posts' ? (
     <PostLayout
       post={entry}
       headings={headings}

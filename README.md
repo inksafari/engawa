@@ -33,7 +33,7 @@
   - Component Framework: [Svelte](https://svelte.dev/)
 - Uses
   [Content Collections](https://docs.astro.build/guides/content-collections/)
-  with [Zod schemas](/src/content/config.ts).
+  with [Zod schemas](src/content/config.ts).
 - Markdown & MDX support.
 - Atom/JSON Feed support.
 - [Pagefind](https://pagefind.app/) static search library integration.
@@ -51,12 +51,12 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                        | Action                                       |
 | :----------------------------- | :------------------------------------------- |
-| `pnpx astro telemetry disable` | Disable data collection                      |
-| `pnpm install`                 | Installs dependencies                        |
-| `pnpm dev`                     | Starts local dev server at `localhost:8081`  |
-| `pnpm build`                   | Build your production site to `./dist/`      |
-| `pnpm preview`                 | Preview your build locally, before deploying |
-| `pnpm fmt`                     | Format your code with Prettier               |
+| `bunx astro telemetry disable` | Disable data collection                      |
+| `bun install`                  | Installs dependencies                        |
+| `bun dev`                      | Starts local dev server at `localhost:8081`  |
+| `bun build:prod`               | Build your production site to `./dist/`      |
+| `bun preview`                  | Preview your build locally, before deploying |
+| `bun fmt`                      | Format your code with Biome                  |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -68,8 +68,8 @@ All commands are run from the root of the project, from a terminal:
 - [Footer.astro](src/components/Footer.astro)
   - [Year.svelte](src/components/Year.svelte)
 - [Favicon.astro](src/components/Favicon.astro)
-- [generateRSSFeed.js](src/utilities/generateRSSFeed.js)
-- [get-updatetime.mjs](scripts/get-updatetime.mjs)
+- [generateRssFeed.js](src/utilities/generateRssFeed.js)
+- [get-updatetime.mjs](scripts/get_updatetime.mjs)
 - [new.mjs](scripts/new.mjs)
 - Modify the files in the /public folder:
   - favicon
@@ -120,6 +120,8 @@ isDraft: true
 - SVG icons:
   - [SVG Repo](https://www.svgrepo.com/svg/126349/bird-with-bow-tie?edit=true)
   - [Feather icons](https://feathericons.com/)
+- Demo content generate with ChatGPT
+- Images for demo content from Unsplash
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -127,11 +129,10 @@ isDraft: true
 
 <!-- The source code for this project is available under the GPLv3 License. -->
 
-All images and media are copyright to their respective owners.
-Font licenses: Open Font License (OFL)
-
-- [LXGW Bright TC](https://github.com/lxgw/LxgwBright) (Chinese and English font)
-- [Lotion](https://font.nina.coffee/) (monospaced code font)
+- All images and media are copyright to their respective owners.
+- Font licenses: Open Font License (OFL)
+  - [LXGW Bright TC](https://github.com/lxgw/LxgwBright) (Chinese and English font)
+  - [Lotion](https://font.nina.coffee/) (monospaced code font)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!--
@@ -174,6 +175,6 @@ https://img.shields.io/github/commit-activity/m/inksafari/engawa.svg?style=for-t
 [framework-url]: https://astro.build
 [hosting-url]: https://deno.com/deploy
 [activity-url]: https://github.com/inksafari/engawa/graphs/commit-activity
-[repo-url]: https://github.com/inksafari/engawa
-[repo-issues]: https://github.com/inksafari/engawa/issues
+[repo-url]: https://codeberg.org/inksafari/engawa
+[repo-issues]: https://codeberg.org/inksafari/engawa/issues
 [repo-owner]: https://twitter.com/inksafari

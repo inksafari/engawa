@@ -10,7 +10,7 @@
 // transformerMetaWordHighlight,
 // transformerCompactLineOptions,
 // transformerRemoveLineBreak,
-// } from '@shikijs/transformers' // 'shikiji-transformers'
+// } from '@shikijs/transformers'
 
 // https://github.com/riceball-tw/astro-blog/blob/main/astro.config.mjs
 // https://github.com/danillouz/mysite/blob/main/src/plugins/autolink-headings.mjs
@@ -49,12 +49,11 @@ const rehypePrettyCodeOptions = {
   onVisitHighlightedLine(node) {
     node?.properties?.className?.push('highlighted')
   },
-  onVisitHighlightedChars(node) {
-    console.log(node)
-    node?.properties?.className
-      ? node.properties.className.push('highlighted-chars')
-      : (node.properties.className = ['highlighted-chars'])
-  },
+  //onVisitHighlightedChars(node) {
+  //node?.properties?.className
+  //? node.properties.className.push('highlighted-chars')
+  //: (node.properties.className = ['highlighted-chars'])
+  //},
   tokensMap: {},
   // transformers: [
   // transformerNotationDiff(),

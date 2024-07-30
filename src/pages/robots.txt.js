@@ -19,6 +19,8 @@ export function GET() {
     # Anthropic Claude
     # https://darkvisitors.com/agents/anthropic-ai
     User-agent: anthropic-ai
+    User-agent: Claude-Web
+    User-agent: ClaudeBot
     Disallow: /
 
     # Amazon
@@ -83,6 +85,10 @@ export function GET() {
     User-agent: Omgili
     Disallow: /
 
+    # Perplexity
+    User-agent: PerplexityBot
+    Disallow: /
+
     # Pinterest
     User-Agent: Pinterestbot
     Disallow: /
@@ -134,7 +140,8 @@ export function GET() {
     # Sitemap: ${sitemap.href}
 
     # Credits:
-    # https://neil-clarke.com/block-the-bots-that-feed-ai-models-by-scraping-your-website/
+    # https://ethanmarcotte.com/wrote/blockin-bots/
+    # https://github.com/ai-robots-txt/ai.robots.txt
   `
 
   return new Response(robotsTxt, {

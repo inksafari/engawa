@@ -6,7 +6,7 @@ import spacetime from 'spacetime'
 
 const SITE_TZ = 'Asia/Taipei'
 
-function formatRFC3339(date) {
+function formatRfc3339(date) {
   const tzDate = spacetime(date).goto(SITE_TZ)
   const pattern = 'yyyy-MM-ddTHH:mm:ssZZZZ'
   const result = tzDate.unixFmt(pattern)
@@ -35,7 +35,7 @@ async function updateFrontmatter() {
       // or
       // new Date(execSync(`git log -1 --format="%aI" ${filePath}`).toString().trim())
       // const newDateString = newDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).replace(',', '')
-      const newDateString = formatRFC3339(newDate)
+      const newDateString = formatRfc3339(newDate)
       const newUpdatedDate = `updatedDate: ${newDateString}`
 
       let newFrontmatter = oldFrontmatter.replace(

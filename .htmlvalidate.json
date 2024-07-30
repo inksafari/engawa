@@ -1,7 +1,0 @@
-{
-  "elements": ["html5"],
-  "extends": ["html-validate:standard", "html-validate:a11y"],
-  "rules": {
-    "no-implicit-button-type": "off"
-  }
-}
