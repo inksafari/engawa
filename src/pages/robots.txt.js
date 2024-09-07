@@ -8,6 +8,10 @@ export function GET() {
     #
     # robots.txt ( https://www.robotstxt.org/robotstxt.html )
     #
+    Disallow: /404
+    Disallow: /colophon
+    Disallow: /now
+    Disallow: /search
 
     User-agent: python-requests
     Disallow: /

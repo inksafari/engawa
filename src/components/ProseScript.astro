@@ -1,0 +1,30 @@
+---
+import 'medium-zoom/dist/style.css'
+---
+
+<script is:inline type='module'>
+  //await import('/pagefind/pagefind-highlight.js')
+  //new PagefindHighlight({ highlightParam: 'highlight' })
+</script>
+<script>
+  import { initHan } from '../modules/cjk'
+  import { initMediumZoom } from '../modules/lightbox'
+  import { attach } from '../utilities/useDom'
+
+  // document.addEventListener('astro:before-preparation', () => {
+  // })
+
+  // document.addEventListener('astro:before-swap', () => {
+  // })
+
+  // https://github.com/wry-red/site/blob/main/src/utils/useDom.ts
+  //document.addEventListener('astro:after-swap', () => {
+  //})
+  attach(() => {
+    initHan()
+  })
+
+  document.addEventListener('astro:page-load', () => {
+    initMediumZoom()
+  })
+</script>

@@ -6,7 +6,9 @@
       "scripts/*",
       "**/smoke/**",
       "**/fixtures/**",
-      "**/vendor/**"
+      "**/vendor/**",
+      "*.astro",
+      "*.svelte"
     ]
   },
   "vcs": {
@@ -62,19 +64,19 @@
       }
     },
     {
+      "include": ["*.ts"],
+      "javascript": {
+        "formatter": {
+          "indentWidth": 2
+        }
+      }
+    },
+    {
       "include": ["*.css"],
       "javascript": {
         "formatter": {
           "trailingCommas": "none",
           "quoteStyle": "double"
-        }
-      }
-    },
-    {
-      "include": ["*.astro"],
-      "javascript": {
-        "formatter": {
-          "quoteStyle": "single"
         }
       }
     }

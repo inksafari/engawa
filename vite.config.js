@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 import browserslist from 'browserslist'
 import { browserslistToTargets as cssBrowserslistToTargets } from 'lightningcss'
 import { defineConfig } from 'vitest/config' // import { defineConfig } from 'vite'
@@ -61,7 +61,10 @@ const config = {
     },
   },
   resolve: {
-    '~': path.resolve(__dirname, './src'),
+    alias: {
+      '~': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+    // '~': path.resolve(__dirname, './src'),
     // alias: { '~/': `${process.cwd()}/src/` },
     // alias: [{ find: '~', replacement: path.resolve(__dirname,'./src') }],
     // alias: { '~': fileURLToPath(new URL('./src', import.meta.url)) },
@@ -74,22 +77,25 @@ const config = {
     ],
   },
   // https://lightningcss.dev/docs.html#with-vite
-  css: {
-    transformer: 'lightningcss',
-    lightningcss: {
-      targets: cssBrowserslistToTargets(browserslistConfig),
-      drafts: {
-        customMedia: true,
-      },
-      cssModules: true,
-    },
-  },
+  // css: {
+  // transformer: 'lightningcss',
+  // lightningcss: {
+  // targets: cssBrowserslistToTargets(browserslistConfig),
+  // drafts: {
+  // customMedia: true,
+  // },
+  // cssModules: true,
+  // },
+  // },
   build: {
     assetsInlineLimit: 10_096,
-    cssMinify: 'lightningcss',
-    // rollupOptions: {external: [ /* ...*/ ],},
+    rollupOptions: {
+      external: ['sharp'],
+    },
+    // cssMinify: 'lightningcss',
   },
   // ssr: { noExternal: [ 'open-props'],},
+  //https://github.com/lewishowles/howles.dev/blob/main/vitest.config.js
   //test: {
   //globals: true,
   //environment: 'jsdom',

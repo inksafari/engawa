@@ -1,11 +1,12 @@
 // A quick script that generates a new post template for a Astro site.
 // usage: bun new EXAMPLE or bun new EXAMPLE/index
-// 改用scaffdog？
+// 改用scaffdog？ or
+// https://github.com/noghartt/blog/blob/main/scripts/new-post.ts
+import slug from 'limax'
 import { existsSync, mkdirSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import slug from 'limax'
 import ora from 'ora'
 import { formatPlainDate, formatRFC3339 } from '../src/utilities/date.utils.js'
 

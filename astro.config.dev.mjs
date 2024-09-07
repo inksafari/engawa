@@ -1,16 +1,12 @@
-// import node from '@astrojs/node'
-import { defineConfig } from 'astro/config'
+import { defineConfig, passthroughImageService } from 'astro/config'
 /* --- Integrations ( https://astro.build/integrations ) --- */
 import mdx from '@astrojs/mdx'
 import svelte from '@astrojs/svelte'
 import swup from '@swup/astro'
 import icon from 'astro-icon'
-import devtoolBreakpoints from 'astro-devtool-breakpoints'
-import metaTags from 'astro-meta-tags'
+import { developmentIntegrations } from './src/plugins/plugins.js'
 /* -- Environment Variables -- */
 import siteInfo from './src/consts'
-// import sentry from '@sentry/astro'
-// import spotlightjs from '@spotlightjs/astro'
 /* -- Configuration -- */
 import {
   astroIconOptions,
@@ -23,6 +19,8 @@ const developmentConfig = {
       status: 307,
       destination: '/blog',
     },
+    '/feed': '/rss',
+    '/feeds': '/rss',
   },
   site: siteInfo.siteBase,
   server: {
@@ -30,6 +28,13 @@ const developmentConfig = {
   },
   output: 'server',
   trailingSlash: 'ignore',
+  /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
+  /* https://docs.astro.build/en/guides/images/#configure-no-op-passthrough-service */
+  /* https://docs.astro.build/en/guides/images/#using-sharp */
+  /* https://github.com/Princesseuh/erika.florist/blob/main/src/imageService.ts */
+  image: {
+    service: passthroughImageService(),
+  },
   /* https://docs.astro.build/en/guides/prefetch/ */
   prefetch: {
     defaultStrategy: 'viewport',
@@ -49,21 +54,9 @@ const developmentConfig = {
       smoothScrolling: true,
     }),
     mdx(markdownOptions),
-    devtoolBreakpoints(),
-    metaTags(),
-    // sentry(),
-    // spotlightjs(),
+    ...developmentIntegrations,
   ],
-  redirects: {
-    '/feed': '/rss',
-    '/feeds': '/rss',
-  },
   security: { checkOrigin: true },
-  /* https://docs.astro.build/en/reference/configuration-reference/#image-options */
-  /* https://docs.astro.build/en/guides/assets/#using-sharp */
-  // image: {
-  // entrypoint: './src/imageService.ts',
-  // },
   // vite: {
   // server: {
   // proxy: {

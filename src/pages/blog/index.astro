@@ -2,15 +2,15 @@
 export const prerender = true
 
 import spacetime from 'spacetime'
-import Bar from '../../components/Bar.astro'
 import PostListingLayout from '../../layouts/PostListingLayout.astro'
 import { formatISOString, tzHelper } from '../../utilities/date.utils.js'
 import { getCleanSlug, getURLFromEntry } from '../../utilities/getPermaLink.js'
 import { fetchPosts } from '../../utilities/getPosts.js'
+import SegmentService from '../../utilities/render.ts'
 const currentTime = spacetime.now()
 const allPosts = await fetchPosts({ collection: 'posts' })
 const entries = allPosts.map(getCleanSlug)
-//const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
+// const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
 import siteInfo from '../../consts'
 
 const pageInfo = {
@@ -20,9 +20,8 @@ const pageInfo = {
 ---
 
 <PostListingLayout {pageInfo}>
-  <h3>ramblings</h3>
-  <Bar />
-  <ul class='post-list' data-pagefind-ignore>
+  <h1 class='site-title'>ramblings</h1>
+  <ul class='post-list group mb-10 gap-8 sm:mb-12' data-pagefind-ignore>
     {
       entries.flatMap((entry) => (
         <li class='post-stub h-entry'>
@@ -34,7 +33,7 @@ const pageInfo = {
             class='u-url u-uid'
           >
             <span class='post-stub-title p-name' itemprop='name'>
-              {entry.data.title}
+              <Fragment set:html={SegmentService.segment(entry.data.title)} />
             </span>
           </a>
           <div class='post-stub-meta'>

@@ -11,11 +11,15 @@ devbox.d/
 
 # build output
 .astro/
-.spec.ts-snapshots/
-.spec.js-snapshots/
-search.spec.js-snapshots/
-.unlighthouse/
 dist/
+public/assets/fonts/
+
+# linting & testing
+.pageinsight/
+.unlighthouse/
+.vale/
+**.spec.js-snapshots/
+**.spec.ts-snapshots/
 coverage/
 playwright-report/
 test-results/
@@ -31,18 +35,22 @@ pnpm-debug.log*
 .env
 .env.production
 
-# mine
-.diff
-.vale/
-public/assets/fonts/
+# hosting
 firebase.json
 .firebaserc
 .firebase/
 .wrangler/
 
+# images
+public/assets/images/
+src/assets/
+src/assets/images/
+src/content/posts/images/
+images.json
+lqip.json
+
 # temp
 temp.diff
 src/content/posts/
-src/styles/input/
 src/styles/_fonts/
 src/styles/

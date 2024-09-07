@@ -1,5 +1,6 @@
 import { expect, test as it } from '@playwright/test'
 
+// TODO: https://github.com/yacosta738/yacosta738.github.io/blob/main/tests/integration/blog-search.spec.ts
 it.describe('Search page', () => {
   it('Search', async ({ page }) => {
     await page.goto('/search')

@@ -19,7 +19,9 @@ function fullLink(path, base = siteInfo.siteBase) {
   return new URL(path, base).href
 }
 
-function getURLFromEntry(slug, collection) {
+function getURLFromEntry(rawslug, collection) {
+  const slug = slugifier(rawslug)
+
   switch (collection) {
     case 'pages': {
       // const result = urlJoin(siteInfo.siteBase, collection, slug)

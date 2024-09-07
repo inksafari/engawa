@@ -4,6 +4,7 @@ import rehypeStringify from 'rehype-stringify'
 import remarkDirective from 'remark-directive'
 import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
+// import remarkUnwrapImages from 'remark-unwrap-images'
 import remarkRehype from 'remark-rehype'
 import sanitizeHtml from 'sanitize-html' // ultrahtml
 import { unified } from 'unified'
@@ -20,6 +21,7 @@ function articlePipeline(input) {
     // remark plugins
     .use(remarkDirective)
     .use(remarkMath)
+    // .use(remarkUnwrapImages)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     // rehype plugins
@@ -56,6 +58,7 @@ function compileHTMLForRSS(post) {
 
 /* https://github.com/moeyua/astro-theme-typography/blob/main/src/utils/index.ts */
 /* https://github.com/syhily/yufan.me/blob/astro/src/pages/feed.ts */
+/* https://github.com/Princesseuh/erika.florist/blob/main/src/middleware.ts */
 function getPostDescription(post) {
   if (post.data.abstract) {
     return post.data.abstract

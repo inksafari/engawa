@@ -1,10 +1,10 @@
 ---
-import '../styles/layout_list.js'
 import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
 import Footer from '../components/Footer.astro'
-import Hant from '../components/Hant.astro'
+// import Hant from '../components/Hant.astro'
 import siteInfo from '../consts.ts'
+import '../styles/layout_list.js'
 
 const { pageInfo, currentPage } = Astro.props
 ---
@@ -20,17 +20,21 @@ const { pageInfo, currentPage } = Astro.props
     <BaseHead {pageInfo} />
     <slot name='meta' />
   </Head>
+
   <body
     class='h-feed'
     itemscope
     itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
   >
-    <main id='main-content'>
-      <div class='container'>
-        <slot />
-      </div>
-    </main>
-    <Footer />
-    <Hant />
+    <div class='container'>
+      <main id='main-content' class='row'>
+        <div class='col c-12'>
+          <slot />
+        </div>
+      </main>
+      <Footer />
+    </div>
+    <slot name='footer' />
+    <!-- <Hant /> or <Heti /> -->
   </body>
 </html>

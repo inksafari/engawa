@@ -1,37 +1,50 @@
 ---
+import siteInfo from '../consts.ts'
+import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 import type { HTMLAttributes } from 'astro/types'
 type Props = HTMLAttributes<'a'>
 
 const { href, class: className } = Astro.props
 const url = new URL(href, Astro.url)
-const _isExternal = url.host !== Astro.url.host
-const _isActive =
-  url.href === Astro.url.href || url.href === Astro.url.href.replace(/\/$/, '')
+const isExternal = url.host !== Astro.url.host
+const isActive =
+  url.href == Astro.url.href || url.href == Astro.url.href.replace(/\/$/, '')
+const homePagePath = new URL('/blog', siteInfo.siteBase)
+const homePageUrl = removeTrailingSlash(homePagePath)
+const isHome = url.href == homePageUrl
 ---
 
 <a
   href={href}
-  class:list={[className, { _active: isActive }]}
+  class:list={[
+    className,
+    { 'active underline decoration-1 underline-offset-2': isActive },
+    { 'home-route': isHome },
+  ]}
   itemprop='url'
-  aria-current={_isActive ? 'page' : null}
-  rel={_isExternal ? 'nofollow noopener noreferrer' : null}><slot /></a
+  aria-current={isActive ? 'page' : null}
+  rel={isExternal ? 'prefetch nofollow noopener noreferrer' : 'prefetch'}
+  ><slot /></a
 >
 <style>
   a {
     display: inline-block;
     text-decoration: none;
   }
-  a._active {
-    font-weight: bolder;
-  }
-  /* a._active::after { content: '←'; } */
+  /* a.active::after { content: '←'; } */
 
   /* https://ab.github.io/jekyll-theme-tufte/blog/ */
-  a._active:before {
+  a.active:before {
     content: '\27e8';
   }
 
-  a._active:after {
+  a.active:after {
     content: '\27e9';
+  }
+
+  @media screen and (max-width: 500px) {
+    .home-route {
+      display: none;
+    }
   }
 </style>

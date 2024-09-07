@@ -1,10 +1,10 @@
 ---
-import '../styles/layout_base.js'
 import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
 import Footer from '../components/Footer.astro'
-import Hant from '../components/Hant.astro'
+// import Hant from '../components/Hant.astro'
 import siteInfo from '../consts.ts'
+import '../styles/layout_base.js'
 const { pageInfo } = Astro.props
 ---
 
@@ -24,17 +24,23 @@ const { pageInfo } = Astro.props
     <slot name='meta' />
   </Head>
   <body>
-    <main id='main-content'>
-      <header class='page-header'>
-        <h1 class='page-title'>
-          <span class='page-title-text'>{pageInfo.title}</span>
-        </h1>
-      </header>
-      <slot />
-    </main>
-    <Footer />
-    <Hant />
+    <div class='container'>
+      <main id='main-content' class='h-entry row'>
+        <div class='col c-12'>
+          <!--
+        <header class='page-header'>
+          <h1 class='page-title'>
+            <span class='page-title-text'>{pageInfo.title}</span>
+          </h1>
+        </header>
+        -->
+          <slot />
+        </div>
+      </main>
+      <Footer />
+    </div>
     <slot name='footer' />
+    <!-- <Hant /> or <Heti /> -->
   </body><!--範例：
 <BaseLayout>
   <script src='/assets/exmaple.js' type='text/javascript' slot='meta' ></script>

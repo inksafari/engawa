@@ -30,6 +30,7 @@ const siteInfo = {
   title: authorInfo.networks.twitter.id,
   description: 'Where everyday is gameday.',
   author: authorInfo,
+  domainImage: import.meta.env.VITE_SITE_IMAGE_CDN, // assets.example.com
   domain: import.meta.env.VITE_SITE_DOMAIN, // example.com
   siteBase: isProduction ? liveUrl : localhostUrl, // https://example.com
   port: sitePort,

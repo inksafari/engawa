@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content'
 import PageLayout from '../layouts/PageLayout.astro'
+import EmailDisplay from '../components/EmailDisplay.svelte'
 
 const entry = await getEntry('pages', 'colophon')
 const { Content } = await entry.render()
@@ -11,4 +12,5 @@ const pageInfo = {
 
 <PageLayout {pageInfo}>
   <Content />
+  <EmailDisplay client:only />
 </PageLayout>

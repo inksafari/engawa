@@ -4,7 +4,6 @@
 /// <reference types="vite/client" />
 /// <reference types="vitest" />
 /// <reference types="svelte" />
-
 import type { isTypeNode, isTypeOfExpression } from 'typescript'
 
 declare module '@pagefind/default-ui' {
@@ -36,6 +35,7 @@ type ImportMetaEnv = {
   readonly VITE_SITE_DOMAIN: string
   readonly VITE_SITE_URL: string
   readonly VITE_SITE_PORT: number
+  readonly VITE_SITE_IMAGE_CDN: string
   readonly VITE_WEBMENTION_URL: string
   // readonly VITE_WEBMENTION_API_KEY: string
 }

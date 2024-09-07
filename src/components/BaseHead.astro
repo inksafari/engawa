@@ -6,6 +6,7 @@ import { formatISOString } from '../utilities/date.utils.js'
 import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 import Critical from './Critical.astro'
 import Favicon from './Favicon.astro'
+import Me from './Me.astro'
 
 const pageInfo = metaSchema.parse(Astro.props.pageInfo)
 const titleSeparator = '•'
@@ -68,6 +69,12 @@ const canonicalUrl: URL = new URL(
   title={`JSON Feed for ${siteDomain}`}
   type='application/feed+json'
 />
+<link
+  href='/sitemap.xml'
+  rel='sitemap'
+  title={`Sitemap for ${siteDomain}`}
+  type='application/xml'
+/>
 <meta name='generator' content='Backdrop CMS (http://backdropcms.org)' />
 {
   pageInfo.prev && (
@@ -80,10 +87,10 @@ const canonicalUrl: URL = new URL(
   )
 }
 <ViewTransitions />
-<link href='https://www.inksafari.net/' rel='me' />
-<link href='https://twitter.com/inksafari' rel='me' />
-<link href='https://codeberg.org/inksafari' rel='me' />
-<link href='https://github.com/inksafari' rel='me' />
+<Me />
+<!-- TODO: og images
+https://www.ogimage.gallery/
+-->
 <!-- @source:
 - https://seo.box/
 - https://github.com/yrnana/yrnana.github.io/blob/main/src/components/common/PageMeta.astro

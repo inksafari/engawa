@@ -1,5 +1,6 @@
-import path from 'node:path/posix'
 import { expect, test as it } from '@playwright/test'
+import path from 'node:path/posix'
+
 // import { removeTrailingSlash } from './../src/utilities/getPermaLink.js'
 
 function removeTrailingSlash(pathname) {

@@ -64,13 +64,17 @@ All commands are run from the root of the project, from a terminal:
 
 - .env
 - [consts.ts](src/consts.ts)
+- [Me.astro](src/components/Me.astro)
 - [Header.astro](src/components/Header.astro)
 - [Footer.astro](src/components/Footer.astro)
   - [Year.svelte](src/components/Year.svelte)
+- [emailDisplay.svelte](src/components/emailDisplay.svelte)
 - [Favicon.astro](src/components/Favicon.astro)
 - [generateRssFeed.js](src/utilities/generateRssFeed.js)
-- [get-updatetime.mjs](scripts/get_updatetime.mjs)
+- [get-updatetime.mjs](scripts/getUpdatetime.mjs)
 - [new.mjs](scripts/new.mjs)
+- [readImage.mjs](scripts/readImage.mjs)
+- [generateLqip.mjs](scripts/generateLqip.mjs)
 - Modify the files in the /public folder:
   - favicon
   - robots.txt -> update the Sitemap url to your own domain

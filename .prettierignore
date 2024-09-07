@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# build output
+.astro/
+.unlighthouse/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# mine
+src/components/Hant.astro
+
+# temp
+src/content/posts/
+src/styles/

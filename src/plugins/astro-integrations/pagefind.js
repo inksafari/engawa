@@ -57,3 +57,5 @@ export const pagefind = () => {
     },
   }
 }
+// https://github.com/withastro/starlight/blob/0533ba829648da9f8cdc62b0996328666470a9eb/packages/starlight/index.ts#L90
+// https://github.com/shishkin/astro-pagefind/blob/main/packages/astro-pagefind/src/pagefind.ts

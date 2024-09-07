@@ -16,6 +16,8 @@ function removeDupsAndLowerCase(array) {
 }
 
 const title = zod.string().max(60)
+const prevTitle = zod.string().max(60).optional()
+const nextTitle = zod.string().max(60).optional()
 const abstract = zod.preprocess(
   (value) => value || siteInfo.description,
   zod.string().max(160).optional(),
@@ -36,6 +38,8 @@ const sameSiteUrl = zod.preprocess(
   zod.string().max(60).optional(),
 )
 const bibliography = zod.array(zod.string().url()).optional()
+// TODO: slug和name分開
+// https://github.com/wry-red/site/blob/main/src/utils/usePosts.ts
 const tags = zod
   .array(zod.string())
   .min(1)
@@ -51,6 +55,20 @@ const blogCategory = zod.union([
   zod.literal('other'),
 ])
 
+/* https://github.com/deminearchiver/website/blob/main/app/src/schemas/utils.ts */
+// 沒有用到，暫時保留
+const imageObjectSchema = ({ image }) =>
+  zod.object({
+    src: image(),
+    alt: zod.string().default(''),
+    credit: zod.string(),
+  })
+
+const imageSchema = (context) => {
+  const { image } = context
+  return imageObjectSchema(context)
+}
+
 // ts:
 // export type Post = import('astro:content').CollectionEntry<'posts'>
 // export type Page = import('astro').Page<Post>
@@ -59,20 +77,25 @@ const pageSchema = zod.object({
   isIndex,
 })
 
-const postSchema = zod.object({
-  title,
-  abstract,
-  isIndex,
-  isDraft,
-  publishDate,
-  updatedDate,
-  themeColor,
-  tags,
-  // category: blogCategory,
-  prev: sameSiteUrl,
-  next: sameSiteUrl,
-  bibliography,
-})
+const postSchema = (context) => {
+  return zod.object({
+    banner: imageSchema(context).optional(),
+    title,
+    abstract,
+    isIndex,
+    isDraft,
+    publishDate,
+    updatedDate,
+    themeColor,
+    tags,
+    // category: blogCategory,
+    prev: sameSiteUrl,
+    prevTitle,
+    next: sameSiteUrl,
+    nextTitle,
+    bibliography,
+  })
+}
 
 const metaSchema = zod.object({
   title,

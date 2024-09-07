@@ -1,11 +1,20 @@
 ---
-// import Navigation from './Navigation.astro'
+import NavigationLink from '../components/NavigationLink.astro'
+import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 import siteInfo, { feedUrls } from '../consts.ts'
 import Year from './Year.svelte'
+
+const searchPageRoute = 'search'
+const searchPagePath = new URL(searchPageRoute, siteInfo.siteBase)
+const searchPageUrl = removeTrailingSlash(searchPagePath)
 ---
 
-<footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
-  <div class='legal'>
+<footer class='site-foot row' itemscope itemtype='https://schema.org/WPFooter'>
+  <div class='legel col c-12'>
+    <NavigationLink href='/now'>now</NavigationLink>
+    <NavigationLink href='/colophon'>colophon</NavigationLink>
+    <NavigationLink href={feedUrls.page}>feed</NavigationLink>
+    <NavigationLink href={searchPageUrl}>search</NavigationLink>
     <!-- © 2023-2024 example.com -->
     <div itemprop='copyrightNotice'>
       <span class='copy'>&copy;</span>
@@ -13,31 +22,17 @@ import Year from './Year.svelte'
         <Year from={siteInfo.copyrightYear} />
       </span>
       &nbsp;
-      <a href='/' class='footer-link' itemprop='url' rel='author' data-testid='link'>
+      <a
+        href='/'
+        class='footer-link'
+        itemprop='url'
+        rel='author'
+        data-testid='link'
+      >
         <span translate='no' class='p-author h-card' itemprop='copyrightHolder'>
           {siteInfo.domain}
         </span>
       </a>
     </div><!-- /copyrightNotice -->
-    <!--
-    &nbsp;
-    <a
-      title='RSS Feed'
-      class='rss-container'
-      href={feedUrls.page}
-      target='_blank'
-      rel='noreferrer'
-    >
-      <span class='text-cap'>rss</span>
-      <img
-        class='rss'
-        src='/assets/img/rss.svg'
-        alt='RSS Feed Icon'
-        title='RSS Feed Icon'
-        loading='lazy'
-      />
-    </a>
-    -->
   </div><!-- /legel -->
-  <!-- <Navigation /> -->
 </footer>
