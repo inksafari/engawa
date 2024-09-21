@@ -62,7 +62,7 @@ pre-commit:
       run: gitleaks detect --source . -v
     code:biome:
       glob: "*.{css,cjs,mjs,js,ts,astro,svelte}"
-      run: bunx @biomejs/biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
+      run: bunx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
 
 commit-msg:
   commands:

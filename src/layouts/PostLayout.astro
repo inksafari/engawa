@@ -4,6 +4,7 @@ import { fade } from 'astro:transitions'
 import { Moon } from 'lunarphase-js'
 import BaseHead from '../components/BaseHead.astro'
 import '../styles/layout_post.js'
+import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import FormattedDate from '../components/FormattedDate.astro'
 import OutdateTip from '../components/OutdateTip.astro'
@@ -71,38 +72,38 @@ const pageInfo = {
     }
     <slot name='meta' />
   </Head>
-  <body class='bg-main text-main'>
-    <!-- TODO: microformats
+  <body>
+    <div class='container'>
+      <Header />
+      <!-- TODO: microformats
     - https://developer.mozilla.org/en-US/docs/Web/HTML/microformats
     - https://developers.google.com/search/docs/appearance/structured-data/article
     - https://www.w3.org/TR/xhtml-rdfa-primer/#default_prefixes
     -->
-    <div class='container'>
-      <main id='main-content' class='row'>
-        <article class='h-entry col c-12'>
-          <!-- 1. <header>entry meta</header> -->
-          <header class='mb-8'>
-            <!-- 1.1 post title -->
-            <h1
-              class='entry-title p-name'
-              data-pagefind-meta='title'
-              transition:name={`blog-${slug}-title`}
-              transition:animate={fade({ duration: 1000 })}
-            >
-              <Fragment set:html={SegmentService.segment(data.title)} />
-            </h1>
-            <!-- 1.2 post timestamp ( 1.moon phases emoji  2.date ) -->
-            <div class=''>
-              <span class='screen-reader'>Posted on </span>
-              {moonEmoji}
+      <main id='main-content'>
+        <article class='h-entry'>
+          <!-- 1.1 post title -->
+          <h1
+            class='entry-title p-name'
+            data-pagefind-meta='title'
+            transition:name={`blog-${slug}-title`}
+            transition:animate={fade({ duration: 1000 })}
+          >
+            <Fragment set:html={SegmentService.segment(data.title)} />
+          </h1>
+          <!-- 1.2 post timestamp ( 1.moon phases emoji  2.date ) -->
+          <ul class='post-metadata'>
+            <li>
+              <span class='screen-reader'>Posted on </span>{moonEmoji}
               <FormattedDate date={data.publishDate} />
+            </li>
+            <li>
               <!-- updatedDate -->
               {
                 data.updatedDate && (
                   <Fragment>
                     {/* • · */}
-                    <span class='entry-meta-label-separator'>{' • '}</span>
-                    <span class='entry-meta-label-text'>Updated on</span>
+                    <span class='post-metadata-text'>Updated on</span>
                     <FormattedDate
                       date={data.updatedDate}
                       class='dt-updated'
@@ -111,31 +112,34 @@ const pageInfo = {
                   </Fragment>
                 )
               }
-            </div>
-          </header>
+            </li>
+          </ul>
+
           <!-- 2. <div>entry content</div> -->
           <div
-            class='entry-content e-content heti markdown'
+            class='entry-content e-content heti generated'
             data-pagefind-body
             data-pagefind-meta='kind:weblog'
           >
             {isOld ? <OutdateTip /> : null}
             <slot />
-          </div>
+          </div><!-- .entry-content .e-content -->
           {bytes} bytes
         </article>
+
         <!-- 左箭頭：&larr; / &laquo;&nbsp;  v.  右箭頭&rarr; / &nbsp;&raquo; -->
         {
           hasRecommendations && (
             <nav
-              class='pager post-pagination col c-12'
+              id='post-pagination'
               aria-label='Pagination'
               data-pagefind-ignore
             >
-              <h2 class=''>Read Next</h2>
-              <div class=''>
+              <h2>Read Next</h2>
+              <ul class='links-nextprev'>
                 {prevPage && (
-                  <h3 class='text-xl sm:text-2xl mb-5 sm:mb-7'>
+                  <li>
+                    Previous:
                     <a
                       data-astro-prefetch
                       href={prevPage}
@@ -146,10 +150,11 @@ const pageInfo = {
                         set:html={SegmentService.segment(prevPageTitle)}
                       />
                     </a>
-                  </h3>
+                  </li>
                 )}
                 {nextPage && (
-                  <h3 class='text-xl sm:text-2xl'>
+                  <li>
+                    Next:
                     <a
                       data-astro-prefetch
                       href={nextPage}
@@ -160,20 +165,22 @@ const pageInfo = {
                         set:html={SegmentService.segment(nextPageTitle)}
                       />
                     </a>
-                  </h3>
+                  </li>
                 )}
-              </div>
+              </ul>
             </nav>
           )
         }
       </main>
       <Footer />
-    </div>
+    </div><!-- .container -->
     <!-- TODO: ProseScript -->
     <!-- https://github.com/wry-red/site/blob/main/src/components/ProseScript.astro -->
+    <slot name='footer' />
     <ProseScript />
     <!-- <PictureZoom client:load /> -->
-  </body><style is:inline>
+  </body><!--
+  <style is:inline>
     .entry-content:global(.js-enabled p > img),
     .entry-content:global(.js-enabled figure img) {
       transition: 0.25s;
@@ -202,4 +209,5 @@ const pageInfo = {
       max-width: 80%;
     }
   </style>
+-->
 </html>

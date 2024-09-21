@@ -6,7 +6,7 @@ import * as playformCompress from '@playform/compress'
 import pageInsight from 'astro-page-insight'
 import playformInline from '@playform/inline'
 import purgecss from 'astro-purgecss'
-import { pagefind } from './astro-integrations/pagefind.js'
+// import { pagefind } from './astro-integrations/pagefind.js'
 // import tailwindConfigViewer from 'astro-tailwind-config-viewer'
 
 /* -- Configuration -- */
@@ -35,7 +35,7 @@ const developmentIntegrations = [
 ]
 
 const productionIntegrations = [
-  pagefind(),
+  // pagefind(),
   purgecss(astroPurgecssOptions),
   playformCompress.default(astroCompressOptions),
   playformInline(),

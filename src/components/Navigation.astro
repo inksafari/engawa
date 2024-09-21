@@ -1,11 +1,11 @@
 ---
-import siteInfo from '../consts.ts'
+import NavigationLink from './NavigationLink.astro'
+import siteInfo, { feedUrls } from '../consts.ts'
 import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 // @source: https://jonneal.dev/blog/better-elements-with-astro/
 // TODO: 開啟VoiceOver測試
 // https://www.aditus.io/patterns/multiple-navigation-landmarks/
 // https://a11ysupport.io/tech/aria/aria-current_attribute
-import NavigationLink from './NavigationLink.astro'
 
 const { class: className } = Astro.props
 const searchPageRoute = 'search'
@@ -15,34 +15,25 @@ const navClasses = ''
 ---
 
 <!-- <nav id='footer-navigation' aria-label='Footer navigation'> -->
-<a class='skip-link' href='#main-content'>Skip to content</a>
 <nav
   id='site-navigation'
   class:list={[navClasses, className]}
   aria-label='Header navigation'
 >
-  <div class=''>
-    <button
-      class=''
-      aria-label='Open Menu'
-      aria-expanded='false'
-      aria-controls='menu-items'
-    >
-      <span class=''></span>
-    </button>
-    <ul id='menu-items' class='gap-6'>
-      <li class='py-1'>
-        <NavigationLink href='/blog'>Home</NavigationLink>
-      </li>
-      <li class='py-1'>
-        <NavigationLink href='/colophon'>colophon</NavigationLink>
-      </li>
-      <li class='py-1'>
-        <NavigationLink href='/now'>now</NavigationLink>
-      </li>
-      <li class='py-1'>
-        <NavigationLink href={searchPageUrl}>/search</NavigationLink>
-      </li>
-    </ul>
-  </div>
+  <ul id='nav'>
+    <li class='nav-item'>
+      <NavigationLink href='/blog'>Home</NavigationLink>
+    </li>
+    <li class='nav-item'>
+      <NavigationLink href='/now'>now</NavigationLink>
+    </li>
+    <li class='nav-item'>
+      <NavigationLink href={feedUrls.page}>feed</NavigationLink>
+    </li>
+    <!--
+    <li class='nav-item'>
+      <NavigationLink href={searchPageUrl}>search</NavigationLink>
+    </li>
+    -->
+  </ul>
 </nav>

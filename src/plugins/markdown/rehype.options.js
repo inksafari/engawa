@@ -16,7 +16,7 @@
 // https://github.com/danillouz/mysite/blob/main/src/plugins/autolink-headings.mjs
 const rehypeAutolinkHeadingsOptions = {
   behavior: 'prepend',
-  properties: { class: 'heading-permalink', ariaHidden: true, tabIndex: -1 },
+  properties: { class: 'heading-anchor', ariaHidden: true, tabIndex: -1 },
   content: {
     type: 'text',
     value: '// ',

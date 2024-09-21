@@ -1,0 +1,9 @@
+/* https://www.npmjs.com/package/rehype-color-chips */
+.gfm-color-chip {
+  margin-left: 0.125rem;
+  display: inline-block;
+  height: 0.625rem;
+  width: 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid gray;
+}

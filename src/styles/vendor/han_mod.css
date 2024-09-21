@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+/*! 漢字標準格式 v3.3.0 | MIT License | hanzi.pro                      */
+
+/*! Han.css: the CSS typography framework optimised for Hanzi         */
+
+/*! ----------------------------------------------------------------- */
+
+/*! https://github.com/ethantw/Han/blob/master/demo/han.css           */
+
+
+/** modified by @inksafari:
+ *  1. Han Fonts只保留Han Space，並移到最前面。
+ *  2.「標點擠壓」、「漢字西文混排間隙」功能保留，其餘暫時刪除。
+ */
+
+/* Fonts */
+@font-face {
+  font-family: 'Han Space';
+  src: url('/assets/fonts/han-space.woff2?v3.3.0') format('woff2');
+  unicode-range: U+20;
+}
+
+/* <del>normalize.css v4.0.0</del> */
+
+/* https://necolas.github.io/normalize.css/4.0.0/normalize.css */
+
+/* 漢字西文混排間隙：h-hws */
+h-hws,
+h-hws[hidden] {
+  display: inline;
+  visibility: hidden;
+  font: 0.89em Arial;
+}
+
+code h-hws,
+code h-hws[hidden],
+h-hws.quote-inner,
+h-hws.quote-outer:lang(zh-CN),
+h-hws.quote-outer:lang(zh-Hans),
+h-hws[hidden].quote-inner,
+h-hws[hidden].quote-outer:lang(zh-CN),
+h-hws[hidden].quote-outer:lang(zh-Hans),
+kbd h-hws,
+kbd h-hws[hidden],
+pre h-hws,
+pre h-hws[hidden],
+samp h-hws,
+samp h-hws[hidden] {
+  display: none;
+}
+
+/* 標點擠壓：.bd-jiya */
+h-char.bd-jiya.bd-end::after,
+h-char.bd-jiya.bd-open::before,
+h-cs,
+h-cs[hidden] {
+  display: none;
+  visibility: hidden;
+  content: ' ';
+  font: 0.825em Courier;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+h-char.bd-jiya.bd-close::after,
+h-char.bd-jiya.bd-cop::after,
+h-char.bd-jiya.bd-open::before,
+h-char.bd-jiya[unicode='ff0e']::after,
+h-cs.jinze-outer,
+h-cs.jinze-outer[hidden] {
+  display: inline;
+}
+
+h-char.bd-jiya.bd-open > h-inner {
+  margin-left: -0.5em;
+}
+
+h-char.bd-jiya.bd-close > h-inner,
+h-char.bd-jiya.bd-cop > h-inner,
+h-char.bd-jiya[unicode='ff0e'] > h-inner {
+  letter-spacing: -0.5em;
+}
+
+h-char.bd-consecutive.bd-end:not(.end-portion)::after,
+h-char.bd-consecutive.bd-open[prev='bd-open']::before,
+h-char.bd-jiya.bd-cop:lang(zh-HK)::after,
+h-char.bd-jiya.bd-cop:lang(zh-Hant)::after,
+h-char.bd-jiya.bd-cop:lang(zh-TW)::after,
+h-cs.jiya-outer.bd-end:not(.end-portion) {
+  display: none;
+}
+
+h-char.bd-jiya.bd-cop:lang(zh-HK) > h-inner,
+h-char.bd-jiya.bd-cop:lang(zh-Hant) > h-inner,
+h-char.bd-jiya.bd-cop:lang(zh-TW) > h-inner {
+  letter-spacing: inherit;
+}
+
+h-cs.jiya-outer.bd-end[next='bd-open'] {
+  display: inline;
+}
+
+h-char.bd-consecutive.bd-open[prev*='bd-cop']:lang(zh-HK)::before,
+h-char.bd-consecutive.bd-open[prev*='bd-cop']:lang(zh-Hant)::before,
+h-char.bd-consecutive.bd-open[prev*='bd-cop']:lang(zh-TW)::before,
+h-cs.jiya-outer.bd-end:lang(zh-HK),
+h-cs.jiya-outer.bd-end:lang(zh-Hant),
+h-cs.jiya-outer.bd-end:lang(zh-TW),
+h-cs.jiya-outer[prev*='bd-cop']:lang(zh-HK),
+h-cs.jiya-outer[prev*='bd-cop']:lang(zh-Hant),
+h-cs.jiya-outer[prev*='bd-cop']:lang(zh-TW) {
+  display: none;
+}
+
+/* 待處理： */
+
+/* 標點符號：Biaodian */
+
+/* 行間注： ruby, rt, h-ruby, h-ru */
+
+/* 行尾點號懸掛：.bd-hangable, .hangable-outer */
+
+/* 以PUA字元取代合字符：.comb-liga */

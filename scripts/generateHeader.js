@@ -4,6 +4,7 @@ import {
   inlineScriptHashes,
   inlineStyleHashes,
 } from '../.astro/generated_hashes.mjs'
+import siteInfo from '../src/consts.ts'
 
 const header_template = `
 Accept-CH: DPR, Viewport-Width, Width
@@ -26,7 +27,7 @@ Content-Security-Policy: !!!INJECTCSP!!!
 let csp_script_hashes = inlineScriptHashes.map((x) => `'${x}'`).join(' ')
 let csp_style_hashes = inlineStyleHashes.map((x) => `'${x}'`).join(' ')
 
-const csp = `default-src 'self'; script-src 'self' static.cloudflareinsights.com ${csp_script_hashes}; style-src 'self' ${csp_style_hashes}; object-src 'none'; connect-src 'self' cloudflareinsights.com; frame-ancestors 'none'; upgrade-insecure-requests;`
+const csp = `default-src 'self'; script-src 'self' ${siteInfo.domainImage} static.cloudflareinsights.com ${csp_script_hashes}; style-src 'self' ${siteInfo.domainImage} ${csp_style_hashes}; object-src 'none'; connect-src 'self' ${siteInfo.domainImage} cloudflareinsights.com; frame-ancestors 'none'; upgrade-insecure-requests;`
 
 const headers = header_template.replace('!!!INJECTCSP!!!', csp)
 

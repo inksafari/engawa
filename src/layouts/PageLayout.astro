@@ -1,8 +1,8 @@
 ---
 import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
+import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
-// import Hant from '../components/Hant.astro'
 import siteInfo from '../consts.ts'
 import '../styles/layout_page.js'
 const { pageInfo } = Astro.props
@@ -28,25 +28,23 @@ const { pageInfo } = Astro.props
     itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
   >
     <div class='container'>
-      <main id='main-content' class='row'>
-        <article class='h-entry col c-12'>
-          <section class='page-header'>
-            <h1
-              class='page-title p-name'
-              itemprop='headline name'
-              data-testid='heading'
-            >
-              {pageInfo.title}
-            </h1>
-          </section>
-          <div class='markdown page-content e-content' itemprop='text'>
+      <Header />
+      <main id='main-content'>
+        <article class='h-entry'>
+          <h1
+            class='page-title p-name'
+            itemprop='headline name'
+            data-testid='heading'
+          >
+            {pageInfo.title}
+          </h1>
+          <div class='entry-content e-content heti generated' itemprop='text'>
             <slot />
           </div>
         </article>
       </main>
       <Footer />
-    </div>
-    <!-- <Hant /> or <Heti /> -->
+    </div><!-- .container -->
     <slot name='footer' />
   </body>
 </html>

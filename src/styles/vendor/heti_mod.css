@@ -1,0 +1,56 @@
+/*!
+ * Project: Heti@0.9.4
+ * URL: https://github.com/sivan/heti
+ * Author: Sivan [sun.sivan@gmail.com]
+ */
+
+/** modified by @inksafari:
+ * 「行間注」、「漢字西文混排間隙」功能保留，其餘暫時刪除。
+ */
+.heti rt {
+  font-size: .875em;
+  font-weight: 400
+}
+
+.heti .heti-ruby--inline {
+  display: inline-flex;
+  flex-direction: column-reverse;
+  height: 1.5em;
+  vertical-align: top
+}
+
+.heti .heti-ruby--inline rt {
+  display: inline;
+  margin-bottom: -0.25em;
+  line-height: 1;
+  text-align: center
+}
+
+.heti heti-spacing {
+  display: inline
+}
+
+.heti heti-spacing+sup,
+.heti heti-spacing+sub {
+  margin-inline-start: 0
+}
+
+.heti .heti-spacing-start {
+  margin-inline-end: .25em
+}
+
+.heti .heti-spacing-end {
+  margin-inline-start: .25em
+}
+
+.heti heti-adjacent {
+  display: inline
+}
+
+.heti .heti-adjacent-half {
+  margin-inline-end: -0.5em
+}
+
+.heti .heti-adjacent-quarter {
+  margin-inline-end: -0.25em
+}

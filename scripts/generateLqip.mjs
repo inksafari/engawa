@@ -9,6 +9,12 @@ import { getPlaiceholder } from 'plaiceholder'
 import lqip from 'lqip-modern'
 import { rgbaToThumbHash, thumbHashToDataURL } from 'thumbhash'
 import { Bitmap, ImageRunner, ShapeTypes, SvgExporter } from 'geometrizejs'
+import {
+  blurhashToDataUri,
+  blurhashToCssGradientString
+} from '@unpic/placeholder'
+
+
 
 const sourceDirectory = 'src/assets/images/' // Change this to your input directory
 const outputDirectory = 'public/assets/images' // Change this to your output directory
@@ -104,7 +110,7 @@ async function generatePlaceholderDataURI(inputImage) {
   const placeholderBuffer = await sharp(inputImage)
     .clone()
     .resize(100, 100, { fit: 'inside' })
-    .toFormat('webp', { quality: 1 })
+    .toFormat('bmp', { quality: 1 })
     .modulate({
       brightness: 1,
       saturation: 1.2,
@@ -112,7 +118,7 @@ async function generatePlaceholderDataURI(inputImage) {
     .blur()
     .toBuffer({ resolveWithObject: true })
 
-  const imageDataURI = `data:image/webp;base64,${placeholderBuffer.data.toString(
+  const imageDataURI = `data:image/bmp;base64,${placeholderBuffer.data.toString(
     'base64'
   )}`
 
@@ -138,6 +144,8 @@ async function generateBlurHashDataURI(inputImage) {
     4
   )
 
+  // 也可以直接用 '@unpic/placeholder' 的 blurhashToDataUri 省略組圖和編碼
+  // https://unpic.pics/placeholder/#blurhashtodatauri
   const bitmap = hashDecoded(blurhash, info.width, info.height)
   const blurryImage = sharp(Buffer.from(bitmap), {
     raw: {
@@ -145,15 +153,46 @@ async function generateBlurHashDataURI(inputImage) {
       width: 100,  // info.width,
       height: 100, // info.height,
     }
-  }).webp({
+  }).bmp({
     quality: 40,
   }).toBuffer()
-  const imageDataURI = `data:image/webp;base64,${encode64(blurryImage)}`
+  const imageDataURI = `data:image/bmp;base64,${encode64(blurryImage)}`
 
   return await new Promise(response => {
     if (isBlurhashValid(blurhash)) {
-      // return response({ blurryhash, w: info.width, h: info.height })
+      // return response({ blurhash, w: info.width, h: info.height })
       return response(imageDataURI)
+    } else {
+      return response(null)
+    }
+  })
+}
+
+/* -- https://unpic.pics/placeholder/ （同樣使用 BlurHash ） -- */
+async function generateBlurHashCSS(inputImage) {
+  const smallImage = sharp(inputImage)
+    .clone()
+    .ensureAlpha()
+    .resize({ width: 100, height: 100, fit: 'fill' })
+    .raw()
+
+  const { data, info } = await smallImage.toBuffer({
+    resolveWithObject: true,
+  })
+  const blurhash = encodeHash(
+    new Uint8ClampedArray(data),
+    info.width,
+    info.height,
+    4,
+    4
+  )
+
+  const placeholder = blurhashToCssGradientString(blurhash)
+
+  return await new Promise(response => {
+    if (isBlurhashValid(blurhash)) {
+      // return response({ blurhash, w: info.width, h: info.height })
+      return response(placeholder)
     } else {
       return response(null)
     }
@@ -240,13 +279,13 @@ async function processImage(filePath) {
     .toBuffer()
   await sharp(data).toFile(outputPath)
 
-  // Create low-quality WebP image placeholders
+  // Generate low-quality image placeholders
   // [method 1] sharp: base64 encoded image
   // output[sourceFile] = await generatePlaceholderDataURI(filePath)
   // [method 2] plaiceholder(sharp): base64 encoded png
   // https://github.com/joe-bell/plaiceholder/blob/main/packages/plaiceholder/src/index.ts
-  const placeHolder = await getPlaiceholder(filePath)
-  output[sourceFile] = placeHolder.base64
+  // const placeHolder = await getPlaiceholder(filePath)
+  // output[sourceFile] = placeHolder.base64
   // [method 3] lqip-modern(sharp): base64 encoded WebP
   // https://www.npmjs.com/package/lqip-modern
   // const placeHolder = await lqip(filePath)
@@ -262,11 +301,14 @@ async function processImage(filePath) {
   // 其他方法(geometric primitives)： { primitive / geometrizejs / archaic } & svgo
   // geometrizejs:
   // https://gist.github.com/Munawwar/6ac51e33e901d89750ee61319d064aa5
-  await generatePlaceholderSVG(filePath, geosvgPath)
+  // await generatePlaceholderSVG(filePath, geosvgPath)
   // [method 5] BlurHash: base83 encoded hash（需要自己組圖片）
   // https://blurha.sh/
   // output[sourceFile] = await generateBlurHashDataURI(filePath)
-  // [method 6] ThumbHash: base64 encoded image
+  // [method 6] @unpic/placeholder: base64 encoded bmp ( w/ BlurHash )
+  //                             or blurhashToCssGradientString
+  output[sourceFile] = await generateBlurHashCSS(filePath)
+  // [method 7] ThumbHash: base64 encoded image
   // https://evanw.github.io/thumbhash/
   // output[sourceFile] = await generateThumbHashDataURI(filePath)
 

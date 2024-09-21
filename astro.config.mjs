@@ -72,14 +72,6 @@ const baseConfig = {
     //)
   ],
   security: { checkOrigin: true },
-  // https://astro.build/blog/astro-460/#experimental-support-for-csrf-protection
-  experimental: {
-    security: {
-      csrfProtection: {
-        origin: true,
-      },
-    },
-  },
 }
 // isProduction && baseConfig.integrations.push(...productionIntegrations)
 baseConfig.integrations.push(...productionIntegrations)

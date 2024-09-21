@@ -1,7 +1,7 @@
 ---
 import { getEntry } from 'astro:content'
 import PageLayout from '../layouts/PageLayout.astro'
-import EmailDisplay from '../components/EmailDisplay.svelte'
+import EmailDisplay from '../components/emailDisplay.svelte'
 
 const entry = await getEntry('pages', 'colophon')
 const { Content } = await entry.render()
@@ -12,5 +12,6 @@ const pageInfo = {
 
 <PageLayout {pageInfo}>
   <Content />
-  <EmailDisplay client:only />
+  <!-- https://docs.astro.build/en/reference/directives-reference/#client-directives -->
+  <EmailDisplay client:only='svelte' />
 </PageLayout>

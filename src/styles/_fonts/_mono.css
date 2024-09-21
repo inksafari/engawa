@@ -1,0 +1,55 @@
+/*!
+ * Berkeley Mono(paid font)
+ * https://berkeleygraphics.com/typefaces/berkeley-mono/
+ */
+
+/* ... */
+
+/*!
+ * Fira Code
+ * https://github.com/tonsky/FiraCode
+ */
+/* https://github.com/max-niederman/website/blob/307948e0464c04abb8b1c697c89e89363d0c6f92/packages/theme/src/styles/global.scss */
+/* https://github.com/fontsource/fontsource/issues/153#issuecomment-775977351 */
+/* @use '@fontsource/fira-code/scss/mixins' as FiraCode;
+ * @include FiraCode.fontFaceVariable(
+ * $fontDir: '/assets/fonts/@fontsource/fira-code/files',
+ * $type: 'wghtOnly'
+ * );
+ */
+
+/*!
+ * Iosevka
+ * https://github.com/be5invis/Iosevka
+ */
+
+/* ... */
+
+/*!
+ * Lotion
+ * https://font.nina.coffee/
+ */
+
+/* ... */
+
+/*!
+ * Monaspace
+ * https://monaspace.githubnext.com
+ * https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/
+ */
+
+/* ... */
+
+/*!
+ * PragmataPro Mono(paid font)
+ * https://fsd.it/shop/fonts/pragmatapro/
+ */
+
+/* ... */
+
+/*!
+ * PlemolJP (プレモル ジェイピー)
+ * https://github.com/yuru7/PlemolJP
+ */
+
+/* ... */

@@ -18,7 +18,7 @@ const isHome = url.href == homePageUrl
   href={href}
   class:list={[
     className,
-    { 'active underline decoration-1 underline-offset-2': isActive },
+    { 'active underline': isActive },
     { 'home-route': isHome },
   ]}
   itemprop='url'
@@ -27,20 +27,12 @@ const isHome = url.href == homePageUrl
   ><slot /></a
 >
 <style>
-  a {
-    display: inline-block;
-    text-decoration: none;
-  }
   /* a.active::after { content: '←'; } */
 
   /* https://ab.github.io/jekyll-theme-tufte/blog/ */
-  a.active:before {
-    content: '\27e8';
-  }
+  /* a.active:before { content: '\27e8'; } */
 
-  a.active:after {
-    content: '\27e9';
-  }
+  /* a.active:after { content: '\27e9'; } */
 
   @media screen and (max-width: 500px) {
     .home-route {

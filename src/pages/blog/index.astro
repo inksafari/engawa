@@ -10,6 +10,7 @@ import SegmentService from '../../utilities/render.ts'
 const currentTime = spacetime.now()
 const allPosts = await fetchPosts({ collection: 'posts' })
 const entries = allPosts.map(getCleanSlug)
+const count = entries.length + 1
 // const categories = [...new Set(entries.flatMap((entry) => entry.data.categories))].sort()
 import siteInfo from '../../consts'
 
@@ -20,8 +21,8 @@ const pageInfo = {
 ---
 
 <PostListingLayout {pageInfo}>
-  <h1 class='site-title'>ramblings</h1>
-  <ul class='post-list group mb-10 gap-8 sm:mb-12' data-pagefind-ignore>
+  <!-- <ol reversed start={count} class='posts' data-pagefind-ignore> -->
+  <ol class='posts' reversed start={count} data-pagefind-ignore>
     {
       entries.flatMap((entry) => (
         <li class='post-stub h-entry'>
@@ -36,21 +37,24 @@ const pageInfo = {
               <Fragment set:html={SegmentService.segment(entry.data.title)} />
             </span>
           </a>
-          <div class='post-stub-meta'>
-            <time
-              datetime={formatISOString(entry.data.publishDate)}
-              class='dt-published'
-              itemprop='datePublished'
-            >
-              {currentTime.diff(tzHelper(entry.data.publishDate), 'days') > -179
-                ? tzHelper(entry.data.publishDate).format('nice-year')
-                : currentTime.since(tzHelper(entry.data.publishDate)).rounded}
-            </time>
-          </div>
+          <time
+            datetime={formatISOString(entry.data.publishDate)}
+            class='dt-published'
+            itemprop='datePublished'
+          >
+            {currentTime.diff(tzHelper(entry.data.publishDate), 'days') > -179
+              ? tzHelper(entry.data.publishDate).format('nice-year')
+              : currentTime.since(tzHelper(entry.data.publishDate)).rounded}
+          </time>
         </li>
       ))
     }
-  </ul>
+  </ol>
+  <style define:vars={{ count }}>
+    ol.posts {
+      counter-reset: start-from var(--count);
+    }
+  </style>
   <script is:inline>
     console.log('%c Over the seaside ', 'color: #ff7f50')
     console.log('%c I see my future drown in the sea ', 'color: #ff7f50')
@@ -61,14 +65,4 @@ const pageInfo = {
       'background: #fafcd1;color: #ff7f50',
     )
   </script>
-  <style is:inline>
-    body {
-      --body-bg-color: #f0eadf;
-      background-color: var(--body-bg-color);
-    }
-
-    ::selection {
-      background-color: #fef65b;
-    }
-  </style>
 </PostListingLayout>

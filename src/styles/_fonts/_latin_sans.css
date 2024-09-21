@@ -1,0 +1,275 @@
+/*!
+ * Akkurat(paid font)
+ * https://lineto.com/typefaces/akkurat
+ */
+
+/* ... */
+
+/*!
+ * Anek
+ * https://github.com/EkType/Anek
+ */
+
+/* ... */
+
+/*!
+ * Archivo
+ * https://www.omnibus-type.com/fonts/archivo/
+ */
+/*@font-face {
+/*  font-family: 'Archivo';
+/*  font-style: normal;
+/*  font-weight: 400 700;
+/*  font-display: swap;
+/*  src: url('/assets/fonts/archivo-variable.woff2') format('woff2'),
+/*      url('/assets/fonts/archivo-variable.woff') format('woff');
+/*  font-named-instance: 'Regular';
+/*}
+*?
+
+/*!
+ * Atkinson Hyperlegible
+ * https://brailleinstitute.org/freefont
+ */
+/*@font-face {
+/*  font-family: 'Atkinson Hyperlegible';
+/*  font-style: normal;
+/*  font-weight: 400;
+/*  src:
+/*    local('Atkinson-Hyperlegible-Regular'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Regular-102.woff') format('woff');
+/*  unicode-range: U+000-5FF;
+/*}
+/*@font-face {
+/*  font-family: 'Atkinson Hyperlegible';
+/*  font-style: normal;
+/*  font-weight: 700;
+/*  src:
+/*    local('Atkinson-Hyperlegible-Bold'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Bold-102.woff') format('woff');
+/*  unicode-range: U+000-5FF;
+/*}
+/*@font-face {
+/*  font-family: 'Atkinson Hyperlegible';
+/*  font-style: italic;
+/*  font-weight: 400;
+/*  src:
+/*    local('Atkinson-Hyperlegible-Italic'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-Italic-102.woff') format('woff');
+/*  unicode-range: U+000-5FF;
+/*}
+/*@font-face {
+/*  font-family: 'Atkinson Hyperlegible';
+/*  font-style: italic;
+/*  font-weight: 700;
+/*  src:
+/*    local('Atkinson-Hyperlegible-BoldItalic'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2'),
+/*    url('/assets/fonts/Atkinson-Hyperlegible-BoldItalic-102.woff') format('woff');
+/*  unicode-range: U+000-5FF;
+/*}
+*/
+
+/*!
+ * BDO-Grotesk
+ * https://lokalcontainer.com/Typeface
+ */
+
+/* ... */
+
+/*!
+ * Calluna Sans(paid font)
+ * https://www.exljbris.com/callunasans.html
+ */
+
+/* ... */
+
+/*!
+ * Cal Sans
+ * https://github.com/calcom/font
+ */
+
+/* ... */
+
+/*!
+ * Clear Sans
+ * https://github.com/intel/clear-sans
+ */
+
+/* ... */
+
+/*!
+ * Calluna Sans(paid font)
+ * https://www.exljbris.com/callunasans.html
+ */
+
+/* ... */
+
+/*!
+ * Figtree
+ * https://www.erikdkennedy.com/projects/figtree.html
+ * https://fonts.google.com/specimen/Figtree
+ */
+
+/* ... */
+
+/*!
+ * Geist Sans
+ * https://vercel.com/font
+ */
+
+/* ... */
+
+/*!
+ * Inter
+ * https://rsms.me/inter/
+ */
+/* https://twitter.com/BryceWrayTX/status/1541443520581484544 */
+/*@font-face {
+/*  font-family: Inter;
+/*  font-weight: 1 999;
+/*  font-style: normal;
+/*  font-display: swap;
+/*  src: url('/fonts/Inter.woff2') format('woff2-variations');
+/*  text-rendering: auto;
+/*  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+/*}
+*/
+
+/* dealing with Inter VF */
+/*:is(i, cite, em, var, address, dfn, figcaption) { */
+/*  font-variation-settings: 'slnt' -8; */
+
+/* previous is needed by Chromium and Safari;
+  its presence makes Firefox "over-slant" Inter VF,
+  so we override that below with the media query for Firefox */
+/*font-style: oblique 8deg; */
+
+/* previous is needed by Firefox and Safari; it apparently has no effect on Chromium */
+/*}
+*/
+
+/*!
+ * IBM Plex Sans
+ * https://github.com/IBM/plex
+ */
+/*@font-face {
+/*	font-family: 'IBM Plex Sans Variable';
+/*	font-style: normal;
+/*	font-weight: 100 700;
+/*	src:
+/*		local('IBM Plex Sans Var'),
+/*		local('IBMPlexSansVar-Roman'),
+/*		url('/assets/fonts/IBMPlexSansVar-Roman.woff2') format('woff2 supports variations');
+/*		url('/assets/fonts/IBMPlexSansVar-Roman.woff2') format('woff2-variations');
+/*}
+*/
+
+/*!
+ * Josefin Sans
+ * https://fonts.google.com/specimen/Josefin+Sans
+ */
+
+/* ... */
+
+/*!
+ * Jost
+ * https://fonts.google.com/specimen/Jost
+ */
+
+/* ... */
+
+/*!
+ * Mae(paid font)
+ * https://lettermin.com/about/?font=mae
+ */
+
+/* ... */
+
+/*!
+ * Manrope
+ * https://www.gent.media/manrope
+ */
+
+/* ... */
+
+/*!
+ * MONA SANS
+ * https://github.com/mona-sans
+ */
+
+/* ... */
+
+/*!
+ * Nunito
+ * https://fonts.google.com/specimen/Nunito
+ */
+/*@font-face {
+/*  font-display: swap;
+/*  font-family: Nunito;
+/*  font-weight: 125 950;
+/*  font-stretch: 75% 125%;
+/*  font-style: normal;
+/*  src:
+/*    local('Nunito[ital,wght]'),
+/*    local('Nunito[wght]'),
+/*    local('Nunito'),
+/*    url('/assets/fonts/Manrope[ital,wght].woff2') format('woff2 supports variations'),
+/*    url('/assets/fonts/Manrope[ital,wght].woff2') format('woff2-variations'),
+/*    url('/assets/fonts/Manrope[ital,wght].woff2') format('woff2');
+/*  unicode-range: U+000-5FF /* Download only latin glyphs */
+/*}
+*/
+
+/*!
+ * Open Sauce Fonts
+ * https://github.com/marcologous/Open-Sauce-Fonts
+ */
+
+/* ... */
+
+/*!
+ * Public Sans by 🇺🇸
+ * https://github.com/uswds/public-sans
+ */
+
+/* ... */
+
+/*!
+ * Recursive Sans & Mono
+ * https://www.recursive.design/
+ */
+
+/* ... */
+
+/*!
+ * Roboto
+ * hhttps://fonts.google.com/specimen/Roboto
+ */
+
+/* ... */
+
+/*!
+ * Signika
+ * https://www.fontfabric.com/fonts/signika/
+ */
+
+/* ... */
+
+/*!
+ * Titillium Web
+ * https://fonts.google.com/specimen/Titillium+Web
+ */
+
+/* ... */
+
+/*!
+ * Zona Pro
+ * https://www.fontfabric.com/fonts/zona-pro/
+ */
+
+/* ... */
+

@@ -1,8 +1,7 @@
 ---
 import { Head } from 'astro-capo'
 import BaseHead from '../components/BaseHead.astro'
-import Footer from '../components/Footer.astro'
-// import Hant from '../components/Hant.astro'
+import Header from '../components/Header.astro'
 import siteInfo from '../consts.ts'
 import '../styles/layout_list.js'
 
@@ -27,14 +26,11 @@ const { pageInfo, currentPage } = Astro.props
     itemtype='https://schema.org/WebPage https://schema.org/CollectionPage'
   >
     <div class='container'>
-      <main id='main-content' class='row'>
-        <div class='col c-12'>
-          <slot />
-        </div>
+      <Header />
+      <main id='main-content'>
+        <slot />
       </main>
-      <Footer />
-    </div>
+    </div><!-- .container -->
     <slot name='footer' />
-    <!-- <Hant /> or <Heti /> -->
   </body>
 </html>

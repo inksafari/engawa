@@ -1,0 +1,935 @@
+/* Tokens
+   =========================================================================== */
+:root {
+  /* -- OpenProps -- */
+  /* https://github.com/argyleink/open-props/tree/main/src */
+  --font-sans: ui-sans-serif, system-ui, segoe-ui-variable-display,
+    /* https://aka.ms/SegoeUIVariable */
+    arial, sans-serif, twitter-color-emoji, twemoji-mozilla;
+  --font-mono:
+    ui-monospace, Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace, sans-serif;
+
+  /* -- Pagefind -- */
+  /* https://pagefind.app/docs/ui-usage/#customising-the-styles */
+  /* https://github.com/scottaw66/scottwillsey/blob/main/src/styles/sw3.css */
+  /* --pagefind-ui-background: var(--yan-color-background-primary); */
+  /* --pagefind-ui-border: var(--yan-color-border); */
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-font: inherit;
+
+  /* -- Colors -- */
+  /* https://wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems */
+}
+
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select {
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+/* Helpers
+   =========================================================================== */
+.skip-link {
+  position: absolute;
+  top: clamp(1.09rem, 1rem + 0.47vw, 1.33rem);
+  left: clamp(1.09rem, 1rem + 0.47vw, 1.33rem);
+}
+
+.skip-link:not(:focus),
+.screen-reader,
+.visually-hidden,
+:not(:focus) > .heading-permalink,
+:not(:hover) > .heading-permalink {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+/* Debug
+   =========================================================================== */
+/* If no link is supplied or href field is missing */
+a:is(:not([href]), [href=""], [href="#"]) {
+  outline: 2px dotted red;
+}
+
+/* only <li>'s allowed in ul & ol */
+:is(ul, ol) > *:not(li) {
+  outline: 2px dotted red;
+}
+
+/* Blur images when they have no alt, width, height attribute */
+img:not([alt]),
+img:not([width]),
+img:not([height]) {
+  filter: blur(10px);
+}
+
+/* Document
+   ========================================================================== */
+html {
+  font-size: 100%;
+  line-height: 1.1;
+  /* font-family: var(--font-sans); */
+  /* -webkit-tap-highlight-color: transparent; */
+  overflow-y: scroll;
+
+  /* Prevent zooming when orientation changes on some iOS devices */
+  text-size-adjust: none;
+}
+
+html[dir="ltr"]:lang(en) {
+  font-size: 14px;
+  font-kerning: normal;
+}
+
+@supports (font-variation-settings: normal) {
+  html:lang(en) {
+    /* https://helpx.adobe.com/fonts/using/open-type-syntax.html */
+    font-feature-settings: "liga", "clig", "calt", "kern", "onum", "pnum";
+    font-variant-ligatures: common-ligatures contextual;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+}
+
+html[dir="ltr"]:lang(ja),
+html[dir="ltr"]:lang(ko),
+html[dir="ltr"]:lang(zh) {
+  font-size: 20px;
+  font-kerning: none;
+  hanging-punctuation: first allow-end;
+  line-break: normal;
+  overflow-wrap: break-word;
+}
+
+@supports (font-variation-settings: normal) {
+  html[dir="ltr"]:lang(ja),
+  html[dir="ltr"]:lang(ko),
+  html[dir="ltr"]:lang(zh) {
+    /* TODO: chws */
+    /* https://fontplus.jp/usage/services/chws-vchw */
+    /* https://kojiishi.github.io/chws/samples.html */
+    font-feature-settings: "liga" 0, "clig" 0, "onum", "pnum";
+    font-variant-ligatures: no-common-ligatures;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+    font-variant-east-asian: proportional-width traditional;
+  }
+
+  html[dir="rtl"]:lang(ja),
+  html[dir="rtl"]:lang(ko),
+  html[dir="rtl"]:lang(zh) {
+    font-kerning: none;
+    font-feature-settings: "vchw" 1;
+    font-variant-east-asian: ruby;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::after,
+  ::before {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Sections
+   =========================================================================== */
+body {
+  /* font-family: var(--font-sans); */
+  background-color: #f6f6f6;
+  color: #222222;
+  font-style: normal;
+  font-weight: 400;
+  overflow-x: hidden;
+  counter-reset: theorem definition sidenote-counter;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.container {
+  --container-width: 720px;
+  max-width: var(--container-width);
+  padding: 1em 0;
+  /* 垂直 水平 */
+  margin: 0 2em 0 5em;
+  /* 上右下左 */
+}
+
+@media only screen and (max-width: 810px) {
+  .container {
+    padding: 1em 0;
+    /* 垂直 水平 */
+    margin: 0 2em 0 2em;
+    /* 上右下左 */
+  }
+}
+
+.container > * {
+  margin-block-start: 0;
+}
+
+/* header.site-header 與 main 之間; */
+.container > * + * {
+  margin-block-start: 1em;
+}
+
+main :first-child {
+  margin-block-start: 0;
+}
+
+main:lang(en) p,
+main:lang(en) li {
+  line-height: 1.5;
+  vertical-align: baseline;
+}
+
+main:lang(ja) p,
+main:lang(ko) p,
+main:lang(zh) p,
+main:lang(ja) li,
+main:lang(ko) li,
+main:lang(zh) li {
+  line-height: 1.825;
+}
+
+mark {
+  background-color: #fafd69;
+}
+
+::selection {
+  background-color: aquamarine;
+}
+
+::-moz-selection {
+  background-color: aquamarine;
+}
+
+* {
+  scrollbar-color: blue #f6f6f6;
+}
+
+::-webkit-scrollbar {
+  height: .7rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f6f6f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: blue;
+}
+
+/* Site Header
+   =========================================================================== */
+header.site-header {
+  display: flex;
+  gap: 1em .5em;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1em 0;
+}
+
+nav#site-navigation ul.nav {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav#site-navigation li.nav-item {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+nav#site-navigation li.nav-item a {
+  text-decoration: none;
+  color: #3e3e3e;
+  /* font-weight: 500; */
+}
+
+nav#site-navigation li.nav-item a:hover {
+  color: #3e3e3e;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ff3b8d;
+}
+
+nav#site-navigation li.nav-item a[href]:not(:hover) {
+  text-decoration: none;
+}
+
+/* nav#site-navigation li.nav a[href][aria-current="page"] {} */
+
+/* Archive layout
+   =========================================================================== */
+ol.posts {
+  list-style: none;
+  padding: unset;
+  padding-inline-start: 1.7em;
+  /* counter-reset: start-from 0; */
+}
+
+ol.posts li.post-stub {
+  display: flex;
+  flex-wrap: column;
+  align-items: baseline;
+  counter-increment: start-from -1;
+  margin-inline-start: 1em;
+}
+
+li.post-stub:before {
+  font-family: var(--font-mono);
+  display: inline-block;
+  pointer-events: none;
+  content: " " counter(start-from, decimal-leading-zero) ". ";
+  line-height: 1.2;
+  text-align: right;
+  margin-inline-start: -2.9em;
+}
+
+li.post-stub,
+li.post-stub time.dt-published {
+  font-size: 0.8em;
+  color: #8b8b8b;
+}
+
+li.post-stub time.dt-published {
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+  padding-inline-end: 0em;
+  text-align: right;
+}
+
+li.post-stub a.u-url {
+  flex-basis: calc(100% - 3em);
+  color: #3e3e3e;
+  font-size: 1.18em;
+  font-weight: 700;
+  padding-inline-start: 0.55em;
+  padding-inline-end: 1.5em;
+}
+
+li.post-stub a.u-url:hover,
+li.post-stub a.u-url:active {
+  color: #3e3e3e;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #d57300;
+}
+
+/* Entry layout
+   =========================================================================== */
+/* entry-title 和 entry-content 之間 */
+article > * + * {
+  margin-block-start: 1em;
+}
+
+ul.post-metadata {
+  color: #3e3e3e;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .5em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.post-metadata > * + *::before {
+  content: "·";
+}
+
+/* ul.post-metadata time { margin-inline-end: 1em; } */
+
+/* ul.post-metadata span.post-metadata-text {} */
+
+/* 例如從 ul.post-metadata 到 div.entry-content */
+main article > *,
+main div.entry-content > * {
+  margin-block-start: 1em;
+}
+
+main article > * + *,
+main div.entry-content > * + * {
+  margin-block-start: 1em;
+}
+
+/* Site footer
+   =========================================================================== */
+footer.site-foot {
+  display: flex;
+  gap: 1em 0.5em;
+  flex-wrap: wrap;
+  align-items: right;
+  /* 上右下左 or 垂直水平 */
+  padding: 1em 0 0 0;
+}
+
+main#main-content::after {
+  display: block;
+  color: #6f6f6f;
+  /* 上右下左 / 垂直水平 */
+  margin: 3em 10em 0em 10em;
+  text-align: left;
+  content: "〆";
+}
+
+footer.site-foot ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav#site-navigation li {
+  display: inline-block;
+}
+
+footer.site-foot span,
+footer.site-foot span.copy,
+footer.site-foot span.year,
+footer.site-foot span.p-author,
+footer.site-foot a.footer-link,
+nav#footer-navigation a {
+  color: #6f6f6f;
+}
+
+footer.site-foot span.copy,
+footer.site-foot span.year,
+footer.site-foot a.footer-link,
+nav#footer-navigation a {
+  font-size: 0.9em;
+}
+
+footer.site-foot ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+footer.site-foot li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+footer.site-foot span.text-up {
+  text-transform: uppercase;
+}
+
+/* @media (hover: hover) and (pointer: fine) { footer.site-foot a.footer-link:hover {}} */
+
+/* Blog post
+   =========================================================================== */
+/* credit: https://codepen.io/JoeHastings/pen/MOdRVm */
+blockquote {
+  font-weight: 700;
+  max-width: 600px;
+  line-height: 1.5;
+  position: relative;
+  margin: 0;
+  padding-inline-start: 0.5rem;
+}
+
+blockquote:before,
+blockquote:after {
+  position: absolute;
+  color: #e2e2e2;
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+}
+
+blockquote:before {
+  content: "“";
+  left: -2rem;
+  top: -2rem;
+}
+
+blockquote:after {
+  content: "”";
+  right: -3rem;
+  bottom: -2rem;
+}
+
+blockquote blockquote:before {
+  content: "";
+}
+
+blockquote blockquote:after {
+  content: "";
+}
+
+blockquote blockquote {
+  border-inline-start: 7px solid #8b8b8b;
+  padding-inline-start: 0.5em;
+}
+
+blockquote cite {
+  line-height: 3;
+  text-align: left;
+}
+
+div.entry-content ruby > rt {
+  font-size: 50%;
+}
+
+div.entry-content dt,
+div.entry-content ul,
+div.entry-content ol {
+  font-family: var(--font-mono);
+  margin: 0.5em 1em;
+}
+
+div.entry-content ul {
+  list-style-type: square;
+}
+
+div.entry-content ol {
+  list-style-type: decimal;
+  padding-inline-start: 1em;
+}
+
+div.entry-content li > ul {
+  margin: 0;
+}
+
+div.entry-content table {
+  display: block;
+  overflow-x: auto;
+  margin: 24px 0;
+  white-space: nowrap;
+}
+
+div.entry-content table th,
+div.entry-content table td {
+  padding: 8px;
+  border: 1px solid #db0072;
+}
+
+div.entry-content table th {
+  font-weight: 700;
+  color: #222222;
+  background-color: #ffdce5;
+}
+
+/* font-variant-numeric: slashed-zero; */
+
+div.entry-content hr {
+  width: 200px;
+  margin: 1.5em auto;
+  border: none;
+  border-top: 1px solid #222222;
+  display: block;
+}
+
+div.entry-content hr.temp2 {
+  border: none;
+  border-top: 1px solid #c2c5cc;
+  transform: translateY(-1px);
+  margin: clamp(1.37rem, 1.21rem + 0.8vw, 1.78rem) 0 !important;
+  max-width: 55rem;
+}
+
+div.entry-content hr.temp3 {
+  margin-block: 4em;
+  height: 1px;
+  border: none;
+  background-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 75%),
+    rgb(0 0 0 / 0%)
+  );
+}
+
+/* Headings
+   =========================================================================== */
+h1.entry-title {
+  text-wrap: balance;
+}
+
+:is(h2, h3, h4, dt, blockquote, figcaption, .text-balance) {
+  color: #3e3e3e;
+  text-wrap: balance;
+
+  /* For demonstration */
+  max-inline-size: 48ch;
+}
+
+:is(h1, h2, h3, h4) {
+  font-weight: 700;
+  font-variant-ligatures: none;
+  line-height: 1.2;
+}
+
+div.entry-content h2 {
+  letter-spacing: 0.04em;
+}
+
+div.entry-content p,
+div.entry-content dd,
+div.entry-content li {
+  text-wrap: pretty;
+
+  /* CJK */
+  /* text-autospace: ideograph-space; */
+  word-break: auto-phrase;
+  /* Chome 119+(暫僅支援日文) */
+}
+
+h4 {
+  font-size: 1.17em;
+}
+
+h3 {
+  font-size: 1.28em;
+}
+
+h2 {
+  font-size: 1.39em;
+}
+
+h1 {
+  font-size: 1.61em;
+}
+
+/* Lists
+   =========================================================================== */
+/* https://www.w3.org/TR/css-text-4/#white-space-trim */
+/* dt { display: inline; } */
+/* dt + dt::before { content: ", "; white-space-trim: discard-before; } */
+dl dt::after {
+  content: "：";
+}
+
+dl dt {
+  line-height: 1.2;
+}
+
+dd {
+  line-height: 1.5;
+}
+
+/* Hyperlinks
+   =========================================================================== */
+/* a:not([class]) {} */
+
+footer.site-foot a {
+  color: #3e3e3e;
+  text-decoration: none;
+}
+
+footer.site-foot a:hover {
+  color: #3e3e3e;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ff3b8d;
+}
+
+main a[href] {
+  text-decoration: none;
+}
+
+main a[href]:hover,
+main a[href]:active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ff3b8d;
+}
+
+main a[href]:visited {
+  text-decoration: underline;
+}
+
+/* main a[ref='external']::after, main a[target='_blank']::after { content: ' ↗️'; } */
+
+/* div.entry-content h2::before { content: "// "; } */
+
+.heading-anchor {
+  text-decoration: none;
+  font-style: normal;
+  font-size: 1em;
+  margin-left: .1em;
+}
+
+a[href].heading-anchor,
+a[href].heading-anchor:visited {
+  color: transparent;
+}
+
+a[href].heading-anchor:focus,
+a[href].heading-anchor:hover {
+  text-decoration: underline;
+}
+
+a[href].heading-anchor:focus,
+:hover > a[href].heading-anchor {
+  color: #aaa;
+}
+
+h2 + .heading-anchor {
+  font-size: 1.5em;
+}
+
+/* Callouts
+   =========================================================================== */
+.callout-outdated-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-right: 0.75rem;
+  color: #ff2fb2;
+}
+
+.callout-outdated-text {
+  font-family: sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+div.callout-outdated {
+  display: flex;
+  align-items: center;
+  max-width: 35rem;
+  margin-right: auto;
+  margin-left: 0;
+  padding: 0.75rem 1rem;
+  background-color: #f7ffac;
+  border-width: 1px;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 2px 0 rgb(0 0 0 / 5%);
+}
+
+/* Code
+   =========================================================================== */
+/* Styles for inline code or code snippets */
+div.entry-content :not(pre) > code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  hyphens: none;
+}
+
+kbd {
+  background: #ffdce5;
+  border: 2px solid #ffddd8;
+  border-radius: .5rem;
+  padding: 0.15rem 0.4rem;
+}
+
+/* inline code */
+div.entry-content :not(pre) > code {
+  background: #ffe0b2;
+  font-weight: 700;
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+}
+
+div.entry-content pre {
+  overflow-x: scroll;
+}
+
+div.entry-content pre code {
+  padding: 1rem 1.4rem;
+  max-width: 100%;
+  line-height: 1.375;
+  tab-size: 2;
+  direction: ltr;
+  hanging-punctuation: none;
+  text-align: left;
+  white-space: pre-wrap;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+div.entry-content code {
+  word-break: break-all;
+}
+
+/* Images & Videos
+   =========================================================================== */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+div.entry-content img {
+  border-radius: 10px;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (prefers-color-scheme: dark) {
+  img {
+    opacity: 0.8;
+  }
+}
+
+/* Forms & Input
+   =========================================================================== */
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Prevent textarea from overflowing */
+textarea {
+  width: 100%;
+}
+
+input {
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #eee;
+  font: inherit;
+}
+
+/* Set shorter line heights on interactive elements */
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  cursor: pointer;
+}
+
+/* External Library Includes */
+/* @import url("fineprint.css") print; */
+/* @import url("bluish.css") print, screen; */
+/* @import url("landscape.css") screen and (orientation: landscape); */
+
+/*
+ * 鳴謝
+ *
+ * Reasonable Colors v0.4.0 | MIT License
+ * https://www.reasonable.work/colors/
+ *
+ * minireset.css v0.0.6 | Jeremy Thomas (@jgthms) | MIT License
+ * https://github.com/jgthms/minireset.css
+ *
+ * eleventy-base-blog v8 | MIT License
+ * https://eleventy-base-blog.netlify.app/
+ *
+ * Han.css（漢字標準格式） v3.3.0 | MIT License
+ * https://hanzi.pro/
+ *
+ * Heti（赫蹏） v.0.9.4 | Sivan [sun.sivan@gmail.com] | MIT License
+ * https://sivan.github.io/heti/
+ *
+ */
+/*
+          ▛▟
+    © inksafari.net
+*/

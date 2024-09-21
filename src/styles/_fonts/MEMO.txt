@@ -1,0 +1,30 @@
+備忘：不要直接引入。
+
+- https://v-fonts.com/
+- https://fonts.google.com/variablefonts
+- https://fontlibrary.dev
+- https://fontsource.org
+- https://www.fontshare.com
+
+MONO:
+- https://github.com/chrissimpkins/codeface
+- https://www.yetanothercodefont.com
+
+
+Web Safe Fonts:
+- windows:  https://docs.microsoft.com/typography/fonts/windows_11_font_list
+- macOS:    https://github.com/adrg/os-font-list#macos
+- (Latin)   https://modernfontstacks.com/
+            https://www.cssfontstack.com/
+- (zh-Hans) https://zenozeng.github.io/fonts.css/
+
+Refs:
+- https://phloe.co/dev/font-size
+
+list:
+- https://www.behance.net/prestigetype
+- https://www.indiantypefoundry.com/
+- https://pangrampangram.com/
+- https://www.stormtype.com/
+- https://fonts.google.com/specimen/Paytone+One
+- https://fonts.google.com/specimen/Quantico

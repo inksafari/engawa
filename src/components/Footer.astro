@@ -1,38 +1,58 @@
 ---
-import NavigationLink from '../components/NavigationLink.astro'
-import { removeTrailingSlash } from '../utilities/getPermaLink.js'
+import NavigationLink from './NavigationLink.astro'
 import siteInfo, { feedUrls } from '../consts.ts'
 import Year from './Year.svelte'
+import { removeTrailingSlash } from '../utilities/getPermaLink.js'
 
 const searchPageRoute = 'search'
 const searchPagePath = new URL(searchPageRoute, siteInfo.siteBase)
 const searchPageUrl = removeTrailingSlash(searchPagePath)
 ---
 
-<footer class='site-foot row' itemscope itemtype='https://schema.org/WPFooter'>
-  <div class='legel col c-12'>
-    <NavigationLink href='/now'>now</NavigationLink>
-    <NavigationLink href='/colophon'>colophon</NavigationLink>
-    <NavigationLink href={feedUrls.page}>feed</NavigationLink>
-    <NavigationLink href={searchPageUrl}>search</NavigationLink>
-    <!-- © 2023-2024 example.com -->
-    <div itemprop='copyrightNotice'>
-      <span class='copy'>&copy;</span>
-      <span class='year' itemprop='copyrightYear'>
-        <Year from={siteInfo.copyrightYear} />
+<footer class='site-foot' itemscope itemtype='https://schema.org/WPFooter'>
+  <!-- © 2023-2024 example.com -->
+  <div itemprop='copyrightNotice'>
+    <span class='copy'>&copy;</span>
+    <span class='year' itemprop='copyrightYear'>
+      <Year from={siteInfo.copyrightYear} />
+    </span>
+    &nbsp;
+    <a
+      href='/'
+      class='footer-link'
+      itemprop='url'
+      rel='author'
+      data-testid='link'
+    >
+      <span translate='no' class='p-author h-card' itemprop='copyrightHolder'>
+        {siteInfo.domain}
       </span>
-      &nbsp;
-      <a
-        href='/'
-        class='footer-link'
-        itemprop='url'
-        rel='author'
-        data-testid='link'
-      >
-        <span translate='no' class='p-author h-card' itemprop='copyrightHolder'>
-          {siteInfo.domain}
-        </span>
-      </a>
-    </div><!-- /copyrightNotice -->
-  </div><!-- /legel -->
+    </a>
+    <span>, </span>
+    <a
+      href='https://notbyai.fyi/help/what-is-the-not-by-ai-90-rule'
+      class='footer-link'
+    >
+      <span>not by AI</span>
+    </a>
+    <span>.</span>
+  </div><!-- /copyrightNotice -->
+  <nav id='footer-navigation' aria-label='Footer navigation'>
+    <ul>
+      <li>
+        <NavigationLink href='/colophon'>colophon</NavigationLink>
+      </li>
+      <li>
+        <NavigationLink href='/now'>now</NavigationLink>
+      </li>
+      <li>
+        <NavigationLink href={feedUrls.page}>feed</NavigationLink>
+      </li>
+      <!--
+      <li>
+        <NavigationLink href={searchPageUrl}>search</NavigationLink>
+      </li>
+      -->
+    </ul>
+  </nav>
 </footer>
